@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OperationContext.Base;
-using OperationResult.Helper.Boolean;
-using OperationResult.Helper.String;
+using ExtensionMethods.Helper.Boolean;
+using ExtensionMethods.Helper.String;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,37 +29,42 @@ namespace OperationContext
 
 
         /// <summary>
-        /// Return <see cref="JsonResult"/> with real result completly .
+        /// Set custom <see cref="OperationResultBase.StatusCode"/>.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="result"></param>
+        /// <param name="statusCode"></param>
+        /// <returns></returns>
+        public static OperationResult<T> WithStatusCode<T>(this OperationResult<T> result, int statusCode)
+        {
+            result.StatusCode = statusCode;
+            return result;
+        }
+
+        /// <summary>
+        /// Return <see cref="JsonResult"/> with real result completely .
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="result"></param>
         /// <returns><see cref="JsonResult"/></returns>
         public static JsonResult ToJsonResult<T>(this OperationResult<T> result)
         {
-            switch (result.OperationResultType)
+            return result.OperationResultType switch
             {
-                case OperationResultTypes.Success:
-                    return result.GetValidResult(StatusCodes.Status200OK, null, true);
-                case OperationResultTypes.Exist:
-                    return result.GetValidResult(StatusCodes.Status202Accepted, result.Message);
-                case OperationResultTypes.NotExist:
-                    return result.GetValidResult(StatusCodes.Status204NoContent, result.Message);
-                case OperationResultTypes.Failed:
-                    return result.GetValidResult(StatusCodes.Status400BadRequest, result.Message);
-                case OperationResultTypes.Forbidden:
-                    return result.GetValidResult(StatusCodes.Status403Forbidden, result.Message);
-                case OperationResultTypes.Unauthorized:
-                    return result.GetValidResult(StatusCodes.Status401Unauthorized, result.Message);
-                case OperationResultTypes.Exception:
-                    return result.GetValidResult(StatusCodes.Status500InternalServerError, result.FullExceptionMessage);
-                default:
-                    return new JsonResult("");
-            }
+                OperationResultTypes.Success => result.GetValidResult(result.HasCustomeStatusCode.NestedIF<int>(result.StatusCode ?? 0, StatusCodes.Status200OK), null, true),
+                OperationResultTypes.Exist => result.GetValidResult(result.HasCustomeStatusCode.NestedIF<int>(result.StatusCode ?? 0, StatusCodes.Status202Accepted), result.Message),
+                OperationResultTypes.NotExist => result.GetValidResult(result.HasCustomeStatusCode.NestedIF<int>(result.StatusCode ?? 0, StatusCodes.Status404NotFound), result.Message),
+                OperationResultTypes.Failed => result.GetValidResult(result.HasCustomeStatusCode.NestedIF<int>(result.StatusCode ?? 0, StatusCodes.Status400BadRequest), result.Message),
+                OperationResultTypes.Forbidden => result.GetValidResult(result.HasCustomeStatusCode.NestedIF<int>(result.StatusCode ?? 0, StatusCodes.Status403Forbidden), result.Message),
+                OperationResultTypes.Unauthorized => result.GetValidResult(result.HasCustomeStatusCode.NestedIF<int>(result.StatusCode ?? 0, StatusCodes.Status401Unauthorized), result.Message),
+                OperationResultTypes.Exception => result.GetValidResult(result.HasCustomeStatusCode.NestedIF<int>(result.StatusCode ?? 0, StatusCodes.Status500InternalServerError), result.FullExceptionMessage),
+                _ => new JsonResult(string.Empty),
+            };
         }
 
 
         /// <summary>
-        /// Return <see cref="JsonResult"/> with real result completly .
+        /// Return <see cref="JsonResult"/> with real result completely .
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="result"></param>
@@ -87,7 +92,7 @@ namespace OperationContext
         #region -   Sync   -
 
         /// <summary>
-        /// Collect multi resuts dependent on first TResult1 then extension to take multi result of defrent type .
+        /// Collect multi results dependent on first TResult1 then extension to take multi result of different type .
         /// </summary>
         /// <typeparam name="TResult1"></typeparam>
         /// <param name="result1"></param>
@@ -125,14 +130,16 @@ namespace OperationContext
         #region -   Async   -
 
         /// <summary>
-        /// Collect multi resuts dependent on first TResult1 then extension to take multi result of defrent type .
+        /// Collect multi results dependent on first TResult1 then extension to take multi result of different type .
         /// </summary>
         /// <typeparam name="TResult1"></typeparam>
         /// <param name="result1"></param>
         /// <returns><see cref="OperationResult{TResult1}"/></returns>
         public static async Task<OperationResult<TResult1>> CollectAsync<TResult1>(this Task<OperationResult<TResult1>> result1)
-        { await Task.WhenAll(result1);
-          return (await result1); }
+        {
+            await Task.WhenAll(result1);
+            return (await result1);
+        }
 
 
         /// <summary>
@@ -168,7 +175,7 @@ namespace OperationContext
         #region -   Sync   -
 
         /// <summary>
-        /// Collect multi resuts dependent on first TResult1 then extension to take multi result of defrent type .
+        /// Collect multi results dependent on first TResult1 then extension to take multi result of different type .
         /// </summary>
         /// <typeparam name="TResult1"></typeparam>
         /// <typeparam name="TResult2"></typeparam>
@@ -210,7 +217,7 @@ namespace OperationContext
         #region -   Async   -
 
         /// <summary>
-        /// Collect multi resuts dependent on first TResult1 then extension to take multi result of defrent type .
+        /// Collect multi results dependent on first TResult1 then extension to take multi result of different type .
         /// </summary>
         /// <typeparam name="TResult1"></typeparam>
         /// <typeparam name="TResult2"></typeparam>
@@ -218,8 +225,10 @@ namespace OperationContext
         /// <param name="result2"></param>
         /// <returns></returns>
         public static async Task<(OperationResult<TResult1> result1, OperationResult<TResult2> result2)> CollectAsync<TResult1, TResult2>(this Task<OperationResult<TResult1>> result1, Task<OperationResult<TResult2>> result2)
-        { await Task.WhenAll(result1, result2);
-          return (await result1,await result2); }
+        {
+            await Task.WhenAll(result1, result2);
+            return (await result1, await result2);
+        }
 
 
         /// <summary>
@@ -257,7 +266,7 @@ namespace OperationContext
         #region -   Sync   -
 
         /// <summary>
-        /// Collect multi resuts dependent on first TResult1 then extension to take multi result of defrent type .
+        /// Collect multi results dependent on first TResult1 then extension to take multi result of different type .
         /// </summary>
         /// <typeparam name="TResult1"></typeparam>
         /// <typeparam name="TResult2"></typeparam>
@@ -302,7 +311,7 @@ namespace OperationContext
         #region -   Async   -
 
         /// <summary>
-        /// Collect multi resuts dependent on first TResult1 then extension to take multi result of defrent type .
+        /// Collect multi results dependent on first TResult1 then extension to take multi result of different type .
         /// </summary>
         /// <typeparam name="TResult1"></typeparam>
         /// <typeparam name="TResult2"></typeparam>
@@ -312,8 +321,10 @@ namespace OperationContext
         /// <param name="result3"></param>
         /// <returns></returns>
         public static async Task<(OperationResult<TResult1> result1, OperationResult<TResult2> result2, OperationResult<TResult3> result3)> CollectAsync<TResult1, TResult2, TResult3>(this Task<OperationResult<TResult1>> result1, Task<OperationResult<TResult2>> result2, Task<OperationResult<TResult3>> result3)
-        { await Task.WhenAll(result1, result2, result3);
-          return (await result1,await result2,await result3); }
+        {
+            await Task.WhenAll(result1, result2, result3);
+            return (await result1, await result2, await result3);
+        }
 
         /// <summary>
         /// Sugar use to fill results after <see cref="CollectAsync{TResult1, TResult2,TResult3}(Task{OperationResult{TResult1}}, Task{OperationResult{TResult2}}, Task{OperationResult{TResult3}})"/> into DTO <see langword="new()"/>  or <see langword="anonymous"/>  .
@@ -352,7 +363,7 @@ namespace OperationContext
         #region -   Sync   -
 
         /// <summary>
-        /// Collect multi resuts dependent on first TResult1 then extension to take multi result of defrent type .
+        /// Collect multi results dependent on first TResult1 then extension to take multi result of different type .
         /// </summary>
         /// <typeparam name="TResult1"></typeparam>
         /// <typeparam name="TResult2"></typeparam>
@@ -401,7 +412,7 @@ namespace OperationContext
         #region -   Async   -
 
         /// <summary>
-        /// Collect multi resuts dependent on first TResult1 then extension to take multi result of defrent type .
+        /// Collect multi results dependent on first TResult1 then extension to take multi result of different type .
         /// </summary>
         /// <typeparam name="TResult1"></typeparam>
         /// <typeparam name="TResult2"></typeparam>
@@ -413,8 +424,10 @@ namespace OperationContext
         /// <param name="result4"></param>
         /// <returns></returns>
         public static async Task<(OperationResult<TResult1> result1, OperationResult<TResult2> result2, OperationResult<TResult3> result3, OperationResult<TResult4> result4)> CollectAsync<TResult1, TResult2, TResult3, TResult4>(this Task<OperationResult<TResult1>> result1, Task<OperationResult<TResult2>> result2, Task<OperationResult<TResult3>> result3, Task<OperationResult<TResult4>> result4)
-        { await Task.WhenAll(result1, result2, result3, result4);
-          return (await result1,await result2,await result3,await result4); }
+        {
+            await Task.WhenAll(result1, result2, result3, result4);
+            return (await result1, await result2, await result3, await result4);
+        }
 
         /// <summary>
         /// Sugar use to fill results after <see cref="CollectAsync{TResult1, TResult2, TResult3, TResult4}(Task{OperationResult{TResult1}}, Task{OperationResult{TResult2}}, Task{OperationResult{TResult3}}, Task{OperationResult{TResult4}})"/> into DTO <see langword="new()"/>  or <see langword="anonymous"/>  .
@@ -455,7 +468,7 @@ namespace OperationContext
         #region -   Sync   -
 
         /// <summary>
-        /// Collect multi resuts dependent on first TResult1 then extension to take multi result of defrent type .
+        /// Collect multi results dependent on first TResult1 then extension to take multi result of different type .
         /// </summary>
         /// <typeparam name="TResult1"></typeparam>
         /// <typeparam name="TResult2"></typeparam>
@@ -508,7 +521,7 @@ namespace OperationContext
         #region -   Async   -
 
         /// <summary>
-        /// Collect multi resuts dependent on first TResult1 then extension to take multi result of defrent type .
+        /// Collect multi results dependent on first TResult1 then extension to take multi result of different type .
         /// </summary>
         /// <typeparam name="TResult1"></typeparam>
         /// <typeparam name="TResult2"></typeparam>
@@ -522,8 +535,10 @@ namespace OperationContext
         /// <param name="result5"></param>
         /// <returns></returns>
         public static async Task<(OperationResult<TResult1> result1, OperationResult<TResult2> result2, OperationResult<TResult3> result3, OperationResult<TResult4> result4, OperationResult<TResult5> result5)> CollectAsync<TResult1, TResult2, TResult3, TResult4, TResult5>(this Task<OperationResult<TResult1>> result1, Task<OperationResult<TResult2>> result2, Task<OperationResult<TResult3>> result3, Task<OperationResult<TResult4>> result4, Task<OperationResult<TResult5>> result5)
-        { await Task.WhenAll(result1, result2, result3, result4, result5);
-          return (await result1,await result2,await result3,await result4,await result5); }
+        {
+            await Task.WhenAll(result1, result2, result3, result4, result5);
+            return (await result1, await result2, await result3, await result4, await result5);
+        }
 
         /// <summary>
         /// Sugar use to fill results after <see cref="CollectAsync{TResult1, TResult2, TResult3, TResult4,TResult5}(Task{OperationResult{TResult1}}, Task{OperationResult{TResult2}}, Task{OperationResult{TResult3}}, Task{OperationResult{TResult4}}, Task{OperationResult{TResult5}})"/> into DTO <see langword="new()"/>  or <see langword="anonymous"/>  .
@@ -537,7 +552,7 @@ namespace OperationContext
         /// <param name="results"></param>
         /// <param name="receiver"></param>
         /// <returns></returns>
-        public static  async Task<OperationResult<TResult>> IntoAsync<TResult1, TResult2, TResult3, TResult4, TResult5, TResult>(this Task<(OperationResult<TResult1> result1, OperationResult<TResult2> result2, OperationResult<TResult3> result3, OperationResult<TResult4> result4, OperationResult<TResult5> result5)> results,
+        public static async Task<OperationResult<TResult>> IntoAsync<TResult1, TResult2, TResult3, TResult4, TResult5, TResult>(this Task<(OperationResult<TResult1> result1, OperationResult<TResult2> result2, OperationResult<TResult3> result3, OperationResult<TResult4> result4, OperationResult<TResult5> result5)> results,
             Func<OperationResult<TResult1>, OperationResult<TResult2>, OperationResult<TResult3>, OperationResult<TResult4>, OperationResult<TResult5>, TResult> receiver)
         { var (result1, result2, result3, result4, result5) = await results; return await results.InOnceAsync(receiver(result1, result2, result3, result4, result5)); }
 
@@ -566,7 +581,7 @@ namespace OperationContext
         #region -   Sync   -
 
         /// <summary>
-        /// Collect multi resuts dependent on first TResult1 then extension to take multi result of defrent type .
+        /// Collect multi results dependent on first TResult1 then extension to take multi result of different type .
         /// </summary>
         /// <typeparam name="TResult1"></typeparam>
         /// <typeparam name="TResult2"></typeparam>
@@ -623,7 +638,7 @@ namespace OperationContext
         #region -   Async   -
 
         /// <summary>
-        /// Collect multi resuts dependent on first TResult1 then extension to take multi result of defrent type .
+        /// Collect multi results dependent on first TResult1 then extension to take multi result of different type .
         /// </summary>
         /// <typeparam name="TResult1"></typeparam>
         /// <typeparam name="TResult2"></typeparam>
@@ -639,8 +654,10 @@ namespace OperationContext
         /// <param name="result6"></param>
         /// <returns></returns>
         public static async Task<(OperationResult<TResult1> result1, OperationResult<TResult2> result2, OperationResult<TResult3> result3, OperationResult<TResult4> result4, OperationResult<TResult5> result5, OperationResult<TResult6> result6)> CollectAsync<TResult1, TResult2, TResult3, TResult4, TResult5, TResult6>(this Task<OperationResult<TResult1>> result1, Task<OperationResult<TResult2>> result2, Task<OperationResult<TResult3>> result3, Task<OperationResult<TResult4>> result4, Task<OperationResult<TResult5>> result5, Task<OperationResult<TResult6>> result6)
-        { await Task.WhenAll(result1, result2, result3, result4, result5, result6);
-          return (await result1,await result2,await result3,await result4,await result5,await result6); }
+        {
+            await Task.WhenAll(result1, result2, result3, result4, result5, result6);
+            return (await result1, await result2, await result3, await result4, await result5, await result6);
+        }
 
         /// <summary>
         /// Sugar use to fill results after <see cref="CollectAsync{TResult1, TResult2, TResult3, TResult4,TResult5,TResult6}(Task{OperationResult{TResult1}}, Task{OperationResult{TResult2}}, Task{OperationResult{TResult3}}, Task{OperationResult{TResult4}}, Task{OperationResult{TResult5}}, Task{OperationResult{TResult6}})"/> into DTO <see langword="new()"/>  or <see langword="anonymous"/>  .
@@ -685,7 +702,7 @@ namespace OperationContext
         #region -   Sync   -
 
         /// <summary>
-        /// Collect multi resuts dependent on first TResult1 then extension to take multi result of defrent type .
+        /// Collect multi results dependent on first TResult1 then extension to take multi result of different type .
         /// </summary>
         /// <typeparam name="TResult1"></typeparam>
         /// <typeparam name="TResult2"></typeparam>
@@ -746,7 +763,7 @@ namespace OperationContext
         #region -   Async   -
 
         /// <summary>
-        /// Collect multi resuts dependent on first TResult1 then extension to take multi result of defrent type .
+        /// Collect multi returns dependent on first TResult1 then extension to take multi result of different type .
         /// </summary>
         /// <typeparam name="TResult1"></typeparam>
         /// <typeparam name="TResult2"></typeparam>
@@ -764,8 +781,10 @@ namespace OperationContext
         /// <param name="result7"></param>
         /// <returns></returns>
         public static async Task<(OperationResult<TResult1> result1, OperationResult<TResult2> result2, OperationResult<TResult3> result3, OperationResult<TResult4> result4, OperationResult<TResult5> result5, OperationResult<TResult6> result6, OperationResult<TResult7> result7)> CollectAsync<TResult1, TResult2, TResult3, TResult4, TResult5, TResult6, TResult7>(this Task<OperationResult<TResult1>> result1, Task<OperationResult<TResult2>> result2, Task<OperationResult<TResult3>> result3, Task<OperationResult<TResult4>> result4, Task<OperationResult<TResult5>> result5, Task<OperationResult<TResult6>> result6, Task<OperationResult<TResult7>> result7)
-        { await Task.WhenAll(result1, result2, result3, result4, result5, result6, result7);
-          return (await result1,await result2,await result3,await result4,await result5,await result6,await result7); }
+        {
+            await Task.WhenAll(result1, result2, result3, result4, result5, result6, result7);
+            return (await result1, await result2, await result3, await result4, await result5, await result6, await result7);
+        }
 
         /// <summary>
         /// Sugar use to fill results after <see cref="CollectAsync{TResult1, TResult2, TResult3, TResult4,TResult5,TResult6,TResult7}(Task{OperationResult{TResult1}}, Task{OperationResult{TResult2}}, Task{OperationResult{TResult3}}, Task{OperationResult{TResult4}}, Task{OperationResult{TResult5}}, Task{OperationResult{TResult6}}, Task{OperationResult{TResult7}})"/> into DTO <see langword="new()"/>  or <see langword="anonymous"/>  .
@@ -812,9 +831,9 @@ namespace OperationContext
 
         /// <summary>
         /// Condition to collect many operation result into once , dependent on  Priority of <see cref="OperationResultTypes"/>
-        /// <para>With <see cref="OperationResultTypes.Exception"/>  Will retrun first exception result  used <see cref="OperationResult{TResult}.SetException(Exception)"/></para>
-        /// <para>With <see cref="OperationResultTypes.Failed"/> ,<see cref="OperationResultTypes.Forbidden"/> and <see cref="OperationResultTypes.Unauthorized"/> Will retrun join of message  used <see cref="OperationResult{TResult}.SetSuccess(string)"/></para>
-        /// <para>With <see cref="OperationResultTypes.Success"/> Will retrun TResult and  join of message used <see cref="OperationResult{TResult}.SetFailed(string, OperationResultTypes)"/> .</para>
+        /// <para>With <see cref="OperationResultTypes.Exception"/>  Will return first exception result  used <see cref="OperationResult{TResult}.SetException(Exception)"/></para>
+        /// <para>With <see cref="OperationResultTypes.Failed"/> ,<see cref="OperationResultTypes.Forbidden"/> and <see cref="OperationResultTypes.Unauthorized"/> Will return join of message  used <see cref="OperationResult{TResult}.SetSuccess(string)"/></para>
+        /// <para>With <see cref="OperationResultTypes.Success"/> Will return TResult and  join of message used <see cref="OperationResult{TResult}.SetFailed(string, OperationResultTypes)"/> .</para>
         /// </summary>
         /// <typeparam name="TOneResult"></typeparam>
         /// <typeparam name="TResult"></typeparam>
@@ -823,9 +842,9 @@ namespace OperationContext
         /// <returns><see cref="OperationResult{TResult}"/></returns>
         private static OperationResult<TResult> OnePriority<TOneResult, TResult>(TOneResult oneResult, TResult result)
         {
-            OperationResult<TResult> operation = new OperationResult<TResult>();
+            OperationResult<TResult> operation = new();
 
-            OperatinResultBase Result = oneResult as OperatinResultBase;
+            OperationResultBase Result = oneResult as OperationResultBase;
 
             if (Result.OperationResultType == OperationResultTypes.Exception)
                 return operation.SetException(Result.Exception);
@@ -844,9 +863,9 @@ namespace OperationContext
 
         /// <summary>
         /// Condition to collect many operation result into once , dependent on  Priority of <see cref="OperationResultTypes"/>
-        /// <para>With <see cref="OperationResultTypes.Exception"/>  Will retrun first exception result  used <see cref="OperationResult{TResult}.SetException(Exception)"/></para>
-        /// <para>With <see cref="OperationResultTypes.Failed"/> ,<see cref="OperationResultTypes.Forbidden"/> and <see cref="OperationResultTypes.Unauthorized"/> Will retrun join of message  used <see cref="OperationResult{TResult}.SetSuccess(string)"/></para>
-        /// <para>With <see cref="OperationResultTypes.Success"/> Will retrun TResult and  join of message used <see cref="OperationResult{TResult}.SetFailed(string, OperationResultTypes)"/> .</para>
+        /// <para>With <see cref="OperationResultTypes.Exception"/>  Will return first exception result  used <see cref="OperationResult{TResult}.SetException(Exception)"/></para>
+        /// <para>With <see cref="OperationResultTypes.Failed"/> ,<see cref="OperationResultTypes.Forbidden"/> and <see cref="OperationResultTypes.Unauthorized"/> Will return join of message  used <see cref="OperationResult{TResult}.SetSuccess(string)"/></para>
+        /// <para>With <see cref="OperationResultTypes.Success"/> Will return TResult and  join of message used <see cref="OperationResult{TResult}.SetFailed(string, OperationResultTypes)"/> .</para>
         /// </summary>
         /// <typeparam name="TTupleResult"></typeparam>
         /// <typeparam name="TResult"></typeparam>
@@ -855,29 +874,29 @@ namespace OperationContext
         /// <returns><see cref="OperationResult{TResult}"/></returns>
         private static OperationResult<TResult> OncePriority<TTupleResult, TResult>(TTupleResult results, TResult result) where TTupleResult : ITuple
         {
-            OperationResult<TResult> operation = new OperationResult<TResult>();
+            OperationResult<TResult> operation = new();
 
-            IEnumerable<OperatinResultBase> listResult = Enumerable.Repeat(0, results.Length).Select(index => results[index]).Cast<OperatinResultBase>();
+            IEnumerable<OperationResultBase> listResult = Enumerable.Repeat(0, results.Length).Select(index => results[index]).Cast<OperationResultBase>();
 
-            OperatinResultBase firstException = listResult.FirstOrDefault(result => result.OperationResultType == OperationResultTypes.Exception);
+            OperationResultBase firstException = listResult.FirstOrDefault(result => result.OperationResultType == OperationResultTypes.Exception);
             if (firstException != null)
                 return operation.SetException(firstException.Exception);
 
             if (listResult.Any(result => result.OperationResultType == OperationResultTypes.Failed || result.OperationResultType == OperationResultTypes.Forbidden || result.OperationResultType == OperationResultTypes.Unauthorized))
                 return operation.SetFailed(String.Join(",",
-                    listResult.Select((result, iter) => result.Message.IsNullOrEmpty().NestedIF($"Result {iter} not contain Message or Success", result.Message))), listResult.Max(result=>result.OperationResultType));
+                    listResult.Select((result, iter) => result.Message.IsNullOrEmpty().NestedIF($"Result {iter} not contain Message or Success", result.Message))), listResult.Max(result => result.OperationResultType));
 
             return operation.SetSuccess(result, String.Join(",",
                     listResult.Select((result, iter) => result.Message.IsNullOrEmpty().NestedIF($"Result {iter} not contain Message or Success", result.Message))));
 
         }
 
-        /// <summary>
-        /// Task-Wrapped-Operations use <see cref="Task.WhenAll"/>
-        /// </summary>
-        /// <param name="tasks"></param>
-        /// <returns></returns>
-        private static Task<TResult[]> WrappedOperations<TResult>(params Task<TResult>[] tasks)
-            => Task.WhenAll(tasks);
+        ///// <summary>
+        ///// Task-Wrapped-Operations use <see cref="Task.WhenAll"/>
+        ///// </summary>
+        ///// <param name="tasks"></param>
+        ///// <returns></returns>
+        //private static Task<TResult[]> WrappedOperations<TResult>(params Task<TResult>[] tasks)
+        //    => Task.WhenAll(tasks);
     }
 }

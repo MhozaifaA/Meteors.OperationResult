@@ -4,7 +4,7 @@ using System.Text;
 namespace ExtensionMethods.Helper.Exception
 {
     /// <summary>
-    /// basics extesions
+    /// basics Extensions
     /// </summary>
     internal static class ExceptionExtension
     {

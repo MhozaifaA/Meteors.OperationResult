@@ -1,6 +1,4 @@
-﻿
-
-namespace OperationContext.Base
+﻿namespace OperationContext.Base
 {
     internal interface IResult<T>
     {

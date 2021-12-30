@@ -1,43 +1,42 @@
-﻿
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 
 namespace OperationContext
 {
     /// <summary>
     /// Logical  result type
-    /// <para> Warning: dont uses cast to any numbers <see cref="int"/> ... 
-    /// only cheked by <see langword="enum"/></para>
+    /// <para> Warning: don't uses cast to any numbers <see cref="int"/> ... 
+    /// only checked by <see langword="enum"/></para>
     /// </summary>
-    public enum OperationResultTypes:uint
+    public enum OperationResultTypes : uint
     {
         /// <summary>
         /// As <see cref="StatusCodes.Status200OK"/>
         /// </summary>
-        Success,
+        Success = 200,
         /// <summary>
         /// As <see cref="StatusCodes.Status202Accepted"/>
         /// </summary>
-        Exist,
+        Exist = 202,
         /// <summary>
-        /// As <see cref="StatusCodes.Status204NoContent"/>
+        /// As <see cref="StatusCodes.Status404NotFound"/>
         /// </summary>
-        NotExist,
+        NotExist = 404,
         /// <summary>
         /// As <see cref="StatusCodes.Status400BadRequest"/>
         /// </summary>
-        Failed,
+        Failed = 400,
         /// <summary>
         /// As <see cref="StatusCodes.Status403Forbidden"/>
         /// </summary>
-        Forbidden,
+        Forbidden = 403,
         /// <summary>
         /// As <see cref="StatusCodes.Status500InternalServerError"/>
         /// </summary>
-        Exception,
+        Exception = 500,
         /// <summary>
-        /// Useful in third party api
+        /// Useful in third party API
         /// As <see cref="StatusCodes.Status401Unauthorized"/>
         /// </summary>
-        Unauthorized
+        Unauthorized = 401,
     }
 }

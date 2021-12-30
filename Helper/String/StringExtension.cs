@@ -1,4 +1,4 @@
-﻿namespace OperationResult.Helper.String
+﻿namespace ExtensionMethods.Helper.String
 {
     /// <summary>
     /// Basics extensions
