@@ -14,31 +14,68 @@
             Main object result.
             </summary>
         </member>
-        <member name="T:OperationContext.Base.OperatinResultBase">
+        <member name="T:OperationContext.Base.OperationResultBase">
             <summary>
             Main prop not changed or effect on return
+            abstract of for <see cref="T:OperationContext._Operation"/>
             </summary>
         </member>
-        <member name="P:OperationContext.Base.OperatinResultBase.Message">
+        <member name="P:OperationContext.Base.OperationResultBase.Message">
             <summary>
             Any validation text or result-message.
             </summary>
         </member>
-        <member name="P:OperationContext.Base.OperatinResultBase.OperationResultType">
+        <member name="P:OperationContext.Base.OperationResultBase.OperationResultType">
             <summary>
             Result type.
             </summary>
         </member>
-        <member name="P:OperationContext.Base.OperatinResultBase.Exception">
+        <member name="P:OperationContext.Base.OperationResultBase.Exception">
             <summary>
              Represents errors that occur during CONTEXT execution.
+             protected of for <see cref="T:OperationContext._Operation"/>
             </summary>
+        </member>
+        <member name="P:OperationContext.Base.OperationResultBase.StatusCode">
+            <summary>
+            custom return StatusCode-HTTP used with web-requests.
+            <para>Not effect with native C# code lib as un-host-web projects or responses.</para>
+            </summary>
+        </member>
+        <member name="M:OperationContext.Base.OperationResultBase.Equals(OperationContext.Base.OperationResultBase)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="other"></param>
+            <returns></returns>
+        </member>
+        <member name="F:OperationContext.Base.OperationResultBase.disposed">
+            <summary>
+            Flag enter disposed
+            </summary>
+        </member>
+        <member name="M:OperationContext.Base.OperationResultBase.Finalize">
+            <summary>
+            Destructor
+            </summary>
+        </member>
+        <member name="M:OperationContext.Base.OperationResultBase.Dispose">
+            <summary>
+            Default finalize instead of type Result <code>T = null</code> .
+            </summary>
+        </member>
+        <member name="M:OperationContext.Base.OperationResultBase.Dispose(System.Boolean)">
+            <summary>
+            The virtual dispose method that allows
+            classes inherited from this one to dispose their resources.
+            </summary>
+            <param name="disposing"></param>
         </member>
         <member name="T:OperationContext.OperationResultTypes">
             <summary>
             Logical  result type
-            <para> Warning: dont uses cast to any numbers <see cref="T:System.Int32"/> ... 
-            only cheked by <see langword="enum"/></para>
+            <para> Warning: don't uses cast to any numbers <see cref="T:System.Int32"/> ... 
+            only checked by <see langword="enum"/></para>
             </summary>
         </member>
         <member name="F:OperationContext.OperationResultTypes.Success">
@@ -53,7 +90,7 @@
         </member>
         <member name="F:OperationContext.OperationResultTypes.NotExist">
             <summary>
-            As <see cref="F:Microsoft.AspNetCore.Http.StatusCodes.Status204NoContent"/>
+            As <see cref="F:Microsoft.AspNetCore.Http.StatusCodes.Status404NotFound"/>
             </summary>
         </member>
         <member name="F:OperationContext.OperationResultTypes.Failed">
@@ -73,7 +110,7 @@
         </member>
         <member name="F:OperationContext.OperationResultTypes.Unauthorized">
             <summary>
-            Useful in third party api
+            Useful in third party API
             As <see cref="F:Microsoft.AspNetCore.Http.StatusCodes.Status401Unauthorized"/>
             </summary>
         </member>
@@ -90,9 +127,18 @@
             <param name="object"></param>
             <returns> <see cref="T:OperationContext.OperationResult`1"/> </returns>
         </member>
+        <member name="M:OperationContext.OpertaionResultExtesnsion.WithStatusCode``1(OperationContext.OperationResult{``0},System.Int32)">
+            <summary>
+            Set custom <see cref="P:OperationContext.Base.OperationResultBase.StatusCode"/>.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="result"></param>
+            <param name="statusCode"></param>
+            <returns></returns>
+        </member>
         <member name="M:OperationContext.OpertaionResultExtesnsion.ToJsonResult``1(OperationContext.OperationResult{``0})">
             <summary>
-            Return <see cref="T:Microsoft.AspNetCore.Mvc.JsonResult"/> with real result completly .
+            Return <see cref="T:Microsoft.AspNetCore.Mvc.JsonResult"/> with real result completely .
             </summary>
             <typeparam name="T"></typeparam>
             <param name="result"></param>
@@ -100,7 +146,7 @@
         </member>
         <member name="M:OperationContext.OpertaionResultExtesnsion.ToJsonResultAsync``1(System.Threading.Tasks.Task{OperationContext.OperationResult{``0}})">
             <summary>
-            Return <see cref="T:Microsoft.AspNetCore.Mvc.JsonResult"/> with real result completly .
+            Return <see cref="T:Microsoft.AspNetCore.Mvc.JsonResult"/> with real result completely .
             </summary>
             <typeparam name="T"></typeparam>
             <param name="result"></param>
@@ -119,7 +165,7 @@
         </member>
         <member name="M:OperationContext.OpertaionResultExtesnsion.Collect``1(OperationContext.OperationResult{``0})">
             <summary>
-            Collect multi resuts dependent on first TResult1 then extension to take multi result of defrent type .
+            Collect multi results dependent on first TResult1 then extension to take multi result of different type .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <param name="result1"></param>
@@ -147,7 +193,7 @@
         </member>
         <member name="M:OperationContext.OpertaionResultExtesnsion.CollectAsync``1(System.Threading.Tasks.Task{OperationContext.OperationResult{``0}})">
             <summary>
-            Collect multi resuts dependent on first TResult1 then extension to take multi result of defrent type .
+            Collect multi results dependent on first TResult1 then extension to take multi result of different type .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <param name="result1"></param>
@@ -175,7 +221,7 @@
         </member>
         <member name="M:OperationContext.OpertaionResultExtesnsion.Collect``2(OperationContext.OperationResult{``0},OperationContext.OperationResult{``1})">
             <summary>
-            Collect multi resuts dependent on first TResult1 then extension to take multi result of defrent type .
+            Collect multi results dependent on first TResult1 then extension to take multi result of different type .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <typeparam name="TResult2"></typeparam>
@@ -207,7 +253,7 @@
         </member>
         <member name="M:OperationContext.OpertaionResultExtesnsion.CollectAsync``2(System.Threading.Tasks.Task{OperationContext.OperationResult{``0}},System.Threading.Tasks.Task{OperationContext.OperationResult{``1}})">
             <summary>
-            Collect multi resuts dependent on first TResult1 then extension to take multi result of defrent type .
+            Collect multi results dependent on first TResult1 then extension to take multi result of different type .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <typeparam name="TResult2"></typeparam>
@@ -239,7 +285,7 @@
         </member>
         <member name="M:OperationContext.OpertaionResultExtesnsion.Collect``3(OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2})">
             <summary>
-            Collect multi resuts dependent on first TResult1 then extension to take multi result of defrent type .
+            Collect multi results dependent on first TResult1 then extension to take multi result of different type .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <typeparam name="TResult2"></typeparam>
@@ -275,7 +321,7 @@
         </member>
         <member name="M:OperationContext.OpertaionResultExtesnsion.CollectAsync``3(System.Threading.Tasks.Task{OperationContext.OperationResult{``0}},System.Threading.Tasks.Task{OperationContext.OperationResult{``1}},System.Threading.Tasks.Task{OperationContext.OperationResult{``2}})">
             <summary>
-            Collect multi resuts dependent on first TResult1 then extension to take multi result of defrent type .
+            Collect multi results dependent on first TResult1 then extension to take multi result of different type .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <typeparam name="TResult2"></typeparam>
@@ -311,7 +357,7 @@
         </member>
         <member name="M:OperationContext.OpertaionResultExtesnsion.Collect``4(OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2},OperationContext.OperationResult{``3})">
             <summary>
-            Collect multi resuts dependent on first TResult1 then extension to take multi result of defrent type .
+            Collect multi results dependent on first TResult1 then extension to take multi result of different type .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <typeparam name="TResult2"></typeparam>
@@ -351,7 +397,7 @@
         </member>
         <member name="M:OperationContext.OpertaionResultExtesnsion.CollectAsync``4(System.Threading.Tasks.Task{OperationContext.OperationResult{``0}},System.Threading.Tasks.Task{OperationContext.OperationResult{``1}},System.Threading.Tasks.Task{OperationContext.OperationResult{``2}},System.Threading.Tasks.Task{OperationContext.OperationResult{``3}})">
             <summary>
-            Collect multi resuts dependent on first TResult1 then extension to take multi result of defrent type .
+            Collect multi results dependent on first TResult1 then extension to take multi result of different type .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <typeparam name="TResult2"></typeparam>
@@ -391,7 +437,7 @@
         </member>
         <member name="M:OperationContext.OpertaionResultExtesnsion.Collect``5(OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2},OperationContext.OperationResult{``3},OperationContext.OperationResult{``4})">
             <summary>
-            Collect multi resuts dependent on first TResult1 then extension to take multi result of defrent type .
+            Collect multi results dependent on first TResult1 then extension to take multi result of different type .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <typeparam name="TResult2"></typeparam>
@@ -435,7 +481,7 @@
         </member>
         <member name="M:OperationContext.OpertaionResultExtesnsion.CollectAsync``5(System.Threading.Tasks.Task{OperationContext.OperationResult{``0}},System.Threading.Tasks.Task{OperationContext.OperationResult{``1}},System.Threading.Tasks.Task{OperationContext.OperationResult{``2}},System.Threading.Tasks.Task{OperationContext.OperationResult{``3}},System.Threading.Tasks.Task{OperationContext.OperationResult{``4}})">
             <summary>
-            Collect multi resuts dependent on first TResult1 then extension to take multi result of defrent type .
+            Collect multi results dependent on first TResult1 then extension to take multi result of different type .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <typeparam name="TResult2"></typeparam>
@@ -479,7 +525,7 @@
         </member>
         <member name="M:OperationContext.OpertaionResultExtesnsion.Collect``6(OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2},OperationContext.OperationResult{``3},OperationContext.OperationResult{``4},OperationContext.OperationResult{``5})">
             <summary>
-            Collect multi resuts dependent on first TResult1 then extension to take multi result of defrent type .
+            Collect multi results dependent on first TResult1 then extension to take multi result of different type .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <typeparam name="TResult2"></typeparam>
@@ -527,7 +573,7 @@
         </member>
         <member name="M:OperationContext.OpertaionResultExtesnsion.CollectAsync``6(System.Threading.Tasks.Task{OperationContext.OperationResult{``0}},System.Threading.Tasks.Task{OperationContext.OperationResult{``1}},System.Threading.Tasks.Task{OperationContext.OperationResult{``2}},System.Threading.Tasks.Task{OperationContext.OperationResult{``3}},System.Threading.Tasks.Task{OperationContext.OperationResult{``4}},System.Threading.Tasks.Task{OperationContext.OperationResult{``5}})">
             <summary>
-            Collect multi resuts dependent on first TResult1 then extension to take multi result of defrent type .
+            Collect multi results dependent on first TResult1 then extension to take multi result of different type .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <typeparam name="TResult2"></typeparam>
@@ -575,7 +621,7 @@
         </member>
         <member name="M:OperationContext.OpertaionResultExtesnsion.Collect``7(OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2},OperationContext.OperationResult{``3},OperationContext.OperationResult{``4},OperationContext.OperationResult{``5},OperationContext.OperationResult{``6})">
             <summary>
-            Collect multi resuts dependent on first TResult1 then extension to take multi result of defrent type .
+            Collect multi results dependent on first TResult1 then extension to take multi result of different type .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <typeparam name="TResult2"></typeparam>
@@ -627,7 +673,7 @@
         </member>
         <member name="M:OperationContext.OpertaionResultExtesnsion.CollectAsync``7(System.Threading.Tasks.Task{OperationContext.OperationResult{``0}},System.Threading.Tasks.Task{OperationContext.OperationResult{``1}},System.Threading.Tasks.Task{OperationContext.OperationResult{``2}},System.Threading.Tasks.Task{OperationContext.OperationResult{``3}},System.Threading.Tasks.Task{OperationContext.OperationResult{``4}},System.Threading.Tasks.Task{OperationContext.OperationResult{``5}},System.Threading.Tasks.Task{OperationContext.OperationResult{``6}})">
             <summary>
-            Collect multi resuts dependent on first TResult1 then extension to take multi result of defrent type .
+            Collect multi returns dependent on first TResult1 then extension to take multi result of different type .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <typeparam name="TResult2"></typeparam>
@@ -680,9 +726,9 @@
         <member name="M:OperationContext.OpertaionResultExtesnsion.OnePriority``2(``0,``1)">
             <summary>
             Condition to collect many operation result into once , dependent on  Priority of <see cref="T:OperationContext.OperationResultTypes"/>
-            <para>With <see cref="F:OperationContext.OperationResultTypes.Exception"/>  Will retrun first exception result  used <see cref="M:OperationContext.OperationResult`1.SetException(System.Exception)"/></para>
-            <para>With <see cref="F:OperationContext.OperationResultTypes.Failed"/> ,<see cref="F:OperationContext.OperationResultTypes.Forbidden"/> and <see cref="F:OperationContext.OperationResultTypes.Unauthorized"/> Will retrun join of message  used <see cref="M:OperationContext.OperationResult`1.SetSuccess(System.String)"/></para>
-            <para>With <see cref="F:OperationContext.OperationResultTypes.Success"/> Will retrun TResult and  join of message used <see cref="M:OperationContext.OperationResult`1.SetFailed(System.String,OperationContext.OperationResultTypes)"/> .</para>
+            <para>With <see cref="F:OperationContext.OperationResultTypes.Exception"/>  Will return first exception result  used <see cref="M:OperationContext.OperationResult`1.SetException(System.Exception)"/></para>
+            <para>With <see cref="F:OperationContext.OperationResultTypes.Failed"/> ,<see cref="F:OperationContext.OperationResultTypes.Forbidden"/> and <see cref="F:OperationContext.OperationResultTypes.Unauthorized"/> Will return join of message  used <see cref="M:OperationContext.OperationResult`1.SetSuccess(System.String)"/></para>
+            <para>With <see cref="F:OperationContext.OperationResultTypes.Success"/> Will return TResult and  join of message used <see cref="M:OperationContext.OperationResult`1.SetFailed(System.String,OperationContext.OperationResultTypes)"/> .</para>
             </summary>
             <typeparam name="TOneResult"></typeparam>
             <typeparam name="TResult"></typeparam>
@@ -693,9 +739,9 @@
         <member name="M:OperationContext.OpertaionResultExtesnsion.OncePriority``2(``0,``1)">
             <summary>
             Condition to collect many operation result into once , dependent on  Priority of <see cref="T:OperationContext.OperationResultTypes"/>
-            <para>With <see cref="F:OperationContext.OperationResultTypes.Exception"/>  Will retrun first exception result  used <see cref="M:OperationContext.OperationResult`1.SetException(System.Exception)"/></para>
-            <para>With <see cref="F:OperationContext.OperationResultTypes.Failed"/> ,<see cref="F:OperationContext.OperationResultTypes.Forbidden"/> and <see cref="F:OperationContext.OperationResultTypes.Unauthorized"/> Will retrun join of message  used <see cref="M:OperationContext.OperationResult`1.SetSuccess(System.String)"/></para>
-            <para>With <see cref="F:OperationContext.OperationResultTypes.Success"/> Will retrun TResult and  join of message used <see cref="M:OperationContext.OperationResult`1.SetFailed(System.String,OperationContext.OperationResultTypes)"/> .</para>
+            <para>With <see cref="F:OperationContext.OperationResultTypes.Exception"/>  Will return first exception result  used <see cref="M:OperationContext.OperationResult`1.SetException(System.Exception)"/></para>
+            <para>With <see cref="F:OperationContext.OperationResultTypes.Failed"/> ,<see cref="F:OperationContext.OperationResultTypes.Forbidden"/> and <see cref="F:OperationContext.OperationResultTypes.Unauthorized"/> Will return join of message  used <see cref="M:OperationContext.OperationResult`1.SetSuccess(System.String)"/></para>
+            <para>With <see cref="F:OperationContext.OperationResultTypes.Success"/> Will return TResult and  join of message used <see cref="M:OperationContext.OperationResult`1.SetFailed(System.String,OperationContext.OperationResultTypes)"/> .</para>
             </summary>
             <typeparam name="TTupleResult"></typeparam>
             <typeparam name="TResult"></typeparam>
@@ -703,16 +749,123 @@
             <param name="result">expected result</param>
             <returns><see cref="T:OperationContext.OperationResult`1"/></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.WrappedOperations``1(System.Threading.Tasks.Task{``0}[])">
+        <member name="T:OperationContext._Operation">
             <summary>
-            Task-Wrapped-Operations use <see cref="M:System.Threading.Tasks.Task.WhenAll(System.Collections.Generic.IEnumerable{System.Threading.Tasks.Task})"/>
+            Quick return from <see cref="T:OperationContext.Base.OperationResultBase"/> and <see cref="T:OperationContext.Base.IResult`1"/>
+            <para>Used when un-enable Handler.</para>
             </summary>
-            <param name="tasks"></param>
-            <returns></returns>
+        </member>
+        <member name="M:OperationContext._Operation.Operation">
+            <summary>
+            Normal init used for end return
+            </summary>
+            <returns><see cref="T:OperationContext.Base.OperationResultBase"/></returns>
+        </member>
+        <member name="M:OperationContext._Operation.Operation``1">
+            <summary>
+            Normal init used for end return
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns><see cref="T:OperationContext.OperationResult`1"/></returns>
+        </member>
+        <member name="M:OperationContext._Operation.SetSuccess``1(``0)">
+            <summary>
+            Helper to pass success result 
+            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:OperationContext.OperationResultTypes.Success"/></para>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="result"></param>
+            <returns> <see cref="T:OperationContext.OperationResult`1"/> </returns>
+        </member>
+        <member name="M:OperationContext._Operation.SetSuccess(System.String)">
+            <summary>
+            Helper
+            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:OperationContext.OperationResultTypes.Success"/></para>
+            <para>Effect in <code>base.Message</code> .</para>
+            </summary>
+            <param name="message"></param>
+            <returns> <see cref="T:OperationContext.Base.OperationResultBase"/> </returns>
+        </member>
+        <member name="M:OperationContext._Operation.SetSuccess``1(``0,System.String)">
+            <summary>
+            Helper to pass success result 
+            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:OperationContext.OperationResultTypes.Success"/></para>
+            <para>Effect in <code>base.Message</code> .</para>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="result"></param>
+            <param name="message"></param>
+            <returns> <see cref="T:OperationContext.OperationResult`1"/> </returns>
+        </member>
+        <member name="M:OperationContext._Operation.SetFailed(System.String,OperationContext.OperationResultTypes)">
+            <summary>
+            Helper  
+            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:OperationContext.OperationResultTypes.Failed"/></para>
+            <para>Effect in <code>base.Message</code> .</para>
+            <para>Effect in <code>base.OperationResultType</code> default value <see cref="F:OperationContext.OperationResultTypes.Failed"/> , <see cref="F:OperationContext.OperationResultTypes.Forbidden"/> and <see cref="F:OperationContext.OperationResultTypes.Unauthorized"/> </para>
+            <para>Exception :  <see langword="throw"/> <see cref="T:System.ArgumentException"/> if type not kind of Failed .</para>
+            </summary>
+            <param name="message"></param>
+            <param name="type"></param>
+            <returns> <see cref="T:OperationContext.Base.OperationResultBase"/> </returns>
+        </member>
+        <member name="M:OperationContext._Operation.SetFailed``1(System.String,OperationContext.OperationResultTypes)">
+            <summary>
+            Helper  
+            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:OperationContext.OperationResultTypes.Failed"/></para>
+            <para>Effect in <code>base.Message</code> .</para>
+            <para>Effect in <code>base.OperationResultType</code> default value <see cref="F:OperationContext.OperationResultTypes.Failed"/> , <see cref="F:OperationContext.OperationResultTypes.Forbidden"/> and <see cref="F:OperationContext.OperationResultTypes.Unauthorized"/> </para>
+            <para>Exception :  <see langword="throw"/> <see cref="T:System.ArgumentException"/> if type not kind of Failed .</para>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="message"></param>
+            <param name="type"></param>
+            <returns> <see cref="T:OperationContext.OperationResult`1"/> </returns>
+        </member>
+        <member name="M:OperationContext._Operation.SetException(System.Exception)">
+            <summary>
+            Helper to pass exception result 
+            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:OperationContext.OperationResultTypes.Exception"/> .</para>
+            </summary>
+            <param name="exception"></param>
+            <returns> <see cref="T:OperationContext.Base.OperationResultBase"/> </returns>
+        </member>
+        <member name="M:OperationContext._Operation.SetException``1(System.Exception)">
+            <summary>
+            Helper to pass exception result 
+            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:OperationContext.OperationResultTypes.Exception"/> .</para>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="exception"></param>
+            <returns><see cref="T:OperationContext.OperationResult`1"/>  </returns>
+        </member>
+        <member name="M:OperationContext._Operation.SetContent(OperationContext.OperationResultTypes,System.String)">
+            <summary>
+            Helper  
+            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:OperationContext.OperationResultTypes.Exist"/> or <seealso cref="F:OperationContext.OperationResultTypes.NotExist"/>  </para>
+            <para>Effect in <code>base.Message</code> .</para>
+            <para>Exception :  <see langword="throw"/> <see cref="T:System.ArgumentException"/> if type not kind of Content .</para>
+            </summary>
+            <exception cref="T:System.ArgumentException"></exception>
+            <param name="type"></param>
+            <param name="message"></param>
+            <returns> <see cref="T:OperationContext.Base.OperationResultBase"/> </returns>
+        </member>
+        <member name="M:OperationContext._Operation.SetContent``1(OperationContext.OperationResultTypes,System.String)">
+            <summary>
+            Helper  
+            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:OperationContext.OperationResultTypes.Exist"/> or <seealso cref="F:OperationContext.OperationResultTypes.NotExist"/>  </para>
+            <para>Effect in <code>base.Message</code> .</para>
+            <para>Exception :  <see langword="throw"/> <see cref="T:System.ArgumentException"/> if type not kind of Content .</para>
+            </summary>
+            <exception cref="T:System.ArgumentException"></exception>
+            <param name="type"></param>
+            <param name="message"></param>
+            <returns> <see cref="T:OperationContext.OperationResult`1"/> </returns>
         </member>
         <member name="T:OperationContext.OperationResult`1">
             <summary>
-            Capsulation result.
+            Encapsulation result.
             <para>Depends on context repository/http/mvc/response/request .</para>
             </summary>
             <typeparam name="T"> Type of class </typeparam>
@@ -727,9 +880,21 @@
             Check <see cref="F:OperationContext.OperationResultTypes.Success"/>.
             </summary>
         </member>
+        <member name="P:OperationContext.OperationResult`1.HasException">
+            <summary>
+            Check <see cref="F:OperationContext.OperationResultTypes.Exception"/>.
+            </summary>
+        </member>
         <member name="P:OperationContext.OperationResult`1.FullExceptionMessage">
             <summary>
-            Return deep inner exeptions messages.
+            Return deep inner exceptions messages.
+            </summary>
+        </member>
+        <member name="P:OperationContext.OperationResult`1.HasCustomeStatusCode">
+            <summary>
+            Check <see cref="P:OperationContext.Base.OperationResultBase.StatusCode"/> if init with value > 0.
+            <para>Custom return StatusCode-http used with web-requests.
+            Not effect with native C# code lib as un-host-web projects or responses.</para>
             </summary>
         </member>
         <member name="M:OperationContext.OperationResult`1.SetSuccess(`0)">
@@ -767,6 +932,7 @@
             <para>Effect in <code>base.OperationResultType</code> default value <see cref="F:OperationContext.OperationResultTypes.Failed"/> , <see cref="F:OperationContext.OperationResultTypes.Forbidden"/> and <see cref="F:OperationContext.OperationResultTypes.Unauthorized"/> </para>
             <para>Exception :  <see langword="throw"/> <see cref="T:System.ArgumentException"/> if type not kind of Failed .</para>
             </summary>
+            <exception cref="T:System.ArgumentException"></exception>
             <param name="message"></param>
             <param name="type"></param>
             <returns> <see cref="T:OperationContext.OperationResult`1"/> </returns>
@@ -779,52 +945,130 @@
             <param name="exception"></param>
             <returns> <see cref="T:OperationContext.OperationResult`1"/> </returns>
         </member>
+        <member name="M:OperationContext.OperationResult`1.SetContent(OperationContext.OperationResultTypes,System.String)">
+            <summary>
+            Helper  
+            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:OperationContext.OperationResultTypes.Exist"/> or <seealso cref="F:OperationContext.OperationResultTypes.NotExist"/>  </para>
+            <para>Effect in <code>base.Message</code> .</para>
+            <para>Exception :  <see langword="throw"/> <see cref="T:System.ArgumentException"/> if type not kind of Content .</para>
+            </summary>
+            <exception cref="T:System.ArgumentException"></exception>
+            <param name="type"></param>
+            <param name="message"></param>
+            <returns> <see cref="T:OperationContext.OperationResult`1"/> </returns>
+        </member>
         <member name="M:OperationContext.OperationResult`1.op_Implicit(OperationContext.OperationResultTypes)~OperationContext.OperationResult{`0}">
             <summary>
-            Duirrectory return implicit take assign <see cref="T:OperationContext.OperationResultTypes"/> and allow to return as <see cref="T:OperationContext.OperationResult`1"/>
+            Directly return implicit take assign <see cref="T:OperationContext.OperationResultTypes"/> and allow to return as <see cref="T:OperationContext.OperationResult`1"/>
             </summary>
+            <exception cref="T:System.ArgumentException"></exception>
             <param name="type"></param>
         </member>
         <member name="M:OperationContext.OperationResult`1.op_Implicit(System.ValueTuple{OperationContext.OperationResultTypes,System.String})~OperationContext.OperationResult{`0}">
             <summary>
-            Duirrectory return implicit take assign <see cref="T:OperationContext.OperationResultTypes"/> and <see cref="T:System.String" langword="Message"/> as tuple , Allow to return as <see cref="T:OperationContext.OperationResult`1"/>
+            Directly return implicit take assign <see cref="T:OperationContext.OperationResultTypes"/> and <see cref="T:System.String" langword=" Message"/> as tuple , Allow to return as <see cref="T:OperationContext.OperationResult`1"/>
             </summary>
+            <exception cref="T:System.ArgumentException"></exception>
             <param name="type_message"></param>
+        </member>
+        <member name="M:OperationContext.OperationResult`1.op_Implicit(`0)~OperationContext.OperationResult{`0}">
+            <summary>
+            Directly return implicit take assign <see cref="P:OperationContext.OperationResult`1.Result"/> and allow to return as <see cref="T:OperationContext.OperationResult`1"/>
+            </summary>
+            <param name="result"></param>
+        </member>
+        <member name="M:OperationContext.OperationResult`1.op_Implicit(System.ValueTuple{`0,System.String})~OperationContext.OperationResult{`0}">
+            <summary>
+            Directly return implicit take assign <see cref="P:OperationContext.OperationResult`1.Result"/> and <see cref="T:System.String" langword=" Message"/> as tuple, and allow to return as <see cref="T:OperationContext.OperationResult`1"/>
+            </summary>
+            <param name="result_message"></param>
+        </member>
+        <member name="M:OperationContext.OperationResult`1.Equals(OperationContext.OperationResult{`0})">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="other"></param>
+            <returns></returns>
+        </member>
+        <member name="F:OperationContext.OperationResult`1.disposed">
+            <summary>
+            Flag enter disposed
+            </summary>
+        </member>
+        <member name="M:OperationContext.OperationResult`1.Finalize">
+            <summary>
+            Destructor
+            </summary>
         </member>
         <member name="M:OperationContext.OperationResult`1.Dispose">
             <summary>
-            Default finalize insted of type Result <code>T = null</code> .
+            Default finalize instead of type Result <code>T = null</code> .
             </summary>
         </member>
-        <member name="T:OperationResult.Helper.Boolean.BooleanExtension">
+        <member name="M:OperationContext.OperationResult`1.Dispose(System.Boolean)">
             <summary>
-            basics extesions
+            The virtual dispose method that allows
+            classes inherited from this one to dispose their resources.
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="T:ExtensionMethods.Helper.Boolean.BooleanExtension">
+            <summary>
+            Basics extensions
             </summary>
         </member>
-        <member name="M:OperationResult.Helper.Boolean.BooleanExtension.NestedIF(System.Boolean,System.String,System.String)">
+        <member name="M:ExtensionMethods.Helper.Boolean.BooleanExtension.NestedIF``1(System.Boolean,``0,``0)">
             <summary>
-            Nested iF statment return side by <see langword="Boolean"/> <see cref="!:value"/>
+            Nested iF statement return side by <see langword="Boolean"/>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value"></param>
+            <param name="trueSide"></param>
+            <param name="falseSide"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ExtensionMethods.Helper.Boolean.BooleanExtension.NestedIF(System.Boolean,System.String,System.String)">
+            <summary>
+            Nested iF statement return side by <see langword="Boolean"/> <see cref="!:value"/>
             </summary>
             <param name="value"></param>
             <param name="trueSide"></param>
             <param name="falseSide"></param>
             <returns></returns>
         </member>
-        <member name="T:OperationResult.Helper.String.StringExtension">
+        <member name="M:ExtensionMethods.Helper.Boolean.BooleanExtension.NestedIF``1(System.Boolean,System.Func{``0},System.Func{``0})">
             <summary>
-            Basics extensions
+            Nested iF statement return side by <see langword="Boolean"/>
             </summary>
-        </member>
-        <member name="M:OperationResult.Helper.String.StringExtension.IsNullOrEmpty(System.String)">
-            <summary>
-            Indicates whether the specified string is null or an empty string ("").
-            </summary>
+            <typeparam name="T"></typeparam>
             <param name="value"></param>
+            <param name="trueSide"></param>
+            <param name="falseSide"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ExtensionMethods.Helper.Boolean.BooleanExtension.NestedIF``1(System.Boolean,``0,System.Func{``0})">
+            <summary>
+            Nested iF statement return side by <see langword="Boolean"/>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value"></param>
+            <param name="trueSide"></param>
+            <param name="falseSide"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ExtensionMethods.Helper.Boolean.BooleanExtension.NestedIF``1(System.Boolean,System.Func{``0},``0)">
+            <summary>
+            Nested iF statement return side by <see langword="Boolean"/>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value"></param>
+            <param name="trueSide"></param>
+            <param name="falseSide"></param>
             <returns></returns>
         </member>
         <member name="T:ExtensionMethods.Helper.Exception.ExceptionExtension">
             <summary>
-            basics extesions
+            basics Extensions
             </summary>
         </member>
         <member name="M:ExtensionMethods.Helper.Exception.ExceptionExtension.ToFullException(System.Exception)">
@@ -832,6 +1076,18 @@
             return full message of <see cref="N:ExtensionMethods.Helper.Exception"/>  inner  and depth
             </summary>
             <param name="exception"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ExtensionMethods.Helper.String.StringExtension">
+            <summary>
+            Basics extensions
+            </summary>
+        </member>
+        <member name="M:ExtensionMethods.Helper.String.StringExtension.IsNullOrEmpty(System.String)">
+            <summary>
+            Indicates whether the specified string is null or an empty string ("").
+            </summary>
+            <param name="value"></param>
             <returns></returns>
         </member>
     </members>
