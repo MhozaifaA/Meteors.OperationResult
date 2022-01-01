@@ -2,8 +2,6 @@
 using OperationContext.Base;
 using System;
 
-
-
 namespace OperationContext
 {
     /// <summary>
@@ -169,6 +167,20 @@ namespace OperationContext
         {
             if (type_message.type != OperationResultTypes.Exist && type_message.type != OperationResultTypes.NotExist)
                 throw new ArgumentException($"Directly return {nameof(OperationResult<T>)} take {type_message.type} should use with {OperationResultTypes.Exist} or {OperationResultTypes.NotExist} .");
+
+            return new OperationResult<T>() { OperationResultType = type_message.type, Message = type_message.message };
+        }
+
+
+        /// <summary>
+        /// Directly return implicit take assign <see cref="OperationResultTypes"/> and <see cref="string" langword=" Message"/> as tuple , Allow to return as <see cref="OperationResult{T}"/>
+        /// </summary>
+        /// <exception cref="ArgumentException"></exception>
+        /// <param name="type_message"></param>
+        public static implicit operator OperationResult<T>((string message, OperationResultTypes type) type_message)
+        {
+            if (type_message.type != OperationResultTypes.Failed && type_message.type != OperationResultTypes.Forbidden && type_message.type != OperationResultTypes.Unauthorized)
+                throw new ArgumentException($"{nameof(SetFailed)} in {nameof(OperationResult<T>)} take {type_message.type} should use with {OperationResultTypes.Failed}, {OperationResultTypes.Forbidden} or {OperationResultTypes.Unauthorized} .");
 
             return new OperationResult<T>() { OperationResultType = type_message.type, Message = type_message.message };
         }

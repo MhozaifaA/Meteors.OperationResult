@@ -147,7 +147,7 @@ namespace OperationContext
         public static OperationResultBase SetContent(OperationResultTypes type, string message)
         {
             if (type != OperationResultTypes.Exist && type != OperationResultTypes.NotExist)
-                throw new ArgumentException($"Duirrectory return {nameof(OperationResultBase)} take {type} should use with {OperationResultTypes.Exist} or {OperationResultTypes.NotExist} .");
+                throw new ArgumentException($"Directly return {nameof(OperationResultBase)} take {type} should use with {OperationResultTypes.Exist} or {OperationResultTypes.NotExist} .");
 
             return new OperationResultBase() { OperationResultType = type, Message = message };
         }
