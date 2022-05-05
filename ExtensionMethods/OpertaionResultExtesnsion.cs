@@ -42,6 +42,21 @@ namespace OperationContext
         }
 
         /// <summary>
+        /// Set custom <see cref="OperationResultBase.StatusCode"/>.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="result"></param>
+        /// <param name="statusCode"></param>
+        /// <returns></returns>
+        public static async Task<OperationResult<T>> WithStatusCodeAsync<T>(this Task<OperationResult<T>> result, int statusCode)
+        {
+            var _result = await result;
+            _result.StatusCode = statusCode;
+            return _result;
+        }
+
+
+        /// <summary>
         /// Return <see cref="JsonResult"/> with real result completely .
         /// </summary>
         /// <typeparam name="T"></typeparam>
