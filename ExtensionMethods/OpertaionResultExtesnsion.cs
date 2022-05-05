@@ -64,15 +64,27 @@ namespace OperationContext
         /// <returns><see cref="JsonResult"/></returns>
         public static JsonResult ToJsonResult<T>(this OperationResult<T> result)
         {
+            return result.ToJsonResult(false); //extra to refactoring
+        }
+
+        /// <summary>
+        /// Return <see cref="JsonResult"/> with real result completely .
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="result"></param>
+        /// <param name="isBody">boolean value if return json complete body of operation</param>
+        /// <returns></returns>
+        public static JsonResult ToJsonResult<T>(this OperationResult<T> result,bool isBody = false)
+        {
             return result.OperationResultType switch
             {
-                OperationResultTypes.Success => result.GetValidResult(result.HasCustomeStatusCode.NestedIF<int>(result.StatusCode ?? 0, StatusCodes.Status200OK), null, true),
-                OperationResultTypes.Exist => result.GetValidResult(result.HasCustomeStatusCode.NestedIF<int>(result.StatusCode ?? 0, StatusCodes.Status202Accepted), result.Message),
-                OperationResultTypes.NotExist => result.GetValidResult(result.HasCustomeStatusCode.NestedIF<int>(result.StatusCode ?? 0, StatusCodes.Status404NotFound), result.Message),
-                OperationResultTypes.Failed => result.GetValidResult(result.HasCustomeStatusCode.NestedIF<int>(result.StatusCode ?? 0, StatusCodes.Status400BadRequest), result.Message),
-                OperationResultTypes.Forbidden => result.GetValidResult(result.HasCustomeStatusCode.NestedIF<int>(result.StatusCode ?? 0, StatusCodes.Status403Forbidden), result.Message),
-                OperationResultTypes.Unauthorized => result.GetValidResult(result.HasCustomeStatusCode.NestedIF<int>(result.StatusCode ?? 0, StatusCodes.Status401Unauthorized), result.Message),
-                OperationResultTypes.Exception => result.GetValidResult(result.HasCustomeStatusCode.NestedIF<int>(result.StatusCode ?? 0, StatusCodes.Status500InternalServerError), result.FullExceptionMessage),
+                OperationResultTypes.Success => result.GetValidResult(result.HasCustomeStatusCode.NestedIF<int>(result.StatusCode ?? 0, StatusCodes.Status200OK), null, true, isBody),
+                OperationResultTypes.Exist => result.GetValidResult(result.HasCustomeStatusCode.NestedIF<int>(result.StatusCode ?? 0, StatusCodes.Status202Accepted), result.Message, isBody),
+                OperationResultTypes.NotExist => result.GetValidResult(result.HasCustomeStatusCode.NestedIF<int>(result.StatusCode ?? 0, StatusCodes.Status404NotFound), result.Message, isBody),
+                OperationResultTypes.Failed => result.GetValidResult(result.HasCustomeStatusCode.NestedIF<int>(result.StatusCode ?? 0, StatusCodes.Status400BadRequest), result.Message, isBody),
+                OperationResultTypes.Forbidden => result.GetValidResult(result.HasCustomeStatusCode.NestedIF<int>(result.StatusCode ?? 0, StatusCodes.Status403Forbidden), result.Message, isBody),
+                OperationResultTypes.Unauthorized => result.GetValidResult(result.HasCustomeStatusCode.NestedIF<int>(result.StatusCode ?? 0, StatusCodes.Status401Unauthorized), result.Message, isBody),
+                OperationResultTypes.Exception => result.GetValidResult(result.HasCustomeStatusCode.NestedIF<int>(result.StatusCode ?? 0, StatusCodes.Status500InternalServerError), result.FullExceptionMessage, isBody),
                 _ => new JsonResult(string.Empty),
             };
         }
@@ -84,7 +96,16 @@ namespace OperationContext
         /// <typeparam name="T"></typeparam>
         /// <param name="result"></param>
         /// <returns><see cref="Task{JsonResult}"/></returns>
-        public static async Task<JsonResult> ToJsonResultAsync<T>(this Task<OperationResult<T>> result) => (await result).ToJsonResult();
+        public static Task<JsonResult> ToJsonResultAsync<T>(this Task<OperationResult<T>> result) => result.ToJsonResultAsync(false);
+
+
+        /// <summary>
+        /// Return <see cref="JsonResult"/> with real result completely .
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="result"></param>
+        /// <returns><see cref="Task{JsonResult}"/></returns>
+        public static async Task<JsonResult> ToJsonResultAsync<T>(this Task<OperationResult<T>> result, bool isBody = false) => (await result).ToJsonResult(isBody);
 
 
         /// <summary>
@@ -94,11 +115,28 @@ namespace OperationContext
         /// <param name="result"></param>
         /// <param name="statusCode"></param>
         /// <param name="jsonMessage">String of type</param>
-        /// <param name="json"> boolean value if return json of main type T </param>
+        /// <param name="hasResult"> boolean value if return json of main type T </param>
+        /// <param name="isBody"> boolean value if return json complete body of operation</param>
         /// <returns><see cref="JsonResult"/></returns>
-        private static JsonResult GetValidResult<T>(this OperationResult<T> result, int statusCode, string jsonMessage = null, bool json = false) =>
-            json ? new JsonResult(result.Result) { StatusCode = statusCode } :
-                   new JsonResult(jsonMessage.IsNullOrEmpty() ? result.OperationResultType.ToString() : jsonMessage) { StatusCode = statusCode };
+        private static JsonResult GetValidResult<T>(this OperationResult<T> result, int statusCode, string jsonMessage = null, bool hasResult = false, bool isBody = false)
+        {
+            if(hasResult)
+                return new JsonResult(isBody ? result.Result : result) { StatusCode = statusCode };
+
+
+            if(jsonMessage.IsNullOrEmpty())
+            {
+                if(isBody)
+                {
+                    result.Message = result.OperationResultType.ToString();
+                    return new JsonResult(result) { StatusCode = statusCode };
+                }
+                return new JsonResult(result.OperationResultType.ToString()) { StatusCode = statusCode };
+            }
+
+            return new JsonResult(isBody ? result : jsonMessage) { StatusCode = statusCode };
+
+        }
 
 
 
