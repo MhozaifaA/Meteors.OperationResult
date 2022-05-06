@@ -120,21 +120,21 @@ namespace OperationContext
         /// <returns><see cref="JsonResult"/></returns>
         private static JsonResult GetValidResult<T>(this OperationResult<T> result, int statusCode, string jsonMessage = null, bool hasResult = false, bool isBody = false)
         {
-            if(hasResult)
-                return new JsonResult(isBody ? result.Result : result) { StatusCode = statusCode };
-
-
-            if(jsonMessage.IsNullOrEmpty())
+            bool jsonMessageIsNullOrEmpty = jsonMessage.IsNullOrEmpty();
+            if (isBody)
             {
-                if(isBody)
-                {
+                if (jsonMessageIsNullOrEmpty)
                     result.Message = result.OperationResultType.ToString();
-                    return new JsonResult(result) { StatusCode = statusCode };
-                }
-                return new JsonResult(result.OperationResultType.ToString()) { StatusCode = statusCode };
+                return new JsonResult(result) { StatusCode = statusCode };
             }
 
-            return new JsonResult(isBody ? result : jsonMessage) { StatusCode = statusCode };
+            if (hasResult)
+                return new JsonResult(result.Result) { StatusCode = statusCode };
+
+            if (jsonMessageIsNullOrEmpty)
+                return new JsonResult(result.OperationResultType.ToString()) { StatusCode = statusCode };
+
+            return new JsonResult(jsonMessage) { StatusCode = statusCode };
 
         }
 
