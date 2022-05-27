@@ -15,7 +15,7 @@ namespace OperationContext
         /// <summary>
         /// Main object result.
         /// </summary>
-        public T Result { get; set; }
+        public T Data { get; set; }
 
         /// <summary>
         /// Check <see cref="OperationResultTypes.Success"/>.
@@ -50,7 +50,7 @@ namespace OperationContext
         /// <returns> <see cref="OperationResult{T}"/> </returns>
         public OperationResult<T> SetSuccess(T result)
         {
-            Result = result;
+            Data = result;
             OperationResultType = OperationResultTypes.Success;
             return this;
         }
@@ -81,7 +81,7 @@ namespace OperationContext
         public OperationResult<T> SetSuccess(T result, string message)
         {
             Message = message;
-            Result = result;
+            Data = result;
             OperationResultType = OperationResultTypes.Success;
             return this;
         }
@@ -187,7 +187,7 @@ namespace OperationContext
 
 
         /// <summary>
-        /// Directly return implicit take assign <see cref="Result"/> and allow to return as <see cref="OperationResult{T}"/>
+        /// Directly return implicit take assign <see cref="Data"/> and allow to return as <see cref="OperationResult{T}"/>
         /// </summary>
         /// <param name="result"></param>
         public static implicit operator OperationResult<T>(T result)
@@ -197,7 +197,7 @@ namespace OperationContext
 
 
         /// <summary>
-        /// Directly return implicit take assign <see cref="Result"/> and <see cref="string" langword=" Message"/> as tuple, and allow to return as <see cref="OperationResult{T}"/>
+        /// Directly return implicit take assign <see cref="Data"/> and <see cref="string" langword=" Message"/> as tuple, and allow to return as <see cref="OperationResult{T}"/>
         /// </summary>
         /// <param name="result_message"></param>
         public static implicit operator OperationResult<T>((T result, string message) result_message)
@@ -212,7 +212,7 @@ namespace OperationContext
         /// <returns></returns>
         public bool Equals(OperationResult<T> other)
         {
-            return base.Equals(other) && ((Result is null && other.Result is null) || Result.Equals(other.Result));
+            return base.Equals(other) && ((Data is null && other.Data is null) || Data.Equals(other.Data));
         }
 
 
@@ -249,7 +249,7 @@ namespace OperationContext
             if (!disposed)
             {
                 if (disposing) { Dispose(); }
-                Result = default;
+                Data = default;
             }
 
             disposed = true;

@@ -132,7 +132,7 @@ namespace OperationContext
             }
 
             if (hasResult)
-                return new JsonResult(result.Result) { StatusCode = result.StatusCode };
+                return new JsonResult(result.Data) { StatusCode = result.StatusCode };
 
             if (jsonMessageIsNullOrEmpty)
                 return new JsonResult(result.OperationResultType.ToString()) { StatusCode = result.StatusCode };
