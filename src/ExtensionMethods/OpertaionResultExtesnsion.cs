@@ -905,10 +905,10 @@ namespace OperationContext
 
             if (Result.OperationResultType == OperationResultTypes.Failed || Result.OperationResultType == OperationResultTypes.Forbidden || Result.OperationResultType == OperationResultTypes.Unauthorized)
                 return operation.SetFailed(String.Join(",",
-                    Result.Message.IsNullOrEmpty().NestedIF($"Result {1} not contain Message or Success", Result.Message)), Result.OperationResultType);
+                    Result.Message.IsNullOrEmpty().NestedIF(()=>$"Result {1} not contain Message or Success",()=> Result.Message)), Result.OperationResultType);
 
             return operation.SetSuccess(result, String.Join(",",
-                  Result.Message.IsNullOrEmpty().NestedIF($"Result {1} not contain Message or Success", Result.Message)));
+                  Result.Message.IsNullOrEmpty().NestedIF(()=>$"Result {1} not contain Message or Success",()=> Result.Message)));
 
         }
 
@@ -938,10 +938,10 @@ namespace OperationContext
 
             if (listResult.Any(result => result.OperationResultType == OperationResultTypes.Failed || result.OperationResultType == OperationResultTypes.Forbidden || result.OperationResultType == OperationResultTypes.Unauthorized))
                 return operation.SetFailed(String.Join(",",
-                    listResult.Select((result, iter) => result.Message.IsNullOrEmpty().NestedIF($"Result {iter} not contain Message or Success", result.Message))), listResult.Max(result => result.OperationResultType));
+                    listResult.Select((result, iter) => result.Message.IsNullOrEmpty().NestedIF(()=>$"Result {iter} not contain Message or Success", () => result.Message))), listResult.Max(result => result.OperationResultType));
 
             return operation.SetSuccess(result, String.Join(",",
-                    listResult.Select((result, iter) => result.Message.IsNullOrEmpty().NestedIF($"Result {iter} not contain Message or Success", result.Message))));
+                    listResult.Select((result, iter) => result.Message.IsNullOrEmpty().NestedIF(() => $"Result {iter} not contain Message or Success", () => result.Message))));
 
         }
 
