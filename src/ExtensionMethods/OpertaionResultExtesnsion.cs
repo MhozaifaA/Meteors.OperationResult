@@ -74,18 +74,18 @@ namespace OperationContext
         /// <param name="result"></param>
         /// <param name="isBody">boolean value if return json complete body of operation</param>
         /// <returns></returns>
-        public static JsonResult ToJsonResult<T>(this OperationResult<T> result,bool isBody = false)
+        public static JsonResult ToJsonResult<T>(this OperationResult<T> result, bool isBody = false)
         {
             return result.OperationResultType switch
             {
-                OperationResultTypes.Success => result.GetValidResult(result.HasCustomeStatusCode.NestedIF<int>(result.StatusCode ?? 0, StatusCodes.Status200OK), null, true, isBody),
-                OperationResultTypes.Exist => result.GetValidResult(result.HasCustomeStatusCode.NestedIF<int>(result.StatusCode ?? 0, StatusCodes.Status202Accepted), result.Message, isBody),
-                OperationResultTypes.NotExist => result.GetValidResult(result.HasCustomeStatusCode.NestedIF<int>(result.StatusCode ?? 0, StatusCodes.Status404NotFound), result.Message, isBody),
-                OperationResultTypes.Failed => result.GetValidResult(result.HasCustomeStatusCode.NestedIF<int>(result.StatusCode ?? 0, StatusCodes.Status400BadRequest), result.Message, isBody),
-                OperationResultTypes.Forbidden => result.GetValidResult(result.HasCustomeStatusCode.NestedIF<int>(result.StatusCode ?? 0, StatusCodes.Status403Forbidden), result.Message, isBody),
-                OperationResultTypes.Unauthorized => result.GetValidResult(result.HasCustomeStatusCode.NestedIF<int>(result.StatusCode ?? 0, StatusCodes.Status401Unauthorized), result.Message, isBody),
-                OperationResultTypes.Exception => result.GetValidResult(result.HasCustomeStatusCode.NestedIF<int>(result.StatusCode ?? 0, StatusCodes.Status500InternalServerError), result.FullExceptionMessage, isBody),
-                _ => new JsonResult(string.Empty),
+                OperationResultTypes.Success => result.GetValidResult(jsonMessage:null,hasResult: true, isBody),
+                OperationResultTypes.Exist => result.GetValidResult(jsonMessage: result.Message,isBody: isBody),
+                OperationResultTypes.NotExist => result.GetValidResult(jsonMessage: result.Message, isBody: isBody),
+                OperationResultTypes.Failed => result.GetValidResult(jsonMessage: result.Message, isBody: isBody),
+                OperationResultTypes.Forbidden => result.GetValidResult(jsonMessage: result.Message, isBody: isBody),
+                OperationResultTypes.Unauthorized => result.GetValidResult(jsonMessage: result.Message, isBody: isBody),
+                OperationResultTypes.Exception => result.GetValidResult(jsonMessage: result.FullExceptionMessage, isBody: isBody),
+                _ => throw new NotImplementedException($"Update source code to catch new {nameof(OperationResultTypes)} value: {result.OperationResultType}"),
             };
         }
 
@@ -113,31 +113,32 @@ namespace OperationContext
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="result"></param>
-        /// <param name="statusCode"></param>
         /// <param name="jsonMessage">String of type</param>
         /// <param name="hasResult"> boolean value if return json of main type T </param>
         /// <param name="isBody"> boolean value if return json complete body of operation</param>
         /// <returns><see cref="JsonResult"/></returns>
-        private static JsonResult GetValidResult<T>(this OperationResult<T> result, int statusCode, string jsonMessage = null, bool hasResult = false, bool isBody = false)
+        private static JsonResult GetValidResult<T>(this OperationResult<T> result, string jsonMessage = null, bool hasResult = false, bool isBody = false)
         {
+            if (!result.HasCustomeStatusCode && (result.StatusCode??0) == 0)
+                result.StatusCode = (int)result.OperationResultType;
+
             bool jsonMessageIsNullOrEmpty = jsonMessage.IsNullOrEmpty();
             if (isBody)
             {
                 if (jsonMessageIsNullOrEmpty)
                     result.Message = result.OperationResultType.ToString();
-                return new JsonResult(result) { StatusCode = statusCode };
+              
+                return new JsonResult(result) { StatusCode = result.StatusCode };
             }
 
             if (hasResult)
-                return new JsonResult(result.Result) { StatusCode = statusCode };
+                return new JsonResult(result.Data) { StatusCode = result.StatusCode };
 
             if (jsonMessageIsNullOrEmpty)
-                return new JsonResult(result.OperationResultType.ToString()) { StatusCode = statusCode };
+                return new JsonResult(result.OperationResultType.ToString()) { StatusCode = result.StatusCode };
 
-            return new JsonResult(jsonMessage) { StatusCode = statusCode };
-
+            return new JsonResult(jsonMessage) { StatusCode = result.StatusCode };
         }
-
 
 
         #region -   One   -
@@ -904,10 +905,10 @@ namespace OperationContext
 
             if (Result.OperationResultType == OperationResultTypes.Failed || Result.OperationResultType == OperationResultTypes.Forbidden || Result.OperationResultType == OperationResultTypes.Unauthorized)
                 return operation.SetFailed(String.Join(",",
-                    Result.Message.IsNullOrEmpty().NestedIF($"Result {1} not contain Message or Success", Result.Message)), Result.OperationResultType);
+                    Result.Message.IsNullOrEmpty().NestedIF(()=>$"Result {1} not contain Message or Success",()=> Result.Message)), Result.OperationResultType);
 
             return operation.SetSuccess(result, String.Join(",",
-                  Result.Message.IsNullOrEmpty().NestedIF($"Result {1} not contain Message or Success", Result.Message)));
+                  Result.Message.IsNullOrEmpty().NestedIF(()=>$"Result {1} not contain Message or Success",()=> Result.Message)));
 
         }
 
@@ -937,10 +938,10 @@ namespace OperationContext
 
             if (listResult.Any(result => result.OperationResultType == OperationResultTypes.Failed || result.OperationResultType == OperationResultTypes.Forbidden || result.OperationResultType == OperationResultTypes.Unauthorized))
                 return operation.SetFailed(String.Join(",",
-                    listResult.Select((result, iter) => result.Message.IsNullOrEmpty().NestedIF($"Result {iter} not contain Message or Success", result.Message))), listResult.Max(result => result.OperationResultType));
+                    listResult.Select((result, iter) => result.Message.IsNullOrEmpty().NestedIF(()=>$"Result {iter} not contain Message or Success", () => result.Message))), listResult.Max(result => result.OperationResultType));
 
             return operation.SetSuccess(result, String.Join(",",
-                    listResult.Select((result, iter) => result.Message.IsNullOrEmpty().NestedIF($"Result {iter} not contain Message or Success", result.Message))));
+                    listResult.Select((result, iter) => result.Message.IsNullOrEmpty().NestedIF(() => $"Result {iter} not contain Message or Success", () => result.Message))));
 
         }
 

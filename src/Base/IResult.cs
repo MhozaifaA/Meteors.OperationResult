@@ -5,7 +5,7 @@
         /// <summary>
         /// Main object result.
         /// </summary>
-        public T Result { get; set; }
+        public T Data { get; set; }
     }
 
     internal interface IDynamicResult
@@ -13,6 +13,6 @@
         /// <summary>
         /// Main object result.
         /// </summary>
-        public dynamic Result { get; set; }
+        public dynamic Data { get; set; }
     }
 }

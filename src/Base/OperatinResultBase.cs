@@ -6,7 +6,7 @@ namespace OperationContext.Base
     /// Main prop not changed or effect on return
     /// abstract of for <see cref="OperationContext._Operation"/>
     /// </summary>
-    public class OperationResultBase : IEquatable<OperationResultBase>, IDisposable
+    public class OperationResultBase : IEquatable<OperationResultBase>//, IDisposable
     {
         /// <summary>
         /// Any validation text or result-message.
@@ -41,45 +41,45 @@ namespace OperationContext.Base
                 (Exception == other.Exception || Exception.Message == other.Exception.Message) && StatusCode == other.StatusCode;
         }
 
-        /// <summary>
-        /// Flag enter disposed
-        /// </summary>
-        bool disposed = false;
+        ///// <summary>
+        ///// Flag enter disposed
+        ///// </summary>
+        //bool disposed = false;
 
-        /// <summary>
-        /// Destructor
-        /// </summary>
-        ~OperationResultBase()
-        {
-            this.Dispose(false);
-        }
+        ///// <summary>
+        ///// Destructor
+        ///// </summary>
+        //~OperationResultBase()
+        //{
+        //    this.Dispose(false);
+        //}
 
 
-        /// <summary>
-        /// Default finalize instead of type Result <code>T = null</code> .
-        /// </summary>
-        public void Dispose()
-        {
-            this.Dispose(true);
-            GC.SuppressFinalize(this);
-        }
+        ///// <summary>
+        ///// Default finalize instead of type Result <code>T = null</code> .
+        ///// </summary>
+        //public void Dispose()
+        //{
+        //    this.Dispose(true);
+        //    GC.SuppressFinalize(this);
+        //}
 
-        /// <summary>
-        /// The virtual dispose method that allows
-        /// classes inherited from this one to dispose their resources.
-        /// </summary>
-        /// <param name="disposing"></param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposed)
-            {
-                //if (disposing) {//}
-                Exception = null;
-                Message = null;
-            }
+        ///// <summary>
+        ///// The virtual dispose method that allows
+        ///// classes inherited from this one to dispose their resources.
+        ///// </summary>
+        ///// <param name="disposing"></param>
+        //protected virtual void Dispose(bool disposing)
+        //{
+        //    if (!disposed)
+        //    {
+        //        //if (disposing) {//}
+        //        Exception = null;
+        //        Message = null;
+        //    }
 
-            disposed = true;
-        }
+        //    disposed = true;
+        //}
 
     }
 }
