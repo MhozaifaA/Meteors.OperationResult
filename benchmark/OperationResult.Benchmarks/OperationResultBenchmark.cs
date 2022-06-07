@@ -112,7 +112,7 @@ namespace OperationResult.Benchmarks
         private OperationResult<int> ExecuteFunOp()
         {
             OperationResult<int> op = new();
-            op.Result = 0;
+            op.Data = 0;
             op.OperationResultType = OperationResultTypes.Success;
             return op;
         }
@@ -121,7 +121,7 @@ namespace OperationResult.Benchmarks
         {
             await Task.Delay(0);
             OperationResult<int> op = new();
-            op.Result = 0;
+            op.Data = 0;
             op.OperationResultType = OperationResultTypes.Success;
             return op;
         }
