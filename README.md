@@ -1,5 +1,7 @@
 # OperationResult 1.3
 
+Install-Package Meteors.OperationResult -Version 1.0.1
+
 > Soon to lunch with full doc
 
 TODO
