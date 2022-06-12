@@ -1,10 +1,29 @@
-# OperationResult 1.3
+# [Meteors] OperationResult 1.3
+
+*Meteors Operation Result came with new and redesigned to accept more than container for status and data. **OperationResult** is isolated but stuck with kernel of your business logic , with out if/else and some corrupted code to handle results.*
 
 Install-Package Meteors.OperationResult -Version 1.0.1
 
 > Soon to lunch with full doc
 
+
+
+This lib belongs to the **Meteors**,
+Meteorites helps you write less and clean code with the power of design patterns and full support for the most popular programming for perpetual project
+
+All you need in your project is to use meteorites,
+Simplicity is one in all,
+
+
+
+### APIs
+
+
+
+
+
 TODO
+
 - fix with not set operation types with = 0 
 - linq to for in priority funcs to increase 200ns
 - [X]enable to retuen data with other success status
