@@ -189,10 +189,6 @@ namespace OperationResult.Tests
 
 
 
-        //public OperationResult<FooUser> ImplicitException()
-        //{
-        //    return new System.NullReferenceException();
-        //}
 
         [Theory]
         [MemberData(nameof(FactData))]
