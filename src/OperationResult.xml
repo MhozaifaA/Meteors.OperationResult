@@ -4,139 +4,165 @@
         <name>OperationResult</name>
     </assembly>
     <members>
-        <member name="P:OperationContext.Base.IResult`1.Result">
+        <member name="P:Meteors.OperationResult.IResult`1.Data">
             <summary>
             Main object result.
             </summary>
         </member>
-        <member name="P:OperationContext.Base.IDynamicResult.Result">
+        <member name="P:Meteors.OperationResult.IDynamicResult.Data">
             <summary>
             Main object result.
             </summary>
         </member>
-        <member name="T:OperationContext.Base.OperationResultBase">
+        <member name="T:Meteors.OperationResult.OperationResultBase">
             <summary>
             Main prop not changed or effect on return
-            abstract of for <see cref="T:OperationContext._Operation"/>
+            abstract of for <see cref="!:OperationContext._Operation"/>
             </summary>
         </member>
-        <member name="P:OperationContext.Base.OperationResultBase.Message">
+        <member name="P:Meteors.OperationResult.OperationResultBase.Message">
             <summary>
             Any validation text or result-message.
             </summary>
         </member>
-        <member name="P:OperationContext.Base.OperationResultBase.OperationResultType">
+        <member name="P:Meteors.OperationResult.OperationResultBase.OperationResultType">
             <summary>
             Result type.
             </summary>
         </member>
-        <member name="P:OperationContext.Base.OperationResultBase.Exception">
+        <member name="P:Meteors.OperationResult.OperationResultBase.Exception">
             <summary>
              Represents errors that occur during CONTEXT execution.
-             protected of for <see cref="T:OperationContext._Operation"/>
+             protected of for <see cref="!:OperationContext._Operation"/>
             </summary>
         </member>
-        <member name="P:OperationContext.Base.OperationResultBase.StatusCode">
+        <member name="P:Meteors.OperationResult.OperationResultBase.StatusCode">
             <summary>
             custom return StatusCode-HTTP used with web-requests.
             <para>Not effect with native C# code lib as un-host-web projects or responses.</para>
             </summary>
         </member>
-        <member name="M:OperationContext.Base.OperationResultBase.Equals(OperationContext.Base.OperationResultBase)">
+        <member name="M:Meteors.OperationResult.OperationResultBase.Equals(Meteors.OperationResult.OperationResultBase)">
             <summary>
             <inheritdoc/>
             </summary>
             <param name="other"></param>
             <returns></returns>
         </member>
-        <member name="F:OperationContext.Base.OperationResultBase.disposed">
+        <member name="T:Meteors.OperationResult.ExtensionMethods.BooleanExtension">
             <summary>
-            Flag enter disposed
+            Basics extensions
             </summary>
         </member>
-        <member name="M:OperationContext.Base.OperationResultBase.Finalize">
+        <member name="M:Meteors.OperationResult.ExtensionMethods.BooleanExtension.NestedIF``1(System.Boolean,System.Func{``0},System.Func{``0})">
             <summary>
-            Destructor
+            Nested iF statement return side by <see langword="Boolean"/>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value"></param>
+            <param name="trueSide"></param>
+            <param name="falseSide"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Meteors.OperationResult.ExtensionMethods.ExceptionExtension">
+            <summary>
+            basics Extensions
             </summary>
         </member>
-        <member name="M:OperationContext.Base.OperationResultBase.Dispose">
+        <member name="M:Meteors.OperationResult.ExtensionMethods.ExceptionExtension.ToFullException(System.Exception)">
             <summary>
-            Default finalize instead of type Result <code>T = null</code> .
+            return full message of <see cref="T:System.Exception"/>  inner  and depth
+            </summary>
+            <param name="exception"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Meteors.OperationResult.ExtensionMethods.StringExtension">
+            <summary>
+            Basics extensions
             </summary>
         </member>
-        <member name="M:OperationContext.Base.OperationResultBase.Dispose(System.Boolean)">
+        <member name="M:Meteors.OperationResult.ExtensionMethods.StringExtension.IsNullOrEmpty(System.String)">
             <summary>
-            The virtual dispose method that allows
-            classes inherited from this one to dispose their resources.
+            Indicates whether the specified string is null or an empty string ("").
             </summary>
-            <param name="disposing"></param>
+            <param name="value"></param>
+            <returns></returns>
         </member>
-        <member name="T:OperationContext.OperationResultTypes">
+        <member name="T:Meteors.OperationResultTypes">
             <summary>
             Logical  result type
             <para> Warning: don't uses cast to any numbers <see cref="T:System.Int32"/> ... 
             only checked by <see langword="enum"/></para>
             </summary>
         </member>
-        <member name="F:OperationContext.OperationResultTypes.Success">
+        <member name="F:Meteors.OperationResultTypes.Success">
             <summary>
             As <see cref="F:Microsoft.AspNetCore.Http.StatusCodes.Status200OK"/>
             </summary>
         </member>
-        <member name="F:OperationContext.OperationResultTypes.Exist">
+        <member name="F:Meteors.OperationResultTypes.Exist">
             <summary>
             As <see cref="F:Microsoft.AspNetCore.Http.StatusCodes.Status202Accepted"/>
             </summary>
         </member>
-        <member name="F:OperationContext.OperationResultTypes.NotExist">
+        <member name="F:Meteors.OperationResultTypes.NotExist">
             <summary>
             As <see cref="F:Microsoft.AspNetCore.Http.StatusCodes.Status404NotFound"/>
             </summary>
         </member>
-        <member name="F:OperationContext.OperationResultTypes.Failed">
+        <member name="F:Meteors.OperationResultTypes.Failed">
             <summary>
             As <see cref="F:Microsoft.AspNetCore.Http.StatusCodes.Status400BadRequest"/>
             </summary>
         </member>
-        <member name="F:OperationContext.OperationResultTypes.Forbidden">
+        <member name="F:Meteors.OperationResultTypes.Forbidden">
             <summary>
             As <see cref="F:Microsoft.AspNetCore.Http.StatusCodes.Status403Forbidden"/>
             </summary>
         </member>
-        <member name="F:OperationContext.OperationResultTypes.Exception">
+        <member name="F:Meteors.OperationResultTypes.Exception">
             <summary>
             As <see cref="F:Microsoft.AspNetCore.Http.StatusCodes.Status500InternalServerError"/>
             </summary>
         </member>
-        <member name="F:OperationContext.OperationResultTypes.Unauthorized">
+        <member name="F:Meteors.OperationResultTypes.Unauthorized">
             <summary>
             Useful in third party API
             As <see cref="F:Microsoft.AspNetCore.Http.StatusCodes.Status401Unauthorized"/>
             </summary>
         </member>
-        <member name="T:OperationContext.OpertaionResultExtesnsion">
+        <member name="T:Meteors.OpertaionResultExtesnsion">
             <summary>
-            Helper extensions of <see cref="T:OperationContext.OperationResult`1"/>.
+            Helper extensions of <see cref="T:Meteors.OperationResult`1"/>.
             </summary>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.ToOperationResult``1(``0)">
+        <member name="M:Meteors.OpertaionResultExtesnsion.ToOperationResult``1(``0)">
             <summary>
-            Encapsulation object to <see cref="T:OperationContext.OperationResult`1"/>
+            Encapsulation object to <see cref="T:Meteors.OperationResult`1"/>
             </summary>
             <typeparam name="T"></typeparam>
             <param name="object"></param>
-            <returns> <see cref="T:OperationContext.OperationResult`1"/> </returns>
+            <returns> <see cref="T:Meteors.OperationResult`1"/> </returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.WithStatusCode``1(OperationContext.OperationResult{``0},System.Int32)">
+        <member name="M:Meteors.OpertaionResultExtesnsion.WithStatusCode``1(Meteors.OperationResult{``0},System.Int32)">
             <summary>
-            Set custom <see cref="P:OperationContext.Base.OperationResultBase.StatusCode"/>.
+            Set custom <see cref="P:Meteors.OperationResult.OperationResultBase.StatusCode"/>.
             </summary>
             <typeparam name="T"></typeparam>
             <param name="result"></param>
             <param name="statusCode"></param>
             <returns></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.ToJsonResult``1(OperationContext.OperationResult{``0})">
+        <member name="M:Meteors.OpertaionResultExtesnsion.WithStatusCodeAsync``1(System.Threading.Tasks.Task{Meteors.OperationResult{``0}},System.Int32)">
+            <summary>
+            Set custom <see cref="P:Meteors.OperationResult.OperationResultBase.StatusCode"/>.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="result"></param>
+            <param name="statusCode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Meteors.OpertaionResultExtesnsion.ToJsonResult``1(Meteors.OperationResult{``0})">
             <summary>
             Return <see cref="T:Microsoft.AspNetCore.Mvc.JsonResult"/> with real result completely .
             </summary>
@@ -144,7 +170,16 @@
             <param name="result"></param>
             <returns><see cref="T:Microsoft.AspNetCore.Mvc.JsonResult"/></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.ToJsonResultAsync``1(System.Threading.Tasks.Task{OperationContext.OperationResult{``0}})">
+        <member name="M:Meteors.OpertaionResultExtesnsion.ToJsonResult``1(Meteors.OperationResult{``0},System.Boolean)">
+            <summary>
+            Return <see cref="T:Microsoft.AspNetCore.Mvc.JsonResult"/> with real result completely .
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="result"></param>
+            <param name="isBody">boolean value if return json complete body of operation</param>
+            <returns></returns>
+        </member>
+        <member name="M:Meteors.OpertaionResultExtesnsion.ToJsonResultAsync``1(System.Threading.Tasks.Task{Meteors.OperationResult{``0}})">
             <summary>
             Return <see cref="T:Microsoft.AspNetCore.Mvc.JsonResult"/> with real result completely .
             </summary>
@@ -152,28 +187,36 @@
             <param name="result"></param>
             <returns><see cref="T:System.Threading.Tasks.Task`1"/></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.GetValidResult``1(OperationContext.OperationResult{``0},System.Int32,System.String,System.Boolean)">
+        <member name="M:Meteors.OpertaionResultExtesnsion.ToJsonResultAsync``1(System.Threading.Tasks.Task{Meteors.OperationResult{``0}},System.Boolean)">
+            <summary>
+            Return <see cref="T:Microsoft.AspNetCore.Mvc.JsonResult"/> with real result completely .
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="result"></param>
+            <returns><see cref="T:System.Threading.Tasks.Task`1"/></returns>
+        </member>
+        <member name="M:Meteors.OpertaionResultExtesnsion.GetValidResult``1(Meteors.OperationResult{``0},System.String,System.Boolean,System.Boolean)">
             <summary>
             Return <see langword="real result"/> .
             </summary>
             <typeparam name="T"></typeparam>
             <param name="result"></param>
-            <param name="statusCode"></param>
             <param name="jsonMessage">String of type</param>
-            <param name="json"> boolean value if return json of main type T </param>
+            <param name="hasResult"> boolean value if return json of main type T </param>
+            <param name="isBody"> boolean value if return json complete body of operation</param>
             <returns><see cref="T:Microsoft.AspNetCore.Mvc.JsonResult"/></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.Collect``1(OperationContext.OperationResult{``0})">
+        <member name="M:Meteors.OpertaionResultExtesnsion.Collect``1(Meteors.OperationResult{``0})">
             <summary>
             Collect multi results dependent on first TResult1 then extension to take multi result of different type .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <param name="result1"></param>
-            <returns><see cref="T:OperationContext.OperationResult`1"/></returns>
+            <returns><see cref="T:Meteors.OperationResult`1"/></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.Into``2(OperationContext.OperationResult{``0},System.Func{OperationContext.OperationResult{``0},``1})">
+        <member name="M:Meteors.OpertaionResultExtesnsion.Into``2(Meteors.OperationResult{``0},System.Func{Meteors.OperationResult{``0},``1})">
             <summary>
-            Sugar use to fill results after <see cref="M:OperationContext.OpertaionResultExtesnsion.Collect``1(OperationContext.OperationResult{``0})"/> into DTO <see langword="new()"/>  or <see langword="anonymous"/> .
+            Sugar use to fill results after <see cref="M:Meteors.OpertaionResultExtesnsion.Collect``1(Meteors.OperationResult{``0})"/> into DTO <see langword="new()"/>  or <see langword="anonymous"/> .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <typeparam name="TResult"></typeparam>
@@ -181,77 +224,45 @@
             <param name="receiver"></param>
             <returns></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.InOnce``2(OperationContext.OperationResult{``0},``1)">
+        <member name="M:Meteors.OpertaionResultExtesnsion.InOnce``2(Meteors.OperationResult{``0},``1)">
             <summary>
-            Call priority to get real <see cref="T:OperationContext.OperationResult`1"/> with full Conditions result .
+            Call priority to get real <see cref="T:Meteors.OperationResult`1"/> with full Conditions result .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <typeparam name="TResult"></typeparam>
             <param name="result1"></param>
             <param name="result"></param>
-            <returns><see cref="T:OperationContext.OperationResult`1"/></returns>
+            <returns><see cref="T:Meteors.OperationResult`1"/></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.CollectAsync``1(System.Threading.Tasks.Task{OperationContext.OperationResult{``0}})">
+        <member name="M:Meteors.OpertaionResultExtesnsion.CollectAsync``1(System.Threading.Tasks.Task{Meteors.OperationResult{``0}})">
             <summary>
             Collect multi results dependent on first TResult1 then extension to take multi result of different type .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <param name="result1"></param>
-            <returns><see cref="T:OperationContext.OperationResult`1"/></returns>
+            <returns><see cref="T:Meteors.OperationResult`1"/></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.IntoAsync``2(System.Threading.Tasks.Task{OperationContext.OperationResult{``0}},System.Func{OperationContext.OperationResult{``0},``1})">
+        <member name="M:Meteors.OpertaionResultExtesnsion.IntoAsync``2(System.Threading.Tasks.Task{Meteors.OperationResult{``0}},System.Func{Meteors.OperationResult{``0},``1})">
             <summary>
-            Sugar use to fill results after <see cref="M:OperationContext.OpertaionResultExtesnsion.CollectAsync``1(System.Threading.Tasks.Task{OperationContext.OperationResult{``0}})"/> into DTO <see langword="new()"/>  or <see langword="anonymous"/> .
+            Sugar use to fill results after <see cref="M:Meteors.OpertaionResultExtesnsion.CollectAsync``1(System.Threading.Tasks.Task{Meteors.OperationResult{``0}})"/> into DTO <see langword="new()"/>  or <see langword="anonymous"/> .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <typeparam name="TResult"></typeparam>
             <param name="result1"></param>
             <param name="receiver"></param>
-            <returns><see cref="T:OperationContext.OperationResult`1"/></returns>
+            <returns><see cref="T:Meteors.OperationResult`1"/></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.InOnceAsync``2(System.Threading.Tasks.Task{OperationContext.OperationResult{``0}},``1)">
+        <member name="M:Meteors.OpertaionResultExtesnsion.InOnceAsync``2(System.Threading.Tasks.Task{Meteors.OperationResult{``0}},``1)">
             <summary>
-            Call priority to get real <see cref="T:OperationContext.OperationResult`1"/> with full Conditions result .
+            Call priority to get real <see cref="T:Meteors.OperationResult`1"/> with full Conditions result .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <typeparam name="TResult"></typeparam>
             <param name="result1"></param>
             <param name="result"></param>
-            <returns><see cref="T:OperationContext.OperationResult`1"/></returns>
+            <returns><see cref="T:Meteors.OperationResult`1"/></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.Collect``2(OperationContext.OperationResult{``0},OperationContext.OperationResult{``1})">
-            <summary>
-            Collect multi results dependent on first TResult1 then extension to take multi result of different type .
-            </summary>
-            <typeparam name="TResult1"></typeparam>
-            <typeparam name="TResult2"></typeparam>
-            <param name="result1"></param>
-            <param name="result2"></param>
-            <returns></returns>
-        </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.Into``3(System.ValueTuple{OperationContext.OperationResult{``0},OperationContext.OperationResult{``1}},System.Func{OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},``2})">
-            <summary>
-            Sugar use to fill results after <see cref="M:OperationContext.OpertaionResultExtesnsion.Collect``2(OperationContext.OperationResult{``0},OperationContext.OperationResult{``1})"/> into DTO <see langword="new()"/>  or <see langword="anonymous"/> .
-            </summary>
-            <typeparam name="TResult1"></typeparam>
-            <typeparam name="TResult2"></typeparam>
-            <typeparam name="TResult"></typeparam>
-            <param name="results"></param>
-            <param name="receiver"></param>
-            <returns></returns>
-        </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.InOnce``3(System.ValueTuple{OperationContext.OperationResult{``0},OperationContext.OperationResult{``1}},``2)">
-            <summary>
-            Call priority to get real <see cref="T:OperationContext.OperationResult`1"/> with full Conditions result .
-            </summary>
-            <typeparam name="TResult1"></typeparam>
-            <typeparam name="TResult2"></typeparam>
-            <typeparam name="TResult"></typeparam>
-            <param name="results"></param>
-            <param name="result"></param>
-            <returns></returns>
-        </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.CollectAsync``2(System.Threading.Tasks.Task{OperationContext.OperationResult{``0}},System.Threading.Tasks.Task{OperationContext.OperationResult{``1}})">
+        <member name="M:Meteors.OpertaionResultExtesnsion.Collect``2(Meteors.OperationResult{``0},Meteors.OperationResult{``1})">
             <summary>
             Collect multi results dependent on first TResult1 then extension to take multi result of different type .
             </summary>
@@ -261,9 +272,9 @@
             <param name="result2"></param>
             <returns></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.IntoAsync``3(System.Threading.Tasks.Task{System.ValueTuple{OperationContext.OperationResult{``0},OperationContext.OperationResult{``1}}},System.Func{OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},``2})">
+        <member name="M:Meteors.OpertaionResultExtesnsion.Into``3(System.ValueTuple{Meteors.OperationResult{``0},Meteors.OperationResult{``1}},System.Func{Meteors.OperationResult{``0},Meteors.OperationResult{``1},``2})">
             <summary>
-            Sugar use to fill results after <see cref="M:OperationContext.OpertaionResultExtesnsion.CollectAsync``2(System.Threading.Tasks.Task{OperationContext.OperationResult{``0}},System.Threading.Tasks.Task{OperationContext.OperationResult{``1}})"/> into DTO <see langword="new()"/>  or <see langword="anonymous"/> .
+            Sugar use to fill results after <see cref="M:Meteors.OpertaionResultExtesnsion.Collect``2(Meteors.OperationResult{``0},Meteors.OperationResult{``1})"/> into DTO <see langword="new()"/>  or <see langword="anonymous"/> .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <typeparam name="TResult2"></typeparam>
@@ -272,9 +283,9 @@
             <param name="receiver"></param>
             <returns></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.InOnceAsync``3(System.Threading.Tasks.Task{System.ValueTuple{OperationContext.OperationResult{``0},OperationContext.OperationResult{``1}}},``2)">
+        <member name="M:Meteors.OpertaionResultExtesnsion.InOnce``3(System.ValueTuple{Meteors.OperationResult{``0},Meteors.OperationResult{``1}},``2)">
             <summary>
-            Call priority to get real <see cref="T:OperationContext.OperationResult`1"/> with full Conditions result .
+            Call priority to get real <see cref="T:Meteors.OperationResult`1"/> with full Conditions result .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <typeparam name="TResult2"></typeparam>
@@ -283,43 +294,39 @@
             <param name="result"></param>
             <returns></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.Collect``3(OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2})">
+        <member name="M:Meteors.OpertaionResultExtesnsion.CollectAsync``2(System.Threading.Tasks.Task{Meteors.OperationResult{``0}},System.Threading.Tasks.Task{Meteors.OperationResult{``1}})">
             <summary>
             Collect multi results dependent on first TResult1 then extension to take multi result of different type .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <typeparam name="TResult2"></typeparam>
-            <typeparam name="TResult3"></typeparam>
             <param name="result1"></param>
             <param name="result2"></param>
-            <param name="result3"></param>
             <returns></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.Into``4(System.ValueTuple{OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2}},System.Func{OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2},``3})">
+        <member name="M:Meteors.OpertaionResultExtesnsion.IntoAsync``3(System.Threading.Tasks.Task{System.ValueTuple{Meteors.OperationResult{``0},Meteors.OperationResult{``1}}},System.Func{Meteors.OperationResult{``0},Meteors.OperationResult{``1},``2})">
             <summary>
-            Sugar use to fill results after <see cref="M:OperationContext.OpertaionResultExtesnsion.Collect``3(OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2})"/> into DTO <see langword="new()"/>  or <see langword="anonymous"/>  .
+            Sugar use to fill results after <see cref="M:Meteors.OpertaionResultExtesnsion.CollectAsync``2(System.Threading.Tasks.Task{Meteors.OperationResult{``0}},System.Threading.Tasks.Task{Meteors.OperationResult{``1}})"/> into DTO <see langword="new()"/>  or <see langword="anonymous"/> .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <typeparam name="TResult2"></typeparam>
-            <typeparam name="TResult3"></typeparam>
             <typeparam name="TResult"></typeparam>
             <param name="results"></param>
             <param name="receiver"></param>
             <returns></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.InOnce``4(System.ValueTuple{OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2}},``3)">
+        <member name="M:Meteors.OpertaionResultExtesnsion.InOnceAsync``3(System.Threading.Tasks.Task{System.ValueTuple{Meteors.OperationResult{``0},Meteors.OperationResult{``1}}},``2)">
             <summary>
-            Call priority to get real <see cref="T:OperationContext.OperationResult`1"/> with full Conditions result .
+            Call priority to get real <see cref="T:Meteors.OperationResult`1"/> with full Conditions result .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <typeparam name="TResult2"></typeparam>
-            <typeparam name="TResult3"></typeparam>
             <typeparam name="TResult"></typeparam>
             <param name="results"></param>
             <param name="result"></param>
             <returns></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.CollectAsync``3(System.Threading.Tasks.Task{OperationContext.OperationResult{``0}},System.Threading.Tasks.Task{OperationContext.OperationResult{``1}},System.Threading.Tasks.Task{OperationContext.OperationResult{``2}})">
+        <member name="M:Meteors.OpertaionResultExtesnsion.Collect``3(Meteors.OperationResult{``0},Meteors.OperationResult{``1},Meteors.OperationResult{``2})">
             <summary>
             Collect multi results dependent on first TResult1 then extension to take multi result of different type .
             </summary>
@@ -331,9 +338,9 @@
             <param name="result3"></param>
             <returns></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.IntoAsync``4(System.Threading.Tasks.Task{System.ValueTuple{OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2}}},System.Func{OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2},``3})">
+        <member name="M:Meteors.OpertaionResultExtesnsion.Into``4(System.ValueTuple{Meteors.OperationResult{``0},Meteors.OperationResult{``1},Meteors.OperationResult{``2}},System.Func{Meteors.OperationResult{``0},Meteors.OperationResult{``1},Meteors.OperationResult{``2},``3})">
             <summary>
-            Sugar use to fill results after <see cref="M:OperationContext.OpertaionResultExtesnsion.CollectAsync``3(System.Threading.Tasks.Task{OperationContext.OperationResult{``0}},System.Threading.Tasks.Task{OperationContext.OperationResult{``1}},System.Threading.Tasks.Task{OperationContext.OperationResult{``2}})"/> into DTO <see langword="new()"/>  or <see langword="anonymous"/>  .
+            Sugar use to fill results after <see cref="M:Meteors.OpertaionResultExtesnsion.Collect``3(Meteors.OperationResult{``0},Meteors.OperationResult{``1},Meteors.OperationResult{``2})"/> into DTO <see langword="new()"/>  or <see langword="anonymous"/>  .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <typeparam name="TResult2"></typeparam>
@@ -343,9 +350,9 @@
             <param name="receiver"></param>
             <returns></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.InOnceAsync``4(System.Threading.Tasks.Task{System.ValueTuple{OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2}}},``3)">
+        <member name="M:Meteors.OpertaionResultExtesnsion.InOnce``4(System.ValueTuple{Meteors.OperationResult{``0},Meteors.OperationResult{``1},Meteors.OperationResult{``2}},``3)">
             <summary>
-            Call priority to get real <see cref="T:OperationContext.OperationResult`1"/> with full Conditions result .
+            Call priority to get real <see cref="T:Meteors.OperationResult`1"/> with full Conditions result .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <typeparam name="TResult2"></typeparam>
@@ -355,47 +362,43 @@
             <param name="result"></param>
             <returns></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.Collect``4(OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2},OperationContext.OperationResult{``3})">
+        <member name="M:Meteors.OpertaionResultExtesnsion.CollectAsync``3(System.Threading.Tasks.Task{Meteors.OperationResult{``0}},System.Threading.Tasks.Task{Meteors.OperationResult{``1}},System.Threading.Tasks.Task{Meteors.OperationResult{``2}})">
             <summary>
             Collect multi results dependent on first TResult1 then extension to take multi result of different type .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <typeparam name="TResult2"></typeparam>
             <typeparam name="TResult3"></typeparam>
-            <typeparam name="TResult4"></typeparam>
             <param name="result1"></param>
             <param name="result2"></param>
             <param name="result3"></param>
-            <param name="result4"></param>
             <returns></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.Into``5(System.ValueTuple{OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2},OperationContext.OperationResult{``3}},System.Func{OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2},OperationContext.OperationResult{``3},``4})">
+        <member name="M:Meteors.OpertaionResultExtesnsion.IntoAsync``4(System.Threading.Tasks.Task{System.ValueTuple{Meteors.OperationResult{``0},Meteors.OperationResult{``1},Meteors.OperationResult{``2}}},System.Func{Meteors.OperationResult{``0},Meteors.OperationResult{``1},Meteors.OperationResult{``2},``3})">
             <summary>
-            Sugar use to fill results after <see cref="M:OperationContext.OpertaionResultExtesnsion.Collect``4(OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2},OperationContext.OperationResult{``3})"/> into DTO <see langword="new()"/>  or <see langword="anonymous"/>  .
+            Sugar use to fill results after <see cref="M:Meteors.OpertaionResultExtesnsion.CollectAsync``3(System.Threading.Tasks.Task{Meteors.OperationResult{``0}},System.Threading.Tasks.Task{Meteors.OperationResult{``1}},System.Threading.Tasks.Task{Meteors.OperationResult{``2}})"/> into DTO <see langword="new()"/>  or <see langword="anonymous"/>  .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <typeparam name="TResult2"></typeparam>
             <typeparam name="TResult3"></typeparam>
-            <typeparam name="TResult4"></typeparam>
             <typeparam name="TResult"></typeparam>
             <param name="results"></param>
             <param name="receiver"></param>
             <returns></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.InOnce``5(System.ValueTuple{OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2},OperationContext.OperationResult{``3}},``4)">
+        <member name="M:Meteors.OpertaionResultExtesnsion.InOnceAsync``4(System.Threading.Tasks.Task{System.ValueTuple{Meteors.OperationResult{``0},Meteors.OperationResult{``1},Meteors.OperationResult{``2}}},``3)">
             <summary>
-            Call priority to get real <see cref="T:OperationContext.OperationResult`1"/> with full Conditions result .
+            Call priority to get real <see cref="T:Meteors.OperationResult`1"/> with full Conditions result .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <typeparam name="TResult2"></typeparam>
             <typeparam name="TResult3"></typeparam>
-            <typeparam name="TResult4"></typeparam>
             <typeparam name="TResult"></typeparam>
             <param name="results"></param>
             <param name="result"></param>
             <returns></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.CollectAsync``4(System.Threading.Tasks.Task{OperationContext.OperationResult{``0}},System.Threading.Tasks.Task{OperationContext.OperationResult{``1}},System.Threading.Tasks.Task{OperationContext.OperationResult{``2}},System.Threading.Tasks.Task{OperationContext.OperationResult{``3}})">
+        <member name="M:Meteors.OpertaionResultExtesnsion.Collect``4(Meteors.OperationResult{``0},Meteors.OperationResult{``1},Meteors.OperationResult{``2},Meteors.OperationResult{``3})">
             <summary>
             Collect multi results dependent on first TResult1 then extension to take multi result of different type .
             </summary>
@@ -409,9 +412,9 @@
             <param name="result4"></param>
             <returns></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.IntoAsync``5(System.Threading.Tasks.Task{System.ValueTuple{OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2},OperationContext.OperationResult{``3}}},System.Func{OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2},OperationContext.OperationResult{``3},``4})">
+        <member name="M:Meteors.OpertaionResultExtesnsion.Into``5(System.ValueTuple{Meteors.OperationResult{``0},Meteors.OperationResult{``1},Meteors.OperationResult{``2},Meteors.OperationResult{``3}},System.Func{Meteors.OperationResult{``0},Meteors.OperationResult{``1},Meteors.OperationResult{``2},Meteors.OperationResult{``3},``4})">
             <summary>
-            Sugar use to fill results after <see cref="M:OperationContext.OpertaionResultExtesnsion.CollectAsync``4(System.Threading.Tasks.Task{OperationContext.OperationResult{``0}},System.Threading.Tasks.Task{OperationContext.OperationResult{``1}},System.Threading.Tasks.Task{OperationContext.OperationResult{``2}},System.Threading.Tasks.Task{OperationContext.OperationResult{``3}})"/> into DTO <see langword="new()"/>  or <see langword="anonymous"/>  .
+            Sugar use to fill results after <see cref="M:Meteors.OpertaionResultExtesnsion.Collect``4(Meteors.OperationResult{``0},Meteors.OperationResult{``1},Meteors.OperationResult{``2},Meteors.OperationResult{``3})"/> into DTO <see langword="new()"/>  or <see langword="anonymous"/>  .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <typeparam name="TResult2"></typeparam>
@@ -422,9 +425,9 @@
             <param name="receiver"></param>
             <returns></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.InOnceAsync``5(System.Threading.Tasks.Task{System.ValueTuple{OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2},OperationContext.OperationResult{``3}}},``4)">
+        <member name="M:Meteors.OpertaionResultExtesnsion.InOnce``5(System.ValueTuple{Meteors.OperationResult{``0},Meteors.OperationResult{``1},Meteors.OperationResult{``2},Meteors.OperationResult{``3}},``4)">
             <summary>
-            Call priority to get real <see cref="T:OperationContext.OperationResult`1"/> with full Conditions result .
+            Call priority to get real <see cref="T:Meteors.OperationResult`1"/> with full Conditions result .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <typeparam name="TResult2"></typeparam>
@@ -435,7 +438,7 @@
             <param name="result"></param>
             <returns></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.Collect``5(OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2},OperationContext.OperationResult{``3},OperationContext.OperationResult{``4})">
+        <member name="M:Meteors.OpertaionResultExtesnsion.CollectAsync``4(System.Threading.Tasks.Task{Meteors.OperationResult{``0}},System.Threading.Tasks.Task{Meteors.OperationResult{``1}},System.Threading.Tasks.Task{Meteors.OperationResult{``2}},System.Threading.Tasks.Task{Meteors.OperationResult{``3}})">
             <summary>
             Collect multi results dependent on first TResult1 then extension to take multi result of different type .
             </summary>
@@ -443,43 +446,39 @@
             <typeparam name="TResult2"></typeparam>
             <typeparam name="TResult3"></typeparam>
             <typeparam name="TResult4"></typeparam>
-            <typeparam name="TResult5"></typeparam>
             <param name="result1"></param>
             <param name="result2"></param>
             <param name="result3"></param>
             <param name="result4"></param>
-            <param name="result5"></param>
             <returns></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.Into``6(System.ValueTuple{OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2},OperationContext.OperationResult{``3},OperationContext.OperationResult{``4}},System.Func{OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2},OperationContext.OperationResult{``3},OperationContext.OperationResult{``4},``5})">
+        <member name="M:Meteors.OpertaionResultExtesnsion.IntoAsync``5(System.Threading.Tasks.Task{System.ValueTuple{Meteors.OperationResult{``0},Meteors.OperationResult{``1},Meteors.OperationResult{``2},Meteors.OperationResult{``3}}},System.Func{Meteors.OperationResult{``0},Meteors.OperationResult{``1},Meteors.OperationResult{``2},Meteors.OperationResult{``3},``4})">
             <summary>
-            Sugar use to fill results after <see cref="M:OperationContext.OpertaionResultExtesnsion.Collect``5(OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2},OperationContext.OperationResult{``3},OperationContext.OperationResult{``4})"/> into DTO <see langword="new()"/>  or <see langword="anonymous"/>  .
+            Sugar use to fill results after <see cref="M:Meteors.OpertaionResultExtesnsion.CollectAsync``4(System.Threading.Tasks.Task{Meteors.OperationResult{``0}},System.Threading.Tasks.Task{Meteors.OperationResult{``1}},System.Threading.Tasks.Task{Meteors.OperationResult{``2}},System.Threading.Tasks.Task{Meteors.OperationResult{``3}})"/> into DTO <see langword="new()"/>  or <see langword="anonymous"/>  .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <typeparam name="TResult2"></typeparam>
             <typeparam name="TResult3"></typeparam>
             <typeparam name="TResult4"></typeparam>
-            <typeparam name="TResult5"></typeparam>
             <typeparam name="TResult"></typeparam>
             <param name="results"></param>
             <param name="receiver"></param>
             <returns></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.InOnce``6(System.ValueTuple{OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2},OperationContext.OperationResult{``3},OperationContext.OperationResult{``4}},``5)">
+        <member name="M:Meteors.OpertaionResultExtesnsion.InOnceAsync``5(System.Threading.Tasks.Task{System.ValueTuple{Meteors.OperationResult{``0},Meteors.OperationResult{``1},Meteors.OperationResult{``2},Meteors.OperationResult{``3}}},``4)">
             <summary>
-            Call priority to get real <see cref="T:OperationContext.OperationResult`1"/> with full Conditions result .
+            Call priority to get real <see cref="T:Meteors.OperationResult`1"/> with full Conditions result .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <typeparam name="TResult2"></typeparam>
             <typeparam name="TResult3"></typeparam>
             <typeparam name="TResult4"></typeparam>
-            <typeparam name="TResult5"></typeparam>
             <typeparam name="TResult"></typeparam>
             <param name="results"></param>
             <param name="result"></param>
             <returns></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.CollectAsync``5(System.Threading.Tasks.Task{OperationContext.OperationResult{``0}},System.Threading.Tasks.Task{OperationContext.OperationResult{``1}},System.Threading.Tasks.Task{OperationContext.OperationResult{``2}},System.Threading.Tasks.Task{OperationContext.OperationResult{``3}},System.Threading.Tasks.Task{OperationContext.OperationResult{``4}})">
+        <member name="M:Meteors.OpertaionResultExtesnsion.Collect``5(Meteors.OperationResult{``0},Meteors.OperationResult{``1},Meteors.OperationResult{``2},Meteors.OperationResult{``3},Meteors.OperationResult{``4})">
             <summary>
             Collect multi results dependent on first TResult1 then extension to take multi result of different type .
             </summary>
@@ -495,9 +494,9 @@
             <param name="result5"></param>
             <returns></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.IntoAsync``6(System.Threading.Tasks.Task{System.ValueTuple{OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2},OperationContext.OperationResult{``3},OperationContext.OperationResult{``4}}},System.Func{OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2},OperationContext.OperationResult{``3},OperationContext.OperationResult{``4},``5})">
+        <member name="M:Meteors.OpertaionResultExtesnsion.Into``6(System.ValueTuple{Meteors.OperationResult{``0},Meteors.OperationResult{``1},Meteors.OperationResult{``2},Meteors.OperationResult{``3},Meteors.OperationResult{``4}},System.Func{Meteors.OperationResult{``0},Meteors.OperationResult{``1},Meteors.OperationResult{``2},Meteors.OperationResult{``3},Meteors.OperationResult{``4},``5})">
             <summary>
-            Sugar use to fill results after <see cref="M:OperationContext.OpertaionResultExtesnsion.CollectAsync``5(System.Threading.Tasks.Task{OperationContext.OperationResult{``0}},System.Threading.Tasks.Task{OperationContext.OperationResult{``1}},System.Threading.Tasks.Task{OperationContext.OperationResult{``2}},System.Threading.Tasks.Task{OperationContext.OperationResult{``3}},System.Threading.Tasks.Task{OperationContext.OperationResult{``4}})"/> into DTO <see langword="new()"/>  or <see langword="anonymous"/>  .
+            Sugar use to fill results after <see cref="M:Meteors.OpertaionResultExtesnsion.Collect``5(Meteors.OperationResult{``0},Meteors.OperationResult{``1},Meteors.OperationResult{``2},Meteors.OperationResult{``3},Meteors.OperationResult{``4})"/> into DTO <see langword="new()"/>  or <see langword="anonymous"/>  .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <typeparam name="TResult2"></typeparam>
@@ -509,9 +508,9 @@
             <param name="receiver"></param>
             <returns></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.InOnceAsync``6(System.Threading.Tasks.Task{System.ValueTuple{OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2},OperationContext.OperationResult{``3},OperationContext.OperationResult{``4}}},``5)">
+        <member name="M:Meteors.OpertaionResultExtesnsion.InOnce``6(System.ValueTuple{Meteors.OperationResult{``0},Meteors.OperationResult{``1},Meteors.OperationResult{``2},Meteors.OperationResult{``3},Meteors.OperationResult{``4}},``5)">
             <summary>
-            Call priority to get real <see cref="T:OperationContext.OperationResult`1"/> with full Conditions result .
+            Call priority to get real <see cref="T:Meteors.OperationResult`1"/> with full Conditions result .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <typeparam name="TResult2"></typeparam>
@@ -523,7 +522,7 @@
             <param name="result"></param>
             <returns></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.Collect``6(OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2},OperationContext.OperationResult{``3},OperationContext.OperationResult{``4},OperationContext.OperationResult{``5})">
+        <member name="M:Meteors.OpertaionResultExtesnsion.CollectAsync``5(System.Threading.Tasks.Task{Meteors.OperationResult{``0}},System.Threading.Tasks.Task{Meteors.OperationResult{``1}},System.Threading.Tasks.Task{Meteors.OperationResult{``2}},System.Threading.Tasks.Task{Meteors.OperationResult{``3}},System.Threading.Tasks.Task{Meteors.OperationResult{``4}})">
             <summary>
             Collect multi results dependent on first TResult1 then extension to take multi result of different type .
             </summary>
@@ -532,46 +531,42 @@
             <typeparam name="TResult3"></typeparam>
             <typeparam name="TResult4"></typeparam>
             <typeparam name="TResult5"></typeparam>
-            <typeparam name="TResult6"></typeparam>
             <param name="result1"></param>
             <param name="result2"></param>
             <param name="result3"></param>
             <param name="result4"></param>
             <param name="result5"></param>
-            <param name="result6"></param>
             <returns></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.Into``7(System.ValueTuple{OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2},OperationContext.OperationResult{``3},OperationContext.OperationResult{``4},OperationContext.OperationResult{``5}},System.Func{OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2},OperationContext.OperationResult{``3},OperationContext.OperationResult{``4},OperationContext.OperationResult{``5},``6})">
+        <member name="M:Meteors.OpertaionResultExtesnsion.IntoAsync``6(System.Threading.Tasks.Task{System.ValueTuple{Meteors.OperationResult{``0},Meteors.OperationResult{``1},Meteors.OperationResult{``2},Meteors.OperationResult{``3},Meteors.OperationResult{``4}}},System.Func{Meteors.OperationResult{``0},Meteors.OperationResult{``1},Meteors.OperationResult{``2},Meteors.OperationResult{``3},Meteors.OperationResult{``4},``5})">
             <summary>
-            Sugar use to fill results after <see cref="M:OperationContext.OpertaionResultExtesnsion.Collect``6(OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2},OperationContext.OperationResult{``3},OperationContext.OperationResult{``4},OperationContext.OperationResult{``5})"/> into DTO <see langword="new()"/>  or <see langword="anonymous"/>  .
+            Sugar use to fill results after <see cref="M:Meteors.OpertaionResultExtesnsion.CollectAsync``5(System.Threading.Tasks.Task{Meteors.OperationResult{``0}},System.Threading.Tasks.Task{Meteors.OperationResult{``1}},System.Threading.Tasks.Task{Meteors.OperationResult{``2}},System.Threading.Tasks.Task{Meteors.OperationResult{``3}},System.Threading.Tasks.Task{Meteors.OperationResult{``4}})"/> into DTO <see langword="new()"/>  or <see langword="anonymous"/>  .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <typeparam name="TResult2"></typeparam>
             <typeparam name="TResult3"></typeparam>
             <typeparam name="TResult4"></typeparam>
             <typeparam name="TResult5"></typeparam>
-            <typeparam name="TResult6"></typeparam>
             <typeparam name="TResult"></typeparam>
             <param name="results"></param>
             <param name="receiver"></param>
             <returns></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.InOnce``7(System.ValueTuple{OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2},OperationContext.OperationResult{``3},OperationContext.OperationResult{``4},OperationContext.OperationResult{``5}},``6)">
+        <member name="M:Meteors.OpertaionResultExtesnsion.InOnceAsync``6(System.Threading.Tasks.Task{System.ValueTuple{Meteors.OperationResult{``0},Meteors.OperationResult{``1},Meteors.OperationResult{``2},Meteors.OperationResult{``3},Meteors.OperationResult{``4}}},``5)">
             <summary>
-            Call priority to get real <see cref="T:OperationContext.OperationResult`1"/> with full Conditions result .
+            Call priority to get real <see cref="T:Meteors.OperationResult`1"/> with full Conditions result .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <typeparam name="TResult2"></typeparam>
             <typeparam name="TResult3"></typeparam>
             <typeparam name="TResult4"></typeparam>
             <typeparam name="TResult5"></typeparam>
-            <typeparam name="TResult6"></typeparam>
             <typeparam name="TResult"></typeparam>
             <param name="results"></param>
             <param name="result"></param>
             <returns></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.CollectAsync``6(System.Threading.Tasks.Task{OperationContext.OperationResult{``0}},System.Threading.Tasks.Task{OperationContext.OperationResult{``1}},System.Threading.Tasks.Task{OperationContext.OperationResult{``2}},System.Threading.Tasks.Task{OperationContext.OperationResult{``3}},System.Threading.Tasks.Task{OperationContext.OperationResult{``4}},System.Threading.Tasks.Task{OperationContext.OperationResult{``5}})">
+        <member name="M:Meteors.OpertaionResultExtesnsion.Collect``6(Meteors.OperationResult{``0},Meteors.OperationResult{``1},Meteors.OperationResult{``2},Meteors.OperationResult{``3},Meteors.OperationResult{``4},Meteors.OperationResult{``5})">
             <summary>
             Collect multi results dependent on first TResult1 then extension to take multi result of different type .
             </summary>
@@ -589,9 +584,9 @@
             <param name="result6"></param>
             <returns></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.IntoAsync``7(System.Threading.Tasks.Task{System.ValueTuple{OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2},OperationContext.OperationResult{``3},OperationContext.OperationResult{``4},OperationContext.OperationResult{``5}}},System.Func{OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2},OperationContext.OperationResult{``3},OperationContext.OperationResult{``4},OperationContext.OperationResult{``5},``6})">
+        <member name="M:Meteors.OpertaionResultExtesnsion.Into``7(System.ValueTuple{Meteors.OperationResult{``0},Meteors.OperationResult{``1},Meteors.OperationResult{``2},Meteors.OperationResult{``3},Meteors.OperationResult{``4},Meteors.OperationResult{``5}},System.Func{Meteors.OperationResult{``0},Meteors.OperationResult{``1},Meteors.OperationResult{``2},Meteors.OperationResult{``3},Meteors.OperationResult{``4},Meteors.OperationResult{``5},``6})">
             <summary>
-            Sugar use to fill results after <see cref="M:OperationContext.OpertaionResultExtesnsion.CollectAsync``6(System.Threading.Tasks.Task{OperationContext.OperationResult{``0}},System.Threading.Tasks.Task{OperationContext.OperationResult{``1}},System.Threading.Tasks.Task{OperationContext.OperationResult{``2}},System.Threading.Tasks.Task{OperationContext.OperationResult{``3}},System.Threading.Tasks.Task{OperationContext.OperationResult{``4}},System.Threading.Tasks.Task{OperationContext.OperationResult{``5}})"/> into DTO <see langword="new()"/>  or <see langword="anonymous"/>  .
+            Sugar use to fill results after <see cref="M:Meteors.OpertaionResultExtesnsion.Collect``6(Meteors.OperationResult{``0},Meteors.OperationResult{``1},Meteors.OperationResult{``2},Meteors.OperationResult{``3},Meteors.OperationResult{``4},Meteors.OperationResult{``5})"/> into DTO <see langword="new()"/>  or <see langword="anonymous"/>  .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <typeparam name="TResult2"></typeparam>
@@ -604,9 +599,9 @@
             <param name="receiver"></param>
             <returns></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.InOnceAsync``7(System.Threading.Tasks.Task{System.ValueTuple{OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2},OperationContext.OperationResult{``3},OperationContext.OperationResult{``4},OperationContext.OperationResult{``5}}},``6)">
+        <member name="M:Meteors.OpertaionResultExtesnsion.InOnce``7(System.ValueTuple{Meteors.OperationResult{``0},Meteors.OperationResult{``1},Meteors.OperationResult{``2},Meteors.OperationResult{``3},Meteors.OperationResult{``4},Meteors.OperationResult{``5}},``6)">
             <summary>
-            Call priority to get real <see cref="T:OperationContext.OperationResult`1"/> with full Conditions result .
+            Call priority to get real <see cref="T:Meteors.OperationResult`1"/> with full Conditions result .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <typeparam name="TResult2"></typeparam>
@@ -619,7 +614,55 @@
             <param name="result"></param>
             <returns></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.Collect``7(OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2},OperationContext.OperationResult{``3},OperationContext.OperationResult{``4},OperationContext.OperationResult{``5},OperationContext.OperationResult{``6})">
+        <member name="M:Meteors.OpertaionResultExtesnsion.CollectAsync``6(System.Threading.Tasks.Task{Meteors.OperationResult{``0}},System.Threading.Tasks.Task{Meteors.OperationResult{``1}},System.Threading.Tasks.Task{Meteors.OperationResult{``2}},System.Threading.Tasks.Task{Meteors.OperationResult{``3}},System.Threading.Tasks.Task{Meteors.OperationResult{``4}},System.Threading.Tasks.Task{Meteors.OperationResult{``5}})">
+            <summary>
+            Collect multi results dependent on first TResult1 then extension to take multi result of different type .
+            </summary>
+            <typeparam name="TResult1"></typeparam>
+            <typeparam name="TResult2"></typeparam>
+            <typeparam name="TResult3"></typeparam>
+            <typeparam name="TResult4"></typeparam>
+            <typeparam name="TResult5"></typeparam>
+            <typeparam name="TResult6"></typeparam>
+            <param name="result1"></param>
+            <param name="result2"></param>
+            <param name="result3"></param>
+            <param name="result4"></param>
+            <param name="result5"></param>
+            <param name="result6"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Meteors.OpertaionResultExtesnsion.IntoAsync``7(System.Threading.Tasks.Task{System.ValueTuple{Meteors.OperationResult{``0},Meteors.OperationResult{``1},Meteors.OperationResult{``2},Meteors.OperationResult{``3},Meteors.OperationResult{``4},Meteors.OperationResult{``5}}},System.Func{Meteors.OperationResult{``0},Meteors.OperationResult{``1},Meteors.OperationResult{``2},Meteors.OperationResult{``3},Meteors.OperationResult{``4},Meteors.OperationResult{``5},``6})">
+            <summary>
+            Sugar use to fill results after <see cref="M:Meteors.OpertaionResultExtesnsion.CollectAsync``6(System.Threading.Tasks.Task{Meteors.OperationResult{``0}},System.Threading.Tasks.Task{Meteors.OperationResult{``1}},System.Threading.Tasks.Task{Meteors.OperationResult{``2}},System.Threading.Tasks.Task{Meteors.OperationResult{``3}},System.Threading.Tasks.Task{Meteors.OperationResult{``4}},System.Threading.Tasks.Task{Meteors.OperationResult{``5}})"/> into DTO <see langword="new()"/>  or <see langword="anonymous"/>  .
+            </summary>
+            <typeparam name="TResult1"></typeparam>
+            <typeparam name="TResult2"></typeparam>
+            <typeparam name="TResult3"></typeparam>
+            <typeparam name="TResult4"></typeparam>
+            <typeparam name="TResult5"></typeparam>
+            <typeparam name="TResult6"></typeparam>
+            <typeparam name="TResult"></typeparam>
+            <param name="results"></param>
+            <param name="receiver"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Meteors.OpertaionResultExtesnsion.InOnceAsync``7(System.Threading.Tasks.Task{System.ValueTuple{Meteors.OperationResult{``0},Meteors.OperationResult{``1},Meteors.OperationResult{``2},Meteors.OperationResult{``3},Meteors.OperationResult{``4},Meteors.OperationResult{``5}}},``6)">
+            <summary>
+            Call priority to get real <see cref="T:Meteors.OperationResult`1"/> with full Conditions result .
+            </summary>
+            <typeparam name="TResult1"></typeparam>
+            <typeparam name="TResult2"></typeparam>
+            <typeparam name="TResult3"></typeparam>
+            <typeparam name="TResult4"></typeparam>
+            <typeparam name="TResult5"></typeparam>
+            <typeparam name="TResult6"></typeparam>
+            <typeparam name="TResult"></typeparam>
+            <param name="results"></param>
+            <param name="result"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Meteors.OpertaionResultExtesnsion.Collect``7(Meteors.OperationResult{``0},Meteors.OperationResult{``1},Meteors.OperationResult{``2},Meteors.OperationResult{``3},Meteors.OperationResult{``4},Meteors.OperationResult{``5},Meteors.OperationResult{``6})">
             <summary>
             Collect multi results dependent on first TResult1 then extension to take multi result of different type .
             </summary>
@@ -639,9 +682,9 @@
             <param name="result7"></param>
             <returns></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.Into``8(System.ValueTuple{OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2},OperationContext.OperationResult{``3},OperationContext.OperationResult{``4},OperationContext.OperationResult{``5},OperationContext.OperationResult{``6}},System.Func{OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2},OperationContext.OperationResult{``3},OperationContext.OperationResult{``4},OperationContext.OperationResult{``5},OperationContext.OperationResult{``6},``7})">
+        <member name="M:Meteors.OpertaionResultExtesnsion.Into``8(System.ValueTuple{Meteors.OperationResult{``0},Meteors.OperationResult{``1},Meteors.OperationResult{``2},Meteors.OperationResult{``3},Meteors.OperationResult{``4},Meteors.OperationResult{``5},Meteors.OperationResult{``6}},System.Func{Meteors.OperationResult{``0},Meteors.OperationResult{``1},Meteors.OperationResult{``2},Meteors.OperationResult{``3},Meteors.OperationResult{``4},Meteors.OperationResult{``5},Meteors.OperationResult{``6},``7})">
             <summary>
-            Sugar use to fill results after <see cref="M:OperationContext.OpertaionResultExtesnsion.Collect``7(OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2},OperationContext.OperationResult{``3},OperationContext.OperationResult{``4},OperationContext.OperationResult{``5},OperationContext.OperationResult{``6})"/> into DTO <see langword="new()"/>  or <see langword="anonymous"/>  .
+            Sugar use to fill results after <see cref="M:Meteors.OpertaionResultExtesnsion.Collect``7(Meteors.OperationResult{``0},Meteors.OperationResult{``1},Meteors.OperationResult{``2},Meteors.OperationResult{``3},Meteors.OperationResult{``4},Meteors.OperationResult{``5},Meteors.OperationResult{``6})"/> into DTO <see langword="new()"/>  or <see langword="anonymous"/>  .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <typeparam name="TResult2"></typeparam>
@@ -655,9 +698,9 @@
             <param name="receiver"></param>
             <returns></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.InOnce``8(System.ValueTuple{OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2},OperationContext.OperationResult{``3},OperationContext.OperationResult{``4},OperationContext.OperationResult{``5},OperationContext.OperationResult{``6}},``7)">
+        <member name="M:Meteors.OpertaionResultExtesnsion.InOnce``8(System.ValueTuple{Meteors.OperationResult{``0},Meteors.OperationResult{``1},Meteors.OperationResult{``2},Meteors.OperationResult{``3},Meteors.OperationResult{``4},Meteors.OperationResult{``5},Meteors.OperationResult{``6}},``7)">
             <summary>
-            Call priority to get real <see cref="T:OperationContext.OperationResult`1"/> with full Conditions result .
+            Call priority to get real <see cref="T:Meteors.OperationResult`1"/> with full Conditions result .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <typeparam name="TResult2"></typeparam>
@@ -671,7 +714,7 @@
             <param name="result"></param>
             <returns></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.CollectAsync``7(System.Threading.Tasks.Task{OperationContext.OperationResult{``0}},System.Threading.Tasks.Task{OperationContext.OperationResult{``1}},System.Threading.Tasks.Task{OperationContext.OperationResult{``2}},System.Threading.Tasks.Task{OperationContext.OperationResult{``3}},System.Threading.Tasks.Task{OperationContext.OperationResult{``4}},System.Threading.Tasks.Task{OperationContext.OperationResult{``5}},System.Threading.Tasks.Task{OperationContext.OperationResult{``6}})">
+        <member name="M:Meteors.OpertaionResultExtesnsion.CollectAsync``7(System.Threading.Tasks.Task{Meteors.OperationResult{``0}},System.Threading.Tasks.Task{Meteors.OperationResult{``1}},System.Threading.Tasks.Task{Meteors.OperationResult{``2}},System.Threading.Tasks.Task{Meteors.OperationResult{``3}},System.Threading.Tasks.Task{Meteors.OperationResult{``4}},System.Threading.Tasks.Task{Meteors.OperationResult{``5}},System.Threading.Tasks.Task{Meteors.OperationResult{``6}})">
             <summary>
             Collect multi returns dependent on first TResult1 then extension to take multi result of different type .
             </summary>
@@ -691,9 +734,9 @@
             <param name="result7"></param>
             <returns></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.IntoAsync``8(System.Threading.Tasks.Task{System.ValueTuple{OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2},OperationContext.OperationResult{``3},OperationContext.OperationResult{``4},OperationContext.OperationResult{``5},OperationContext.OperationResult{``6}}},System.Func{OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2},OperationContext.OperationResult{``3},OperationContext.OperationResult{``4},OperationContext.OperationResult{``5},OperationContext.OperationResult{``6},``7})">
+        <member name="M:Meteors.OpertaionResultExtesnsion.IntoAsync``8(System.Threading.Tasks.Task{System.ValueTuple{Meteors.OperationResult{``0},Meteors.OperationResult{``1},Meteors.OperationResult{``2},Meteors.OperationResult{``3},Meteors.OperationResult{``4},Meteors.OperationResult{``5},Meteors.OperationResult{``6}}},System.Func{Meteors.OperationResult{``0},Meteors.OperationResult{``1},Meteors.OperationResult{``2},Meteors.OperationResult{``3},Meteors.OperationResult{``4},Meteors.OperationResult{``5},Meteors.OperationResult{``6},``7})">
             <summary>
-            Sugar use to fill results after <see cref="M:OperationContext.OpertaionResultExtesnsion.CollectAsync``7(System.Threading.Tasks.Task{OperationContext.OperationResult{``0}},System.Threading.Tasks.Task{OperationContext.OperationResult{``1}},System.Threading.Tasks.Task{OperationContext.OperationResult{``2}},System.Threading.Tasks.Task{OperationContext.OperationResult{``3}},System.Threading.Tasks.Task{OperationContext.OperationResult{``4}},System.Threading.Tasks.Task{OperationContext.OperationResult{``5}},System.Threading.Tasks.Task{OperationContext.OperationResult{``6}})"/> into DTO <see langword="new()"/>  or <see langword="anonymous"/>  .
+            Sugar use to fill results after <see cref="M:Meteors.OpertaionResultExtesnsion.CollectAsync``7(System.Threading.Tasks.Task{Meteors.OperationResult{``0}},System.Threading.Tasks.Task{Meteors.OperationResult{``1}},System.Threading.Tasks.Task{Meteors.OperationResult{``2}},System.Threading.Tasks.Task{Meteors.OperationResult{``3}},System.Threading.Tasks.Task{Meteors.OperationResult{``4}},System.Threading.Tasks.Task{Meteors.OperationResult{``5}},System.Threading.Tasks.Task{Meteors.OperationResult{``6}})"/> into DTO <see langword="new()"/>  or <see langword="anonymous"/>  .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <typeparam name="TResult2"></typeparam>
@@ -707,9 +750,9 @@
             <param name="receiver"></param>
             <returns></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.InOnceAsync``8(System.Threading.Tasks.Task{System.ValueTuple{OperationContext.OperationResult{``0},OperationContext.OperationResult{``1},OperationContext.OperationResult{``2},OperationContext.OperationResult{``3},OperationContext.OperationResult{``4},OperationContext.OperationResult{``5},OperationContext.OperationResult{``6}}},``7)">
+        <member name="M:Meteors.OpertaionResultExtesnsion.InOnceAsync``8(System.Threading.Tasks.Task{System.ValueTuple{Meteors.OperationResult{``0},Meteors.OperationResult{``1},Meteors.OperationResult{``2},Meteors.OperationResult{``3},Meteors.OperationResult{``4},Meteors.OperationResult{``5},Meteors.OperationResult{``6}}},``7)">
             <summary>
-            Call priority to get real <see cref="T:OperationContext.OperationResult`1"/> with full Conditions result .
+            Call priority to get real <see cref="T:Meteors.OperationResult`1"/> with full Conditions result .
             </summary>
             <typeparam name="TResult1"></typeparam>
             <typeparam name="TResult2"></typeparam>
@@ -723,371 +766,278 @@
             <param name="result"></param>
             <returns></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.OnePriority``2(``0,``1)">
+        <member name="M:Meteors.OpertaionResultExtesnsion.OnePriority``2(``0,``1)">
             <summary>
-            Condition to collect many operation result into once , dependent on  Priority of <see cref="T:OperationContext.OperationResultTypes"/>
-            <para>With <see cref="F:OperationContext.OperationResultTypes.Exception"/>  Will return first exception result  used <see cref="M:OperationContext.OperationResult`1.SetException(System.Exception)"/></para>
-            <para>With <see cref="F:OperationContext.OperationResultTypes.Failed"/> ,<see cref="F:OperationContext.OperationResultTypes.Forbidden"/> and <see cref="F:OperationContext.OperationResultTypes.Unauthorized"/> Will return join of message  used <see cref="M:OperationContext.OperationResult`1.SetSuccess(System.String)"/></para>
-            <para>With <see cref="F:OperationContext.OperationResultTypes.Success"/> Will return TResult and  join of message used <see cref="M:OperationContext.OperationResult`1.SetFailed(System.String,OperationContext.OperationResultTypes)"/> .</para>
+            Condition to collect many operation result into once , dependent on  Priority of <see cref="T:Meteors.OperationResultTypes"/>
+            <para>With <see cref="F:Meteors.OperationResultTypes.Exception"/>  Will return first exception result  used <see cref="M:Meteors.OperationResult`1.SetException(System.Exception)"/></para>
+            <para>With <see cref="F:Meteors.OperationResultTypes.Failed"/> ,<see cref="F:Meteors.OperationResultTypes.Forbidden"/> and <see cref="F:Meteors.OperationResultTypes.Unauthorized"/> Will return join of message  used <see cref="M:Meteors.OperationResult`1.SetSuccess(System.String)"/></para>
+            <para>With <see cref="F:Meteors.OperationResultTypes.Success"/> Will return TResult and  join of message used <see cref="M:Meteors.OperationResult`1.SetFailed(System.String,Meteors.OperationResultTypes)"/> .</para>
             </summary>
             <typeparam name="TOneResult"></typeparam>
             <typeparam name="TResult"></typeparam>
             <param name="oneResult">expected result</param>
             <param name="result">expected result</param>
-            <returns><see cref="T:OperationContext.OperationResult`1"/></returns>
+            <returns><see cref="T:Meteors.OperationResult`1"/></returns>
         </member>
-        <member name="M:OperationContext.OpertaionResultExtesnsion.OncePriority``2(``0,``1)">
+        <member name="M:Meteors.OpertaionResultExtesnsion.OncePriority``2(``0,``1)">
             <summary>
-            Condition to collect many operation result into once , dependent on  Priority of <see cref="T:OperationContext.OperationResultTypes"/>
-            <para>With <see cref="F:OperationContext.OperationResultTypes.Exception"/>  Will return first exception result  used <see cref="M:OperationContext.OperationResult`1.SetException(System.Exception)"/></para>
-            <para>With <see cref="F:OperationContext.OperationResultTypes.Failed"/> ,<see cref="F:OperationContext.OperationResultTypes.Forbidden"/> and <see cref="F:OperationContext.OperationResultTypes.Unauthorized"/> Will return join of message  used <see cref="M:OperationContext.OperationResult`1.SetSuccess(System.String)"/></para>
-            <para>With <see cref="F:OperationContext.OperationResultTypes.Success"/> Will return TResult and  join of message used <see cref="M:OperationContext.OperationResult`1.SetFailed(System.String,OperationContext.OperationResultTypes)"/> .</para>
+            Condition to collect many operation result into once , dependent on  Priority of <see cref="T:Meteors.OperationResultTypes"/>
+            <para>With <see cref="F:Meteors.OperationResultTypes.Exception"/>  Will return first exception result  used <see cref="M:Meteors.OperationResult`1.SetException(System.Exception)"/></para>
+            <para>With <see cref="F:Meteors.OperationResultTypes.Failed"/> ,<see cref="F:Meteors.OperationResultTypes.Forbidden"/> and <see cref="F:Meteors.OperationResultTypes.Unauthorized"/> Will return join of message  used <see cref="M:Meteors.OperationResult`1.SetSuccess(System.String)"/></para>
+            <para>With <see cref="F:Meteors.OperationResultTypes.Success"/> Will return TResult and  join of message used <see cref="M:Meteors.OperationResult`1.SetFailed(System.String,Meteors.OperationResultTypes)"/> .</para>
             </summary>
             <typeparam name="TTupleResult"></typeparam>
             <typeparam name="TResult"></typeparam>
             <param name="results"></param>
             <param name="result">expected result</param>
-            <returns><see cref="T:OperationContext.OperationResult`1"/></returns>
+            <returns><see cref="T:Meteors.OperationResult`1"/></returns>
         </member>
-        <member name="T:OperationContext._Operation">
+        <member name="T:Meteors._Operation">
             <summary>
-            Quick return from <see cref="T:OperationContext.Base.OperationResultBase"/> and <see cref="T:OperationContext.Base.IResult`1"/>
+            Quick return from <see cref="T:Meteors.OperationResult.OperationResultBase"/> and <see cref="T:Meteors.OperationResult.IResult`1"/>
             <para>Used when un-enable Handler.</para>
             </summary>
         </member>
-        <member name="M:OperationContext._Operation.Operation">
+        <member name="M:Meteors._Operation.Operation">
             <summary>
             Normal init used for end return
             </summary>
-            <returns><see cref="T:OperationContext.Base.OperationResultBase"/></returns>
+            <returns><see cref="T:Meteors.OperationResult.OperationResultBase"/></returns>
         </member>
-        <member name="M:OperationContext._Operation.Operation``1">
+        <member name="M:Meteors._Operation.Operation``1">
             <summary>
             Normal init used for end return
             </summary>
             <typeparam name="T"></typeparam>
-            <returns><see cref="T:OperationContext.OperationResult`1"/></returns>
+            <returns><see cref="T:Meteors.OperationResult`1"/></returns>
         </member>
-        <member name="M:OperationContext._Operation.SetSuccess``1(``0)">
+        <member name="M:Meteors._Operation.SetSuccess``1(``0)">
             <summary>
             Helper to pass success result 
-            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:OperationContext.OperationResultTypes.Success"/></para>
+            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:Meteors.OperationResultTypes.Success"/></para>
             </summary>
             <typeparam name="T"></typeparam>
             <param name="result"></param>
-            <returns> <see cref="T:OperationContext.OperationResult`1"/> </returns>
+            <returns> <see cref="T:Meteors.OperationResult`1"/> </returns>
         </member>
-        <member name="M:OperationContext._Operation.SetSuccess(System.String)">
+        <member name="M:Meteors._Operation.SetSuccess(System.String)">
             <summary>
             Helper
-            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:OperationContext.OperationResultTypes.Success"/></para>
+            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:Meteors.OperationResultTypes.Success"/></para>
             <para>Effect in <code>base.Message</code> .</para>
             </summary>
             <param name="message"></param>
-            <returns> <see cref="T:OperationContext.Base.OperationResultBase"/> </returns>
+            <returns> <see cref="T:Meteors.OperationResult.OperationResultBase"/> </returns>
         </member>
-        <member name="M:OperationContext._Operation.SetSuccess``1(``0,System.String)">
+        <member name="M:Meteors._Operation.SetSuccess``1(``0,System.String)">
             <summary>
             Helper to pass success result 
-            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:OperationContext.OperationResultTypes.Success"/></para>
+            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:Meteors.OperationResultTypes.Success"/></para>
             <para>Effect in <code>base.Message</code> .</para>
             </summary>
             <typeparam name="T"></typeparam>
             <param name="result"></param>
             <param name="message"></param>
-            <returns> <see cref="T:OperationContext.OperationResult`1"/> </returns>
+            <returns> <see cref="T:Meteors.OperationResult`1"/> </returns>
         </member>
-        <member name="M:OperationContext._Operation.SetFailed(System.String,OperationContext.OperationResultTypes)">
+        <member name="M:Meteors._Operation.SetFailed(System.String,Meteors.OperationResultTypes)">
             <summary>
             Helper  
-            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:OperationContext.OperationResultTypes.Failed"/></para>
+            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:Meteors.OperationResultTypes.Failed"/></para>
             <para>Effect in <code>base.Message</code> .</para>
-            <para>Effect in <code>base.OperationResultType</code> default value <see cref="F:OperationContext.OperationResultTypes.Failed"/> , <see cref="F:OperationContext.OperationResultTypes.Forbidden"/> and <see cref="F:OperationContext.OperationResultTypes.Unauthorized"/> </para>
+            <para>Effect in <code>base.OperationResultType</code> default value <see cref="F:Meteors.OperationResultTypes.Failed"/> , <see cref="F:Meteors.OperationResultTypes.Forbidden"/> and <see cref="F:Meteors.OperationResultTypes.Unauthorized"/> </para>
             <para>Exception :  <see langword="throw"/> <see cref="T:System.ArgumentException"/> if type not kind of Failed .</para>
             </summary>
             <param name="message"></param>
             <param name="type"></param>
-            <returns> <see cref="T:OperationContext.Base.OperationResultBase"/> </returns>
+            <returns> <see cref="T:Meteors.OperationResult.OperationResultBase"/> </returns>
         </member>
-        <member name="M:OperationContext._Operation.SetFailed``1(System.String,OperationContext.OperationResultTypes)">
+        <member name="M:Meteors._Operation.SetFailed``1(System.String,Meteors.OperationResultTypes)">
             <summary>
             Helper  
-            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:OperationContext.OperationResultTypes.Failed"/></para>
+            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:Meteors.OperationResultTypes.Failed"/></para>
             <para>Effect in <code>base.Message</code> .</para>
-            <para>Effect in <code>base.OperationResultType</code> default value <see cref="F:OperationContext.OperationResultTypes.Failed"/> , <see cref="F:OperationContext.OperationResultTypes.Forbidden"/> and <see cref="F:OperationContext.OperationResultTypes.Unauthorized"/> </para>
+            <para>Effect in <code>base.OperationResultType</code> default value <see cref="F:Meteors.OperationResultTypes.Failed"/> , <see cref="F:Meteors.OperationResultTypes.Forbidden"/> and <see cref="F:Meteors.OperationResultTypes.Unauthorized"/> </para>
             <para>Exception :  <see langword="throw"/> <see cref="T:System.ArgumentException"/> if type not kind of Failed .</para>
             </summary>
             <typeparam name="T"></typeparam>
             <param name="message"></param>
             <param name="type"></param>
-            <returns> <see cref="T:OperationContext.OperationResult`1"/> </returns>
+            <returns> <see cref="T:Meteors.OperationResult`1"/> </returns>
         </member>
-        <member name="M:OperationContext._Operation.SetException(System.Exception)">
+        <member name="M:Meteors._Operation.SetException(System.Exception)">
             <summary>
             Helper to pass exception result 
-            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:OperationContext.OperationResultTypes.Exception"/> .</para>
+            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:Meteors.OperationResultTypes.Exception"/> .</para>
             </summary>
             <param name="exception"></param>
-            <returns> <see cref="T:OperationContext.Base.OperationResultBase"/> </returns>
+            <returns> <see cref="T:Meteors.OperationResult.OperationResultBase"/> </returns>
         </member>
-        <member name="M:OperationContext._Operation.SetException``1(System.Exception)">
+        <member name="M:Meteors._Operation.SetException``1(System.Exception)">
             <summary>
             Helper to pass exception result 
-            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:OperationContext.OperationResultTypes.Exception"/> .</para>
+            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:Meteors.OperationResultTypes.Exception"/> .</para>
             </summary>
             <typeparam name="T"></typeparam>
             <param name="exception"></param>
-            <returns><see cref="T:OperationContext.OperationResult`1"/>  </returns>
+            <returns><see cref="T:Meteors.OperationResult`1"/>  </returns>
         </member>
-        <member name="M:OperationContext._Operation.SetContent(OperationContext.OperationResultTypes,System.String)">
+        <member name="M:Meteors._Operation.SetContent(Meteors.OperationResultTypes,System.String)">
             <summary>
             Helper  
-            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:OperationContext.OperationResultTypes.Exist"/> or <seealso cref="F:OperationContext.OperationResultTypes.NotExist"/>  </para>
+            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:Meteors.OperationResultTypes.Exist"/> or <seealso cref="F:Meteors.OperationResultTypes.NotExist"/>  </para>
             <para>Effect in <code>base.Message</code> .</para>
             <para>Exception :  <see langword="throw"/> <see cref="T:System.ArgumentException"/> if type not kind of Content .</para>
             </summary>
             <exception cref="T:System.ArgumentException"></exception>
             <param name="type"></param>
             <param name="message"></param>
-            <returns> <see cref="T:OperationContext.Base.OperationResultBase"/> </returns>
+            <returns> <see cref="T:Meteors.OperationResult.OperationResultBase"/> </returns>
         </member>
-        <member name="M:OperationContext._Operation.SetContent``1(OperationContext.OperationResultTypes,System.String)">
+        <member name="M:Meteors._Operation.SetContent``1(Meteors.OperationResultTypes,System.String)">
             <summary>
             Helper  
-            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:OperationContext.OperationResultTypes.Exist"/> or <seealso cref="F:OperationContext.OperationResultTypes.NotExist"/>  </para>
+            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:Meteors.OperationResultTypes.Exist"/> or <seealso cref="F:Meteors.OperationResultTypes.NotExist"/>  </para>
             <para>Effect in <code>base.Message</code> .</para>
             <para>Exception :  <see langword="throw"/> <see cref="T:System.ArgumentException"/> if type not kind of Content .</para>
             </summary>
             <exception cref="T:System.ArgumentException"></exception>
             <param name="type"></param>
             <param name="message"></param>
-            <returns> <see cref="T:OperationContext.OperationResult`1"/> </returns>
+            <returns> <see cref="T:Meteors.OperationResult`1"/> </returns>
         </member>
-        <member name="T:OperationContext.OperationResult`1">
+        <member name="T:Meteors.OperationResult`1">
             <summary>
             Encapsulation result.
             <para>Depends on context repository/http/mvc/response/request .</para>
             </summary>
             <typeparam name="T"> Type of class </typeparam>
         </member>
-        <member name="P:OperationContext.OperationResult`1.Result">
+        <member name="P:Meteors.OperationResult`1.Data">
             <summary>
             Main object result.
             </summary>
         </member>
-        <member name="P:OperationContext.OperationResult`1.IsSuccess">
+        <member name="P:Meteors.OperationResult`1.IsSuccess">
             <summary>
-            Check <see cref="F:OperationContext.OperationResultTypes.Success"/>.
+            Check <see cref="F:Meteors.OperationResultTypes.Success"/>.
             </summary>
         </member>
-        <member name="P:OperationContext.OperationResult`1.HasException">
+        <member name="P:Meteors.OperationResult`1.HasException">
             <summary>
-            Check <see cref="F:OperationContext.OperationResultTypes.Exception"/>.
+            Check <see cref="F:Meteors.OperationResultTypes.Exception"/>.
             </summary>
         </member>
-        <member name="P:OperationContext.OperationResult`1.FullExceptionMessage">
+        <member name="P:Meteors.OperationResult`1.FullExceptionMessage">
             <summary>
             Return deep inner exceptions messages.
             </summary>
         </member>
-        <member name="P:OperationContext.OperationResult`1.HasCustomeStatusCode">
+        <member name="P:Meteors.OperationResult`1.HasCustomeStatusCode">
             <summary>
-            Check <see cref="P:OperationContext.Base.OperationResultBase.StatusCode"/> if init with value > 0.
+            Check <see cref="P:Meteors.OperationResult.OperationResultBase.StatusCode"/> if init with value > 0.
             <para>Custom return StatusCode-http used with web-requests.
             Not effect with native C# code lib as un-host-web projects or responses.</para>
             </summary>
         </member>
-        <member name="M:OperationContext.OperationResult`1.SetSuccess(`0)">
+        <member name="M:Meteors.OperationResult`1.SetSuccess(`0)">
             <summary>
             Helper to pass success result 
-            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:OperationContext.OperationResultTypes.Success"/></para>
+            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:Meteors.OperationResultTypes.Success"/></para>
             </summary>
             <param name="result"></param>
-            <returns> <see cref="T:OperationContext.OperationResult`1"/> </returns>
+            <returns> <see cref="T:Meteors.OperationResult`1"/> </returns>
         </member>
-        <member name="M:OperationContext.OperationResult`1.SetSuccess(System.String)">
+        <member name="M:Meteors.OperationResult`1.SetSuccess(System.String)">
             <summary>
             Helper
-            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:OperationContext.OperationResultTypes.Success"/></para>
+            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:Meteors.OperationResultTypes.Success"/></para>
             <para>Effect in <code>base.Message</code> .</para>
             </summary>
             <param name="message"></param>
-            <returns> <see cref="T:OperationContext.OperationResult`1"/> </returns>
+            <returns> <see cref="T:Meteors.OperationResult`1"/> </returns>
         </member>
-        <member name="M:OperationContext.OperationResult`1.SetSuccess(`0,System.String)">
+        <member name="M:Meteors.OperationResult`1.SetSuccess(`0,System.String)">
             <summary>
             Helper to pass success result 
-            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:OperationContext.OperationResultTypes.Success"/></para>
+            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:Meteors.OperationResultTypes.Success"/></para>
             <para>Effect in <code>base.Message</code> .</para>
             </summary>
             <param name="result"></param>
             <param name="message"></param>
-            <returns> <see cref="T:OperationContext.OperationResult`1"/> </returns>
+            <returns> <see cref="T:Meteors.OperationResult`1"/> </returns>
         </member>
-        <member name="M:OperationContext.OperationResult`1.SetFailed(System.String,OperationContext.OperationResultTypes)">
+        <member name="M:Meteors.OperationResult`1.SetFailed(System.String,Meteors.OperationResultTypes)">
             <summary>
             Helper  
-            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:OperationContext.OperationResultTypes.Failed"/></para>
+            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:Meteors.OperationResultTypes.Failed"/></para>
             <para>Effect in <code>base.Message</code> .</para>
-            <para>Effect in <code>base.OperationResultType</code> default value <see cref="F:OperationContext.OperationResultTypes.Failed"/> , <see cref="F:OperationContext.OperationResultTypes.Forbidden"/> and <see cref="F:OperationContext.OperationResultTypes.Unauthorized"/> </para>
+            <para>Effect in <code>base.OperationResultType</code> default value <see cref="F:Meteors.OperationResultTypes.Failed"/> , <see cref="F:Meteors.OperationResultTypes.Forbidden"/> and <see cref="F:Meteors.OperationResultTypes.Unauthorized"/> </para>
             <para>Exception :  <see langword="throw"/> <see cref="T:System.ArgumentException"/> if type not kind of Failed .</para>
             </summary>
             <exception cref="T:System.ArgumentException"></exception>
             <param name="message"></param>
             <param name="type"></param>
-            <returns> <see cref="T:OperationContext.OperationResult`1"/> </returns>
+            <returns> <see cref="T:Meteors.OperationResult`1"/> </returns>
         </member>
-        <member name="M:OperationContext.OperationResult`1.SetException(System.Exception)">
+        <member name="M:Meteors.OperationResult`1.SetException(System.Exception)">
             <summary>
             Helper to pass exception result 
-            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:OperationContext.OperationResultTypes.Exception"/> .</para>
+            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:Meteors.OperationResultTypes.Exception"/> .</para>
             </summary>
             <param name="exception"></param>
-            <returns> <see cref="T:OperationContext.OperationResult`1"/> </returns>
+            <returns> <see cref="T:Meteors.OperationResult`1"/> </returns>
         </member>
-        <member name="M:OperationContext.OperationResult`1.SetContent(OperationContext.OperationResultTypes,System.String)">
+        <member name="M:Meteors.OperationResult`1.SetContent(Meteors.OperationResultTypes,System.String)">
             <summary>
             Helper  
-            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:OperationContext.OperationResultTypes.Exist"/> or <seealso cref="F:OperationContext.OperationResultTypes.NotExist"/>  </para>
+            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:Meteors.OperationResultTypes.Exist"/> or <seealso cref="F:Meteors.OperationResultTypes.NotExist"/>  </para>
             <para>Effect in <code>base.Message</code> .</para>
             <para>Exception :  <see langword="throw"/> <see cref="T:System.ArgumentException"/> if type not kind of Content .</para>
             </summary>
             <exception cref="T:System.ArgumentException"></exception>
             <param name="type"></param>
             <param name="message"></param>
-            <returns> <see cref="T:OperationContext.OperationResult`1"/> </returns>
+            <returns> <see cref="T:Meteors.OperationResult`1"/> </returns>
         </member>
-        <member name="M:OperationContext.OperationResult`1.op_Implicit(OperationContext.OperationResultTypes)~OperationContext.OperationResult{`0}">
+        <member name="M:Meteors.OperationResult`1.op_Implicit(Meteors.OperationResultTypes)~Meteors.OperationResult{`0}">
             <summary>
-            Directly return implicit take assign <see cref="T:OperationContext.OperationResultTypes"/> and allow to return as <see cref="T:OperationContext.OperationResult`1"/>
+            Directly return implicit take assign <see cref="T:Meteors.OperationResultTypes"/> and allow to return as <see cref="T:Meteors.OperationResult`1"/>
             </summary>
             <exception cref="T:System.ArgumentException"></exception>
             <param name="type"></param>
         </member>
-        <member name="M:OperationContext.OperationResult`1.op_Implicit(System.ValueTuple{OperationContext.OperationResultTypes,System.String})~OperationContext.OperationResult{`0}">
+        <member name="M:Meteors.OperationResult`1.op_Implicit(System.ValueTuple{Meteors.OperationResultTypes,System.String})~Meteors.OperationResult{`0}">
             <summary>
-            Directly return implicit take assign <see cref="T:OperationContext.OperationResultTypes"/> and <see cref="T:System.String" langword=" Message"/> as tuple , Allow to return as <see cref="T:OperationContext.OperationResult`1"/>
+            Directly return implicit take assign <see cref="T:Meteors.OperationResultTypes"/> and <see cref="T:System.String" langword=" Message"/> as tuple , Allow to return as <see cref="T:Meteors.OperationResult`1"/>
             </summary>
             <exception cref="T:System.ArgumentException"></exception>
             <param name="type_message"></param>
         </member>
-        <member name="M:OperationContext.OperationResult`1.op_Implicit(`0)~OperationContext.OperationResult{`0}">
+        <member name="M:Meteors.OperationResult`1.op_Implicit(System.ValueTuple{System.String,Meteors.OperationResultTypes})~Meteors.OperationResult{`0}">
             <summary>
-            Directly return implicit take assign <see cref="P:OperationContext.OperationResult`1.Result"/> and allow to return as <see cref="T:OperationContext.OperationResult`1"/>
+            Directly return implicit take assign <see cref="T:Meteors.OperationResultTypes"/> and <see cref="T:System.String" langword=" Message"/> as tuple , Allow to return as <see cref="T:Meteors.OperationResult`1"/>
+            </summary>
+            <exception cref="T:System.ArgumentException"></exception>
+            <param name="type_message"></param>
+        </member>
+        <member name="M:Meteors.OperationResult`1.op_Implicit(`0)~Meteors.OperationResult{`0}">
+            <summary>
+            Directly return implicit take assign <see cref="P:Meteors.OperationResult`1.Data"/> and allow to return as <see cref="T:Meteors.OperationResult`1"/>
             </summary>
             <param name="result"></param>
         </member>
-        <member name="M:OperationContext.OperationResult`1.op_Implicit(System.ValueTuple{`0,System.String})~OperationContext.OperationResult{`0}">
+        <member name="M:Meteors.OperationResult`1.op_Implicit(System.ValueTuple{`0,System.String})~Meteors.OperationResult{`0}">
             <summary>
-            Directly return implicit take assign <see cref="P:OperationContext.OperationResult`1.Result"/> and <see cref="T:System.String" langword=" Message"/> as tuple, and allow to return as <see cref="T:OperationContext.OperationResult`1"/>
+            Directly return implicit take assign <see cref="P:Meteors.OperationResult`1.Data"/> and <see cref="T:System.String" langword=" Message"/> as tuple, and allow to return as <see cref="T:Meteors.OperationResult`1"/>
             </summary>
             <param name="result_message"></param>
         </member>
-        <member name="M:OperationContext.OperationResult`1.Equals(OperationContext.OperationResult{`0})">
+        <member name="M:Meteors.OperationResult`1.Equals(Meteors.OperationResult{`0})">
             <summary>
             <inheritdoc/>
             </summary>
             <param name="other"></param>
-            <returns></returns>
-        </member>
-        <member name="F:OperationContext.OperationResult`1.disposed">
-            <summary>
-            Flag enter disposed
-            </summary>
-        </member>
-        <member name="M:OperationContext.OperationResult`1.Finalize">
-            <summary>
-            Destructor
-            </summary>
-        </member>
-        <member name="M:OperationContext.OperationResult`1.Dispose">
-            <summary>
-            Default finalize instead of type Result <code>T = null</code> .
-            </summary>
-        </member>
-        <member name="M:OperationContext.OperationResult`1.Dispose(System.Boolean)">
-            <summary>
-            The virtual dispose method that allows
-            classes inherited from this one to dispose their resources.
-            </summary>
-            <param name="disposing"></param>
-        </member>
-        <member name="T:ExtensionMethods.Helper.Boolean.BooleanExtension">
-            <summary>
-            Basics extensions
-            </summary>
-        </member>
-        <member name="M:ExtensionMethods.Helper.Boolean.BooleanExtension.NestedIF``1(System.Boolean,``0,``0)">
-            <summary>
-            Nested iF statement return side by <see langword="Boolean"/>
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="value"></param>
-            <param name="trueSide"></param>
-            <param name="falseSide"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ExtensionMethods.Helper.Boolean.BooleanExtension.NestedIF(System.Boolean,System.String,System.String)">
-            <summary>
-            Nested iF statement return side by <see langword="Boolean"/> <see cref="!:value"/>
-            </summary>
-            <param name="value"></param>
-            <param name="trueSide"></param>
-            <param name="falseSide"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ExtensionMethods.Helper.Boolean.BooleanExtension.NestedIF``1(System.Boolean,System.Func{``0},System.Func{``0})">
-            <summary>
-            Nested iF statement return side by <see langword="Boolean"/>
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="value"></param>
-            <param name="trueSide"></param>
-            <param name="falseSide"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ExtensionMethods.Helper.Boolean.BooleanExtension.NestedIF``1(System.Boolean,``0,System.Func{``0})">
-            <summary>
-            Nested iF statement return side by <see langword="Boolean"/>
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="value"></param>
-            <param name="trueSide"></param>
-            <param name="falseSide"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ExtensionMethods.Helper.Boolean.BooleanExtension.NestedIF``1(System.Boolean,System.Func{``0},``0)">
-            <summary>
-            Nested iF statement return side by <see langword="Boolean"/>
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="value"></param>
-            <param name="trueSide"></param>
-            <param name="falseSide"></param>
-            <returns></returns>
-        </member>
-        <member name="T:ExtensionMethods.Helper.Exception.ExceptionExtension">
-            <summary>
-            basics Extensions
-            </summary>
-        </member>
-        <member name="M:ExtensionMethods.Helper.Exception.ExceptionExtension.ToFullException(System.Exception)">
-            <summary>
-            return full message of <see cref="N:ExtensionMethods.Helper.Exception"/>  inner  and depth
-            </summary>
-            <param name="exception"></param>
-            <returns></returns>
-        </member>
-        <member name="T:ExtensionMethods.Helper.String.StringExtension">
-            <summary>
-            Basics extensions
-            </summary>
-        </member>
-        <member name="M:ExtensionMethods.Helper.String.StringExtension.IsNullOrEmpty(System.String)">
-            <summary>
-            Indicates whether the specified string is null or an empty string ("").
-            </summary>
-            <param name="value"></param>
             <returns></returns>
         </member>
     </members>

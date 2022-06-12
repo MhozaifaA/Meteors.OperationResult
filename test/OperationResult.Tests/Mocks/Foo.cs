@@ -6,9 +6,21 @@ using System.Threading.Tasks;
 
 namespace OperationResult.Tests.Mocks
 {
-    public class Foo
+    public class FooUser
     {
-        public string Text { get; set; }
-        public int Value { get; set; }
+        public FooUser(string userName, string password)
+        {
+            UserName = userName;
+            Password = password;
+        }
+
+        public string UserName { get; set; }
+        public string Password { get; set; }
+
+      
+        public bool Check(string userName, string password)
+        {
+            return UserName.Equals(userName) && Password.Equals(password);
+        }
     }
 }
