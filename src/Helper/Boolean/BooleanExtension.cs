@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ExtensionMethods.Helper.Boolean
+namespace Meteors.OperationResult.ExtensionMethods
 {
     /// <summary>
     /// Basics extensions

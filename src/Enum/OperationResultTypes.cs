@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace OperationContext
+namespace Meteors
 {
     /// <summary>
     /// Logical  result type

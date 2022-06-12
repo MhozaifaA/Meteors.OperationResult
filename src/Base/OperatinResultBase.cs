@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OperationContext.Base
+namespace Meteors.OperationResult
 {
     /// <summary>
     /// Main prop not changed or effect on return

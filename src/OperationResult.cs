@@ -1,8 +1,8 @@
-﻿using ExtensionMethods.Helper.Exception;
-using OperationContext.Base;
+﻿using Meteors.OperationResult;
+using Meteors.OperationResult.ExtensionMethods;
 using System;
 
-namespace OperationContext
+namespace Meteors
 {
     /// <summary>
     /// Encapsulation result.

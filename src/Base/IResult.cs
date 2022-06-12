@@ -1,4 +1,4 @@
-﻿namespace OperationContext.Base
+﻿namespace Meteors.OperationResult
 {
     internal interface IResult<T>
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace ExtensionMethods.Helper.Exception
+namespace Meteors.OperationResult.ExtensionMethods
 {
     /// <summary>
     /// basics Extensions

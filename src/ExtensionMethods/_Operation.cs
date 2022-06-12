@@ -1,7 +1,7 @@
-﻿using OperationContext.Base;
+﻿using Meteors.OperationResult;
 using System;
 
-namespace OperationContext
+namespace Meteors
 {
     /// <summary>
     /// Quick return from <see cref="OperationResultBase"/> and <see cref="IResult{T}"/>

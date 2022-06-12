@@ -1,4 +1,4 @@
-﻿namespace ExtensionMethods.Helper.String
+﻿namespace Meteors.OperationResult.ExtensionMethods
 {
     /// <summary>
     /// Basics extensions
