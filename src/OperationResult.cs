@@ -205,6 +205,19 @@ namespace Meteors
             return new OperationResult<T>().SetSuccess(result_message.result, result_message.message);
         }
 
+
+        /// <summary>
+        /// Helper to pass exception result 
+        /// <para>Effect in <code>base.OperationResultType</code> to <seealso cref="OperationResultTypes.Exception"/> .</para>
+        /// </summary>
+        /// <param name="exception"></param>
+        /// <returns> <see cref="OperationResult{T}"/> </returns>
+        public static implicit operator OperationResult<T>(Exception exception)
+        {
+            return new OperationResult<T>().SetException(exception);
+        }
+
+
         /// <summary>
         /// <inheritdoc/>
         /// </summary>

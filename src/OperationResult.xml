@@ -1033,6 +1033,14 @@
             </summary>
             <param name="result_message"></param>
         </member>
+        <member name="M:Meteors.OperationResult`1.op_Implicit(System.Exception)~Meteors.OperationResult{`0}">
+            <summary>
+            Helper to pass exception result 
+            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:Meteors.OperationResultTypes.Exception"/> .</para>
+            </summary>
+            <param name="exception"></param>
+            <returns> <see cref="T:Meteors.OperationResult`1"/> </returns>
+        </member>
         <member name="M:Meteors.OperationResult`1.Equals(Meteors.OperationResult{`0})">
             <summary>
             <inheritdoc/>

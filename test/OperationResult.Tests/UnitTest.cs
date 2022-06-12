@@ -229,15 +229,14 @@ namespace OperationResult.Tests
                 }
                 else if (one.Password == user.Password)
                 {
-                    operation = one;
-                    operation.Message = $"Success to access";
+                    operation = (one , $"Success to access");
                 }
                 else
                     Assert.NotNull(null); //not match any facts
             }
             catch (System.Exception e)
             {
-               // operation = e; //not supporeted yet
+                operation = e; //not supporeted yet
             }
 
             Assert.Equal(resultTypes, operation.OperationResultType);
