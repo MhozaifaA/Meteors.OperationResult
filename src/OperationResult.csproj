@@ -5,9 +5,10 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>MhozaifaA</Authors>
     <PackageId>Meteors.$(AssemblyName)</PackageId>
-    <PackageLicenseFile>C:\Users\HP\Source\Repos\OperationResult\LICENSE</PackageLicenseFile>
     <AssemblyVersion>1.0.1</AssemblyVersion>
     <FileVersion>1.0.1</FileVersion>
+    <Version>1.0.1</Version>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
