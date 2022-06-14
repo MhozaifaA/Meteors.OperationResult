@@ -69,7 +69,7 @@ namespace OperationResult.Tests
 
         [Theory]
         [MemberData(nameof(FactData))]
-        public async void ToJsonResultAsync(OperationResultTypes type)
+        public async Task ToJsonResultAsync(OperationResultTypes type)
         {
             var operationAsync = Task.FromResult(Seed.Create<FooUser>(type));
             var operation = await operationAsync;
@@ -134,7 +134,7 @@ namespace OperationResult.Tests
 
         [Theory]
         [MemberData(nameof(FactData))]
-        public async void ToJsonResultAsync_IsBody(OperationResultTypes type)
+        public async Task ToJsonResultAsync_IsBody(OperationResultTypes type)
         {
             var operationAsync = Task.FromResult(Seed.Create<FooUser>(type));
             var operation = await operationAsync;
@@ -165,6 +165,30 @@ namespace OperationResult.Tests
 
         }
 
+
+
+
+
+        [Theory]
+        [MemberData(nameof(FactData))]
+        public void WithStatusCode(OperationResultTypes type)
+        {
+            var operation = Seed.Create<FooUser>(type);
+            var result = operation.WithStatusCode(507);
+
+            Assert.Equal(507, result.StatusCode);
+        }
+
+
+        [Theory]
+        [MemberData(nameof(FactData))]
+        public async Task WithStatusCodeAsync(OperationResultTypes type)
+        {
+            var operation = Task.FromResult(Seed.Create<FooUser>(type));
+            var result =await operation.WithStatusCodeAsync(507);
+
+            Assert.Equal(507, result.StatusCode);
+        }
 
     }
 }
