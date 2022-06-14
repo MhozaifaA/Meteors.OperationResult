@@ -15,7 +15,7 @@ namespace OperationResult.Tests
         {
             new object[] {  OperationResultTypes.Exception},
             new object[] { OperationResultTypes.NotExist},
-            new object[] {OperationResultTypes.Exist}, 
+            new object[] {OperationResultTypes.Exist},
             new object[] {  OperationResultTypes.Unauthorized},
             new object[] { OperationResultTypes.Forbidden},
             new object[] { OperationResultTypes.Failed},
@@ -47,18 +47,18 @@ namespace OperationResult.Tests
 
             Assert.Equal((int)type, result.StatusCode);
 
-            if(type == OperationResultTypes.Success)
+            if (type == OperationResultTypes.Success)
             {
                 var data = result.Value as FooUser;
                 Assert.NotNull(data);
             } else
-           
+
             if (type == OperationResultTypes.Exception)
             {
                 Assert.True(operation.HasException);
                 Assert.Equal(Seed.ToFullException(operation.Exception), result.Value?.ToString());
             }
-               else
+            else
             if (type != OperationResultTypes.Success && type != OperationResultTypes.Exception)
             {
                 Assert.Equal(type.ToString(), result.Value?.ToString());
@@ -73,7 +73,7 @@ namespace OperationResult.Tests
         {
             var operationAsync = Task.FromResult(Seed.Create<FooUser>(type));
             var operation = await operationAsync;
-            var result =await operationAsync.ToJsonResultAsync();
+            var result = await operationAsync.ToJsonResultAsync();
 
             Assert.Equal((int)type, result.StatusCode);
 
@@ -108,7 +108,7 @@ namespace OperationResult.Tests
 
             Assert.Equal((int)type, result.StatusCode);
 
-            OperationResult<FooUser>  bodyResult = result.Value as OperationResult<FooUser>;
+            OperationResult<FooUser> bodyResult = result.Value as OperationResult<FooUser>;
             Assert.NotNull(bodyResult);
 
             if (type == OperationResultTypes.Success)
@@ -138,7 +138,7 @@ namespace OperationResult.Tests
         {
             var operationAsync = Task.FromResult(Seed.Create<FooUser>(type));
             var operation = await operationAsync;
-            var result =await operationAsync.ToJsonResultAsync(true);
+            var result = await operationAsync.ToJsonResultAsync(true);
 
             Assert.Equal((int)type, result.StatusCode);
 
@@ -185,9 +185,33 @@ namespace OperationResult.Tests
         public async Task WithStatusCodeAsync(OperationResultTypes type)
         {
             var operation = Task.FromResult(Seed.Create<FooUser>(type));
-            var result =await operation.WithStatusCodeAsync(507);
+            var result = await operation.WithStatusCodeAsync(507);
 
             Assert.Equal(507, result.StatusCode);
+        }
+
+
+
+        [Theory]
+        [MemberData(nameof(FactData))]
+        public void CollectOnce(OperationResultTypes type)
+        {
+            var operation = Seed.Create<FooUser>(type);
+            var result = operation.Collect();
+
+            Assert.Equal(operation, result);
+        }
+
+        [Theory]
+        [MemberData(nameof(FactData))]
+        public void IntoOnce(OperationResultTypes type)
+        {
+            var operation = Seed.Create<FooUser>(type);
+            var result = operation.Into(o => o);
+
+            //this global Priority
+            if (type == OperationResultTypes.Success || type == OperationResultTypes.Failed || type == OperationResultTypes.Exception)
+            Assert.Equal(operation, result.Data);
         }
 
     }

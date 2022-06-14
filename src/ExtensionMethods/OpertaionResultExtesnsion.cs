@@ -903,11 +903,9 @@ namespace Meteors
                 return operation.SetException(Result.Exception);
 
             if (Result.OperationResultType == OperationResultTypes.Failed || Result.OperationResultType == OperationResultTypes.Forbidden || Result.OperationResultType == OperationResultTypes.Unauthorized)
-                return operation.SetFailed(String.Join(",",
-                    Result.Message.IsNullOrEmpty().NestedIF(()=>$"Result {1} not contain Message or Success",()=> Result.Message)), Result.OperationResultType);
+                return operation.SetFailed(Result.Message, Result.OperationResultType);
 
-            return operation.SetSuccess(result, String.Join(",",
-                  Result.Message.IsNullOrEmpty().NestedIF(()=>$"Result {1} not contain Message or Success",()=> Result.Message)));
+            return operation.SetSuccess(result, Result.Message);
 
         }
 
