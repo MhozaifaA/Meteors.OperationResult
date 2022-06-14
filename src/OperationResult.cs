@@ -39,7 +39,7 @@ namespace Meteors
         /// <para>Custom return StatusCode-http used with web-requests.
         /// Not effect with native C# code lib as un-host-web projects or responses.</para>
         /// </summary>
-        public bool HasCustomeStatusCode => StatusCode > 0;
+        public bool HasCustomStatusCode => StatusCode > 0;
 
 
         /// <summary>

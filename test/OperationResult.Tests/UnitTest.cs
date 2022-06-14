@@ -88,7 +88,7 @@ namespace OperationResult.Tests
 
         [Theory]
         [MemberData(nameof(FactData))]
-        public OperationResult<FooUser> AsExtension(FooUser user, OperationResultTypes resultTypes)
+        public OperationResult<FooUser> AsMethod(FooUser user, OperationResultTypes resultTypes)
         {
             OperationResult<FooUser> operation = new OperationResult<FooUser>();
 

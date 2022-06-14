@@ -16,9 +16,154 @@ Simplicity is one in all,
 
 
 
-### APIs
+### Documentation 
 
+* #### Schemas
 
+  - ##### OperationResult/Base Schema
+
+    ▸ Types/Statuses
+
+    `Success, Exist, NotExist,Failed,Forbidden,Exception,Unauthorized`
+
+     ▸ Fields/Props
+
+    `Data, IsSuccess, HasException, FullExceptionMessage, HasCutomStatusCode,Message, OperationResultType, Exception, StatusCode`
+
+    ▸ Methods/Func Helper
+
+    `SetSuccess, SetFailed, SetException, SetContent`
+
+    ▸ Implicit
+
+    `(type) act SetContent, `
+
+    `(Tuple(type, message)) act SetContent,`
+
+    `(Tuple(message,type)) act SetFailed,`
+
+    `(result) act SetSuccess,`
+
+    `((result, message)) act SetSuccess,`
+
+    `(exception) as SetException`
+
+  - ##### _Operation Schema
+
+    ▸ Extensions  (Abstract-Base/Main Class)
+
+    `SetSuccess, SetFailed, SetException, SetContent`
+
+  ​
+
+- ###  How to use
+
+  ```c#
+    public class FooUser { UserName, Password }
+    public class FooUserDetails { FullName, Age }
+
+    public OperationResult<FooUserDetails> Example(FooUser user)
+  ```
+
+  ​
+
+  > Regular way
+
+  ```c#
+    {
+      try
+      {
+        OperationResult<FooUserDetails> operation = new ();
+       
+        if(!IsCurrect(user))
+        {
+           operation.OperationResultType = OperationResultTypes.Failed;
+           operation.Message = $"{user.UserName} faild to access";
+          return operation;
+        }
+        operation.OperationResultType = OperationResultTypes.Success;
+        operation.Message = $"Success to access"; //option
+        operation.Data = GetDatails(user);
+        return operation;
+      }
+      catch(Exception e)
+      {
+        operation.Exception = e;
+        operation.OperationResultType = OperationResultTypes.Exception;
+        return operation;
+      }
+    }
+  ```
+
+  > Method Way
+
+  ```c#
+  {
+    try
+    {
+      OperationResult<FooUserDetails> operation = new ();
+
+      if(!IsCurrect(user))
+      	return operation.SetFailed($"{user.UserName} faild to access");
+      
+      return operation.SetSuccess(result);
+
+    }
+    catch(Exception e)
+    {
+      return operation.SetException(e);
+    }
+  }
+  ```
+  > Extension Way
+
+  ``` c#
+  {
+    try
+    { 
+      if(!IsCurrect(user))
+      	return _Operation.SetFailed($"{user.UserName} faild to access");
+      
+      return _Operation.SetSuccess(result);
+    }
+    catch(Exception e)
+    {
+      return _Operation.SetException(e);
+    }
+  }
+  ```
+
+  > Implicit way
+
+  ```c#
+  {
+    try
+    { 
+      if(!IsCurrect(user))
+      	return ($"{user.UserName} faild to access",OperationResultTypes.Failed);
+      
+      return result; // mean success
+    }
+    catch(Exception e)
+    {
+      return e;
+    }
+  }
+  ```
+
+  You can see benefit when using `Meteors.OperationResult` Ways
+
+  > With Global Exception Handle
+
+  ```c#
+   { 
+      if(!IsCurrect(user))
+      	return ($"{user.UserName} faild to access",OperationResultTypes.Failed);
+      return result;
+    }
+  ```
+
+  ​
 
 
 

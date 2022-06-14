@@ -118,7 +118,7 @@ namespace Meteors
         /// <returns><see cref="JsonResult"/></returns>
         private static JsonResult GetValidResult<T>(this OperationResult<T> result, string jsonMessage = null, bool hasResult = false, bool isBody = false)
         {
-            if (!result.HasCustomeStatusCode && (result.StatusCode??0) == 0)
+            if (!result.HasCustomStatusCode && (result.StatusCode??0) == 0)
                 result.StatusCode = (int)result.OperationResultType;
 
             bool jsonMessageIsNullOrEmpty = jsonMessage.IsNullOrEmpty();
