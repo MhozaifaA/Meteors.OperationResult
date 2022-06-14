@@ -933,7 +933,7 @@
             Return deep inner exceptions messages.
             </summary>
         </member>
-        <member name="P:Meteors.OperationResult`1.HasCustomeStatusCode">
+        <member name="P:Meteors.OperationResult`1.HasCustomStatusCode">
             <summary>
             Check <see cref="P:Meteors.OperationResult.OperationResultBase.StatusCode"/> if init with value > 0.
             <para>Custom return StatusCode-http used with web-requests.

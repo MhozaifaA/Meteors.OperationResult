@@ -7,7 +7,7 @@ using Xunit;
 namespace OperationResult.Tests
 {
 
-    public class UnitTest
+    public class BasicTest
     {
         public static IEnumerable<FooUser> Users => new List<FooUser>() {
             new ("Admin","P@$$W0rd"),
