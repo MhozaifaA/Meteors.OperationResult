@@ -1,10 +1,12 @@
-# [Meteors] OperationResult 1.3
+# [Meteors] OperationResult 6.1.3 
+> `version 1.3 net6.0`
+
 
 *Meteors Operation Result came with new and redesigned to accept more than container for status and data. **OperationResult** is isolated but stuck with kernel of your business logic , with out if/else and some corrupted code to handle results.*
 
 Install-Package Meteors.OperationResult -Version 1.0.1
 
-> Soon to lunch with full doc
+> Soon to lunch with full doc 60%
 
 
 
