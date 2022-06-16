@@ -13,19 +13,16 @@ namespace OperationResult.Tests.Mocks
             UserName = userName;
             Password = password;
         }
-
-        public FooUser()
-        {
-
-        }
+        public FooUser() {}
 
         public string UserName { get; set; }
         public string Password { get; set; }
+    }
 
-      
-        public bool Check(string userName, string password)
-        {
-            return UserName.Equals(userName) && Password.Equals(password);
-        }
+    public class FooInto
+    {
+        public FooUser User { get; set; }
+        public FooUser OtherUser { get; set; }
+        public int StatusCode { get; set; }
     }
 }

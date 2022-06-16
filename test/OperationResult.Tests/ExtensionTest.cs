@@ -210,8 +210,66 @@ namespace OperationResult.Tests
             var result = operation.Into(o => o);
 
             //this global Priority
-            if (type == OperationResultTypes.Success || type == OperationResultTypes.Failed || type == OperationResultTypes.Exception)
-            Assert.Equal(operation, result.Data);
+            if (type == OperationResultTypes.Success)
+                Assert.Equal(operation, result.Data);
+            else if (type != OperationResultTypes.Exist && type != OperationResultTypes.NotExist)
+            {
+                Assert.Equal(operation.Data, result.Data?.Data);
+                Assert.Equal(operation.Message, result.Message);
+                Assert.Equal(operation.OperationResultType, result.OperationResultType);
+                Assert.Equal(operation.Exception, result.Exception);
+                Assert.Equal(operation.StatusCode, result.StatusCode);
+            }
+            else
+            {
+                Assert.Equal(operation.Data, result.Data?.Data);
+                Assert.Equal(operation.Message, result.Message);
+                Assert.Equal(OperationResultTypes.Success, result.OperationResultType);
+                Assert.Equal(operation.Exception, result.Exception);
+                Assert.Equal(operation.StatusCode, result.StatusCode);
+            }
+
+        }
+
+
+        [Theory]
+        [MemberData(nameof(FactData))]
+        public void IntoOnceReturnObj(OperationResultTypes type)
+        {
+            var operation = Seed.Create<FooUser>(type);
+            var result = operation.Into(o => new FooInto() { User = o.Data, 
+                StatusCode = o.StatusCode??0 } );
+
+            //this global Priority
+            if (type == OperationResultTypes.Success)
+            {
+                Assert.Equal(OperationResultTypes.Success, result.OperationResultType);
+
+                Assert.Equal(operation.Data, result.Data.User);
+            }
+            else if (type != OperationResultTypes.Exist && type != OperationResultTypes.NotExist)
+            {
+                Assert.Equal(type, result.OperationResultType);
+
+                Assert.Equal(operation.Data, result.Data?.User);
+
+                Assert.Equal(operation.Message, result.Message);
+
+                Assert.Equal(operation.OperationResultType, result.OperationResultType);
+                Assert.Equal(operation.Exception, result.Exception);
+                Assert.Equal(operation.StatusCode, result.StatusCode);
+            }
+            else
+            {
+
+                Assert.Equal(OperationResultTypes.Success, result.OperationResultType);
+
+                Assert.Equal(operation.Data, result.Data?.User);
+                Assert.Equal(operation.Message, result.Message);
+                Assert.Equal(operation.Exception, result.Exception);
+                Assert.Equal(operation.StatusCode, result.StatusCode);
+            }
+
         }
 
     }
