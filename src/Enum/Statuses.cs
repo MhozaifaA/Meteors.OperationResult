@@ -10,6 +10,10 @@ namespace Meteors.OperationResult
     public enum Statuses : uint
     {
         /// <summary>
+        /// Unknown status take zero(default) value when not assert  
+        /// </summary>
+        UnKnown,
+        /// <summary>
         /// As <see cref="StatusCodes.Status200OK"/>
         /// </summary>
         Success = 200,

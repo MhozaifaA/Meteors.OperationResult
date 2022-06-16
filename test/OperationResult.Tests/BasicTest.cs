@@ -27,7 +27,21 @@ namespace OperationResult.Tests
             new object[] { new FooUser("Admin","P@$$W0rd"), Statuses.Success},
         };
 
-       
+
+        [Fact]
+        public OperationResult<FooUser> UnknownStatus()
+        {
+            OperationResult<FooUser> operation = new OperationResult<FooUser>();
+
+            //act as success
+            operation.Data = new FooUser();
+            operation.Message = "Success";
+
+            Assert.Equal(Statuses.UnKnown, operation.Status);
+
+            return operation;
+        }
+
 
         [Theory]
         [MemberData(nameof(FactData))]
@@ -42,26 +56,27 @@ namespace OperationResult.Tests
 
                 var one = Users.FirstOrDefault(u => u.UserName.Equals(user.UserName));
 
-                if(one is null)
+                if (one is null)
                 {
                     operation.Status = Statuses.NotExist;
                     operation.Message = "message";
                 }
-                else if(user.Password is null)
+                else if (user.Password is null)
                 {
                     operation.Status = Statuses.Exist;
                     operation.Message = $"{one.UserName} found";
-                } else if(one.UserName == "guest" && user.Password == string.Empty)
+                }
+                else if (one.UserName == "guest" && user.Password == string.Empty)
                 {
                     operation.Status = Statuses.Unauthorized;
                     operation.Message = $"{one.UserName} is guest";
                 }
-                else if (one.UserName == "guest" && user.Password.Length > 0 )
+                else if (one.UserName == "guest" && user.Password.Length > 0)
                 {
                     operation.Status = Statuses.Forbidden;
                     operation.Message = $"{one.UserName} is guest con't have password";
                 }
-                else if (one.Password != user.Password )
+                else if (one.Password != user.Password)
                 {
                     operation.Status = Statuses.Failed;
                     operation.Message = $"{one.UserName} faild to access";
@@ -71,8 +86,9 @@ namespace OperationResult.Tests
                     operation.Status = Statuses.Success;
                     operation.Message = $"Success to access";
                     operation.Data = one; //set result
-                }else
-                     Assert.NotNull(null); //not match any facts
+                }
+                else
+                    Assert.NotNull(null); //not match any facts
             }
             catch (System.Exception e)
             {
@@ -80,7 +96,7 @@ namespace OperationResult.Tests
                 operation.Status = Statuses.Exception;
             }
 
-            Assert.Equal(resultTypes, operation.Status); 
+            Assert.Equal(resultTypes, operation.Status);
             return operation;
         }
 
@@ -102,7 +118,7 @@ namespace OperationResult.Tests
 
                 if (one is null)
                 {
-                    operation.SetContent(Statuses.NotExist,"message");
+                    operation.SetContent(Statuses.NotExist, "message");
                 }
                 else if (user.Password is null)
                 {
@@ -110,7 +126,7 @@ namespace OperationResult.Tests
                 }
                 else if (one.UserName == "guest" && user.Password == string.Empty)
                 {
-                    operation.SetFailed($"{one.UserName} is guest" , Statuses.Unauthorized);
+                    operation.SetFailed($"{one.UserName} is guest", Statuses.Unauthorized);
                 }
                 else if (one.UserName == "guest" && user.Password.Length > 0)
                 {
@@ -222,11 +238,11 @@ namespace OperationResult.Tests
                 }
                 else if (one.Password != user.Password)
                 {
-                    operation =($"{one.UserName} faild to access", Statuses.Failed);
+                    operation = ($"{one.UserName} faild to access", Statuses.Failed);
                 }
                 else if (one.Password == user.Password)
                 {
-                    operation = (one , $"Success to access");
+                    operation = (one, $"Success to access");
                 }
                 else
                     Assert.NotNull(null); //not match any facts

@@ -56,6 +56,11 @@
             only checked by <see langword="enum"/></para>
             </summary>
         </member>
+        <member name="F:Meteors.OperationResult.Statuses.UnKnown">
+            <summary>
+            Unknown status take zero(default) value when not assert  
+            </summary>
+        </member>
         <member name="F:Meteors.OperationResult.Statuses.Success">
             <summary>
             As <see cref="F:Microsoft.AspNetCore.Http.StatusCodes.Status200OK"/>
