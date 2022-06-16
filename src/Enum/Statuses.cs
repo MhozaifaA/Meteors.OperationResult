@@ -46,7 +46,7 @@ namespace Meteors.OperationResult
 
 
     /// <summary>
-    /// Extension methods for <see cref="Statuses"/> only support some extra feature to <see cref="enum"/> <see cref="Statuses"/>
+    /// Extension methods for <see cref="Statuses"/> only support some extra feature to <see cref="System.Enum"/> <see cref="Statuses"/>
     /// </summary>
     public static class StatusesExtensions
     {

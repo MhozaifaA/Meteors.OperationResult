@@ -103,6 +103,7 @@ namespace Meteors
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="result"></param>
+        /// <param name="isBody">boolean value if return json complete body of operation</param>
         /// <returns><see cref="Task{JsonResult}"/></returns>
         public static async Task<JsonResult> ToJsonResultAsync<T>(this Task<OperationResult<T>> result, bool isBody = false) => (await result).ToJsonResult(isBody);
 

@@ -99,7 +99,7 @@
         </member>
         <member name="T:Meteors.OperationResult.StatusesExtensions">
             <summary>
-            Extension methods for <see cref="T:Meteors.OperationResult.Statuses"/> only support some extra feature to <see cref="!:enum"/> <see cref="T:Meteors.OperationResult.Statuses"/>
+            Extension methods for <see cref="T:Meteors.OperationResult.Statuses"/> only support some extra feature to <see cref="T:System.Enum"/> <see cref="T:Meteors.OperationResult.Statuses"/>
             </summary>
         </member>
         <member name="M:Meteors.OperationResult.StatusesExtensions.ToPerString(Meteors.OperationResult.Statuses)">
@@ -210,6 +210,7 @@
             </summary>
             <typeparam name="T"></typeparam>
             <param name="result"></param>
+            <param name="isBody">boolean value if return json complete body of operation</param>
             <returns><see cref="T:System.Threading.Tasks.Task`1"/></returns>
         </member>
         <member name="M:Meteors.OpertaionResultExtesnsion.GetValidResult``1(Meteors.OperationResult{``0},System.String,System.Boolean,System.Boolean)">

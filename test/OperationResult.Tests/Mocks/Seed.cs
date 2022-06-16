@@ -16,25 +16,18 @@ namespace OperationResult.Tests.Mocks
             {
                 case Statuses.Success:
                     return _Operation.SetSuccess<T>(Activator.CreateInstance<T>());
-                    break;
                 case Statuses.Exist:
                     return _Operation.SetContent<T>(type, type.ToString());
-                    break;
                 case Statuses.NotExist:
                     return _Operation.SetContent<T>(type, type.ToString());
-                    break;
                 case Statuses.Failed:
                     return _Operation.SetFailed<T>(type.ToString());
-                    break;
                 case Statuses.Forbidden:
                     return _Operation.SetFailed<T>(type.ToString(), type);
-                    break;
                 case Statuses.Exception:
                     return _Operation.SetException<T>(new Exception(type.ToString()));
-                    break;
                 case Statuses.Unauthorized:
                     return _Operation.SetFailed<T>(type.ToString(), type);
-                    break;
                 default:
                     return new NotImplementedException();
             }
