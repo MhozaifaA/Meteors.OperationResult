@@ -938,6 +938,9 @@
             Check <see cref="P:Meteors.OperationResult.OperationResultBase.StatusCode"/> if init with value > 0.
             <para>Custom return StatusCode-http used with web-requests.
             Not effect with native C# code lib as un-host-web projects or responses.</para>
+            <remark>
+            Always will be <see langword="true"/> after call <see cref="M:Meteors.OpertaionResultExtesnsion.ToJsonResult``1(Meteors.OperationResult{``0})"/>
+            </remark>
             </summary>
         </member>
         <member name="M:Meteors.OperationResult`1.SetSuccess(`0)">
