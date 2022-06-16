@@ -97,6 +97,18 @@
             As <see cref="F:Microsoft.AspNetCore.Http.StatusCodes.Status401Unauthorized"/>
             </summary>
         </member>
+        <member name="T:Meteors.OperationResult.StatusesExtensions">
+            <summary>
+            Extension methods for <see cref="T:Meteors.OperationResult.Statuses"/> only support some extra feature to <see cref="!:enum"/> <see cref="T:Meteors.OperationResult.Statuses"/>
+            </summary>
+        </member>
+        <member name="M:Meteors.OperationResult.StatusesExtensions.ToPerString(Meteors.OperationResult.Statuses)">
+            <summary>
+            Like <see cref="M:System.Object.ToString"/> but no Allocated with enum and the most efficient way to performance
+            </summary>
+            <param name="status"></param>
+            <returns></returns>
+        </member>
         <member name="T:Meteors.OperationResult.ExtensionMethods.BooleanExtension">
             <summary>
             Basics extensions

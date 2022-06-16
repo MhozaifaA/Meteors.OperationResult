@@ -126,38 +126,65 @@ namespace OperationResult.Benchmarks
             op.Status = Statuses.Success;
             return op;
         }
-
+        private Statuses[] StatusList = new[] { 
+            Statuses.UnKnown,
+            Statuses.Unauthorized,
+            Statuses.Success,
+            Statuses.Exist,
+            Statuses.NotExist,
+            Statuses.Failed,
+            Statuses.Forbidden,        
+            Statuses.Exception,        
+        };
+        [Benchmark]
+        public void StatusToString()
+        {
+            foreach (var status in StatusList)
+            {
+                var name = status.ToString();
+            }
+        }
 
         [Benchmark]
-        public void ExecuteFunTo()
+        public void StatusToPerString()
         {
-            new JsonResult(ExecuteFun()) { StatusCode = 200 };
+            foreach (var status in StatusList)
+            {
+                var name = status.ToPerString();
+            }
         }
 
 
-
-        [Benchmark]
-        public async Task ExecuteFunToAsync()
-        {
-            new JsonResult(await ExecuteFunAsync()) { StatusCode = 200 };
-        }
-
+        //[Benchmark]
+        //public void ExecuteFunTo()
+        //{
+        //    new JsonResult(ExecuteFun()) { StatusCode = 200 };
+        //}
 
 
 
-        [Benchmark]
-        public void ExecuteFunNewTo()
-        {
-            new JsonResult(ExecuteFunNew()) { StatusCode = 200 };
-        }
+        //[Benchmark]
+        //public async Task ExecuteFunToAsync()
+        //{
+        //    new JsonResult(await ExecuteFunAsync()) { StatusCode = 200 };
+        //}
 
 
 
-        [Benchmark]
-        public async Task ExecuteFunToNewAsync()
-        {
-            new JsonResult(await ExecuteFunNewAsync()) { StatusCode = 200 };
-        }
+
+        //[Benchmark]
+        //public void ExecuteFunNewTo()
+        //{
+        //    new JsonResult(ExecuteFunNew()) { StatusCode = 200 };
+        //}
+
+
+
+        //[Benchmark]
+        //public async Task ExecuteFunToNewAsync()
+        //{
+        //    new JsonResult(await ExecuteFunNewAsync()) { StatusCode = 200 };
+        //}
 
 
         //[Benchmark]

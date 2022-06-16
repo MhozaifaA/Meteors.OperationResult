@@ -28,6 +28,17 @@ namespace OperationResult.Tests
         };
 
 
+
+        [Fact]
+        public void ToPerString()
+        {
+            foreach (var status in System.Enum.GetValues<Statuses>())
+            {
+                Assert.Equal(status.ToString(), status.ToPerString());
+            }
+        }
+
+
         [Fact]
         public OperationResult<FooUser> UnknownStatus()
         {

@@ -43,4 +43,49 @@ namespace Meteors.OperationResult
         /// </summary>
         Unauthorized = 401,
     }
+
+
+    /// <summary>
+    /// Extension methods for <see cref="Statuses"/> only support some extra feature to <see cref="enum"/> <see cref="Statuses"/>
+    /// </summary>
+    public static class StatusesExtensions
+    {
+        /// <summary>
+        /// Like <see cref="object.ToString()"/> but no Allocated with enum and the most efficient way to performance
+        /// </summary>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        public static string ToPerString(this Statuses status)
+        {
+            switch (status)
+            {
+                case Statuses.UnKnown:
+                    return "UnKnown";
+
+                case Statuses.Success:
+                    return "Success";
+
+                case Statuses.Exist:
+                    return "Exist";
+
+                case Statuses.NotExist:
+                    return "NotExist";
+
+                case Statuses.Failed:
+                    return "Failed";
+
+                case Statuses.Forbidden:
+                    return "Forbidden";
+
+                case Statuses.Exception:
+                    return "Exception";
+
+                case Statuses.Unauthorized:
+                    return "Unauthorized";
+
+                default:
+                    throw new System.NotImplementedException();
+            }
+        }
+    }
 }
