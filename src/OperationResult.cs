@@ -39,6 +39,9 @@ namespace Meteors
         /// Check <see cref="OperationResultBase.StatusCode"/> if init with value > 0.
         /// <para>Custom return StatusCode-http used with web-requests.
         /// Not effect with native C# code lib as un-host-web projects or responses.</para>
+        /// <remark>
+        /// Always will be <see langword="true"/> after call <see cref="OpertaionResultExtesnsion.ToJsonResult"/>
+        /// </remark>
         /// </summary>
         [JsonIgnore]
         public bool HasCustomStatusCode => StatusCode > 0;
