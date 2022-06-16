@@ -168,9 +168,9 @@ Simplicity is one in all,
 
 
 TODO
-- implicit OperationResult<T>(T result)  write doc and find other way, this cause a lot of issues `1.3`
+- [x] implicit OperationResult<T>(T result)  write doc and find other way, this cause a lot of issues `1.3`
 - move some dynamic option in Extension with not able to use overread to be static controling `1.3`  , some while effect on prof (Test)
-- fix HasCustomeStatusCode cond inside to json result and value/ better not to mapping to json only fix internal value status>0 `1.3`
+- [x] fix HasCustomeStatusCode cond inside to json result and value/ better not to mapping to json only fix internal value status>0 `1.3`
 - fix with not set operation types with = 0 `1.3`
 - linq to for in priority funcs to increase 200ns
 - [X]enable to retuen data with other success status
