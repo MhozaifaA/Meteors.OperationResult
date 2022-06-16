@@ -186,18 +186,19 @@ namespace Meteors
         }
 
 
-        /// <summary>
-        /// Directly return implicit take assign <see cref="Data"/> and allow to return as <see cref="OperationResult{T}"/>
-        /// </summary>
-        /// <param name="result"></param>
-        public static implicit operator OperationResult<T>(T result)
-        {
-            return new OperationResult<T>().SetSuccess(result);
-        }
+        ///// <summary>
+        ///// Directly return implicit take assign <see cref="Data"/> and allow to return as <see cref="OperationResult{T}"/>
+        ///// </summary>
+        ///// <param name="result"></param>
+        //public static implicit operator OperationResult<T>(T result)
+        //{
+        //    return new OperationResult<T>().SetSuccess(result);
+        //}
 
 
         /// <summary>
         /// Directly return implicit take assign <see cref="Data"/> and <see cref="string" langword=" Message"/> as tuple, and allow to return as <see cref="OperationResult{T}"/>
+        /// <para> with int {T} type will face Ambiguous </para>
         /// </summary>
         /// <param name="result_message"></param>
         public static implicit operator OperationResult<T>((T result, string message) result_message)

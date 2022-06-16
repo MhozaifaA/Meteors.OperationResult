@@ -1021,15 +1021,10 @@
             <exception cref="T:System.ArgumentException"></exception>
             <param name="type_message"></param>
         </member>
-        <member name="M:Meteors.OperationResult`1.op_Implicit(`0)~Meteors.OperationResult{`0}">
-            <summary>
-            Directly return implicit take assign <see cref="P:Meteors.OperationResult`1.Data"/> and allow to return as <see cref="T:Meteors.OperationResult`1"/>
-            </summary>
-            <param name="result"></param>
-        </member>
         <member name="M:Meteors.OperationResult`1.op_Implicit(System.ValueTuple{`0,System.String})~Meteors.OperationResult{`0}">
             <summary>
             Directly return implicit take assign <see cref="P:Meteors.OperationResult`1.Data"/> and <see cref="T:System.String" langword=" Message"/> as tuple, and allow to return as <see cref="T:Meteors.OperationResult`1"/>
+            <para> with int {T} type will face Ambiguous </para>
             </summary>
             <param name="result_message"></param>
         </member>

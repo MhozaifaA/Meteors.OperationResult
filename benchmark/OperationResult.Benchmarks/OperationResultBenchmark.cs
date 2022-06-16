@@ -88,13 +88,13 @@ namespace OperationResult.Benchmarks
         }
 
         private OperationResult<int> ExecuteFunImplicity() {
-            return 0;                            
+            return (0,"");                            
         }
        
         private async Task<OperationResult<int>> ExecuteFunImplicityAsync()
         {
             await Task.Delay(0);
-            return 0;
+            return 0.ToOperationResult();
         }
 
         private OperationResult<int> ExecuteFunEx()
