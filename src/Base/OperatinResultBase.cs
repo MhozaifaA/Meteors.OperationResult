@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 
 namespace Meteors.OperationResult
 {
@@ -22,6 +23,7 @@ namespace Meteors.OperationResult
         ///  Represents errors that occur during CONTEXT execution.
         ///  protected of for <see cref="OperationContext._Operation"/>
         /// </summary>
+        [JsonIgnore]
         public Exception Exception { get; set; }
 
         /// <summary>

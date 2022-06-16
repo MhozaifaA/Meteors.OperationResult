@@ -1,6 +1,7 @@
 ﻿using Meteors.OperationResult;
 using Meteors.OperationResult.ExtensionMethods;
 using System;
+using System.Text.Json.Serialization;
 
 namespace Meteors
 {
@@ -39,6 +40,7 @@ namespace Meteors
         /// <para>Custom return StatusCode-http used with web-requests.
         /// Not effect with native C# code lib as un-host-web projects or responses.</para>
         /// </summary>
+        [JsonIgnore]
         public bool HasCustomStatusCode => StatusCode > 0;
 
 
