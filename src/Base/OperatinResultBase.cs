@@ -5,7 +5,7 @@ namespace Meteors.OperationResult
 {
     /// <summary>
     /// Main prop not changed or effect on return
-    /// abstract of for <see cref="OperationContext._Operation"/>
+    /// abstract of for <see cref="_Operation"/>
     /// </summary>
     public class OperationResultBase : IEquatable<OperationResultBase>//, IDisposable
     {
@@ -15,13 +15,13 @@ namespace Meteors.OperationResult
         public string Message { get; set; }
 
         /// <summary>
-        /// Result type.
+        /// Result type/status.
         /// </summary>
-        public OperationResultTypes OperationResultType { get; set; }
+        public Statuses Status { get; set; }
 
         /// <summary>
         ///  Represents errors that occur during CONTEXT execution.
-        ///  protected of for <see cref="OperationContext._Operation"/>
+        ///  protected of for <see cref="_Operation"/>
         /// </summary>
         [JsonIgnore]
         public Exception Exception { get; set; }
@@ -39,7 +39,7 @@ namespace Meteors.OperationResult
         /// <returns></returns>
         public bool Equals(OperationResultBase other)
         {
-            return Message == other.Message && OperationResultType == other.OperationResultType &&
+            return Message == other.Message && Status == other.Status &&
                 (Exception == other.Exception || Exception.Message == other.Exception.Message) && StatusCode == other.StatusCode;
         }
 

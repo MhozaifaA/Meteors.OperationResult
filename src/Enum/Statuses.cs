@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace Meteors
+namespace Meteors.OperationResult
 {
     /// <summary>
     /// Logical  result type
     /// <para> Warning: don't uses cast to any numbers <see cref="int"/> ... 
     /// only checked by <see langword="enum"/></para>
     /// </summary>
-    public enum OperationResultTypes : uint
+    public enum Statuses : uint
     {
         /// <summary>
         /// As <see cref="StatusCodes.Status200OK"/>

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Meteors.OperationResult;
 
 namespace OperationResult.Benchmarks
 {
@@ -88,7 +89,7 @@ namespace OperationResult.Benchmarks
         }
 
         private OperationResult<int> ExecuteFunImplicity() {
-            return (0,"");                            
+            return 0.ToOperationResult();                            
         }
        
         private async Task<OperationResult<int>> ExecuteFunImplicityAsync()
@@ -113,7 +114,7 @@ namespace OperationResult.Benchmarks
         {
             OperationResult<int> op = new();
             op.Data = 0;
-            op.OperationResultType = OperationResultTypes.Success;
+            op.Status = Statuses.Success;
             return op;
         }
 
@@ -122,7 +123,7 @@ namespace OperationResult.Benchmarks
             await Task.Delay(0);
             OperationResult<int> op = new();
             op.Data = 0;
-            op.OperationResultType = OperationResultTypes.Success;
+            op.Status = Statuses.Success;
             return op;
         }
 

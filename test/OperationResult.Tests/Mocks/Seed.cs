@@ -1,4 +1,5 @@
 ﻿using Meteors;
+using Meteors.OperationResult;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,29 +10,29 @@ namespace OperationResult.Tests.Mocks
 {
     public class Seed
     {
-        public static OperationResult<T> Create<T>(OperationResultTypes type)
+        public static OperationResult<T> Create<T>(Statuses type)
         {
             switch (type)
             {
-                case OperationResultTypes.Success:
+                case Statuses.Success:
                     return _Operation.SetSuccess<T>(Activator.CreateInstance<T>());
                     break;
-                case OperationResultTypes.Exist:
+                case Statuses.Exist:
                     return _Operation.SetContent<T>(type, type.ToString());
                     break;
-                case OperationResultTypes.NotExist:
+                case Statuses.NotExist:
                     return _Operation.SetContent<T>(type, type.ToString());
                     break;
-                case OperationResultTypes.Failed:
+                case Statuses.Failed:
                     return _Operation.SetFailed<T>(type.ToString());
                     break;
-                case OperationResultTypes.Forbidden:
+                case Statuses.Forbidden:
                     return _Operation.SetFailed<T>(type.ToString(), type);
                     break;
-                case OperationResultTypes.Exception:
+                case Statuses.Exception:
                     return _Operation.SetException<T>(new Exception(type.ToString()));
                     break;
-                case OperationResultTypes.Unauthorized:
+                case Statuses.Unauthorized:
                     return _Operation.SetFailed<T>(type.ToString(), type);
                     break;
                 default:

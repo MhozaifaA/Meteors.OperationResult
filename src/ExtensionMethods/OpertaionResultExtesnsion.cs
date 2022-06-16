@@ -75,16 +75,16 @@ namespace Meteors
         /// <returns></returns>
         public static JsonResult ToJsonResult<T>(this OperationResult<T> result, bool isBody = false)
         {
-            return result.OperationResultType switch
+            return result.Status switch
             {
-                OperationResultTypes.Success => result.GetValidResult(jsonMessage:null,hasResult: true, isBody),
-                OperationResultTypes.Exist => result.GetValidResult(jsonMessage: result.Message,isBody: isBody),
-                OperationResultTypes.NotExist => result.GetValidResult(jsonMessage: result.Message, isBody: isBody),
-                OperationResultTypes.Failed => result.GetValidResult(jsonMessage: result.Message, isBody: isBody),
-                OperationResultTypes.Forbidden => result.GetValidResult(jsonMessage: result.Message, isBody: isBody),
-                OperationResultTypes.Unauthorized => result.GetValidResult(jsonMessage: result.Message, isBody: isBody),
-                OperationResultTypes.Exception => result.GetValidResult(jsonMessage: result.FullExceptionMessage, isBody: isBody),
-                _ => throw new NotImplementedException($"Update source code to catch new {nameof(OperationResultTypes)} value: {result.OperationResultType}"),
+                Statuses.Success => result.GetValidResult(jsonMessage:null,hasResult: true, isBody),
+                Statuses.Exist => result.GetValidResult(jsonMessage: result.Message,isBody: isBody),
+                Statuses.NotExist => result.GetValidResult(jsonMessage: result.Message, isBody: isBody),
+                Statuses.Failed => result.GetValidResult(jsonMessage: result.Message, isBody: isBody),
+                Statuses.Forbidden => result.GetValidResult(jsonMessage: result.Message, isBody: isBody),
+                Statuses.Unauthorized => result.GetValidResult(jsonMessage: result.Message, isBody: isBody),
+                Statuses.Exception => result.GetValidResult(jsonMessage: result.FullExceptionMessage, isBody: isBody),
+                _ => throw new NotImplementedException($"Update source code to catch new {nameof(Statuses)} value: {result.Status}"),
             };
         }
 
@@ -119,13 +119,13 @@ namespace Meteors
         private static JsonResult GetValidResult<T>(this OperationResult<T> result, string jsonMessage = null, bool hasResult = false, bool isBody = false)
         {
             if (!result.HasCustomStatusCode && (result.StatusCode??0) == 0)
-                result.StatusCode = (int)result.OperationResultType;
+                result.StatusCode = (int)result.Status;
 
             bool jsonMessageIsNullOrEmpty = jsonMessage.IsNullOrEmpty();
             if (isBody)
             {
                 if (jsonMessageIsNullOrEmpty)
-                    result.Message = result.OperationResultType.ToString();
+                    result.Message = result.Status.ToString();
               
                 return new JsonResult(result) { StatusCode = result.StatusCode };
             }
@@ -134,7 +134,7 @@ namespace Meteors
                 return new JsonResult(result.Data) { StatusCode = result.StatusCode };
 
             if (jsonMessageIsNullOrEmpty)
-                return new JsonResult(result.OperationResultType.ToString()) { StatusCode = result.StatusCode };
+                return new JsonResult(result.Status.ToString()) { StatusCode = result.StatusCode };
 
             return new JsonResult(jsonMessage) { StatusCode = result.StatusCode };
         }
@@ -883,10 +883,10 @@ namespace Meteors
 
 
         /// <summary>
-        /// Condition to collect many operation result into once , dependent on  Priority of <see cref="OperationResultTypes"/>
-        /// <para>With <see cref="OperationResultTypes.Exception"/>  Will return first exception result  used <see cref="OperationResult{TResult}.SetException(Exception)"/></para>
-        /// <para>With <see cref="OperationResultTypes.Failed"/> ,<see cref="OperationResultTypes.Forbidden"/> and <see cref="OperationResultTypes.Unauthorized"/> Will return join of message  used <see cref="OperationResult{TResult}.SetSuccess(string)"/></para>
-        /// <para>With <see cref="OperationResultTypes.Success"/> Will return TResult and  join of message used <see cref="OperationResult{TResult}.SetFailed(string, OperationResultTypes)"/> .</para>
+        /// Condition to collect many operation result into once , dependent on  Priority of <see cref="Statuses"/>
+        /// <para>With <see cref="Statuses.Exception"/>  Will return first exception result  used <see cref="OperationResult{TResult}.SetException(Exception)"/></para>
+        /// <para>With <see cref="Statuses.Failed"/> ,<see cref="Statuses.Forbidden"/> and <see cref="Statuses.Unauthorized"/> Will return join of message  used <see cref="OperationResult{TResult}.SetSuccess(string)"/></para>
+        /// <para>With <see cref="Statuses.Success"/> Will return TResult and  join of message used <see cref="OperationResult{TResult}.SetFailed(string, Statuses)"/> .</para>
         /// </summary>
         /// <typeparam name="TOneResult"></typeparam>
         /// <typeparam name="TResult"></typeparam>
@@ -899,11 +899,11 @@ namespace Meteors
 
             OperationResultBase Result = oneResult as OperationResultBase;
 
-            if (Result.OperationResultType == OperationResultTypes.Exception)
+            if (Result.Status == Statuses.Exception)
                 return operation.SetException(Result.Exception);
 
-            if (Result.OperationResultType == OperationResultTypes.Failed || Result.OperationResultType == OperationResultTypes.Forbidden || Result.OperationResultType == OperationResultTypes.Unauthorized)
-                return operation.SetFailed(Result.Message, Result.OperationResultType);
+            if (Result.Status == Statuses.Failed || Result.Status == Statuses.Forbidden || Result.Status == Statuses.Unauthorized)
+                return operation.SetFailed(Result.Message, Result.Status);
 
             return operation.SetSuccess(result, Result.Message);
 
@@ -913,10 +913,10 @@ namespace Meteors
 
 
         /// <summary>
-        /// Condition to collect many operation result into once , dependent on  Priority of <see cref="OperationResultTypes"/>
-        /// <para>With <see cref="OperationResultTypes.Exception"/>  Will return first exception result  used <see cref="OperationResult{TResult}.SetException(Exception)"/></para>
-        /// <para>With <see cref="OperationResultTypes.Failed"/> ,<see cref="OperationResultTypes.Forbidden"/> and <see cref="OperationResultTypes.Unauthorized"/> Will return join of message  used <see cref="OperationResult{TResult}.SetSuccess(string)"/></para>
-        /// <para>With <see cref="OperationResultTypes.Success"/> Will return TResult and  join of message used <see cref="OperationResult{TResult}.SetFailed(string, OperationResultTypes)"/> .</para>
+        /// Condition to collect many operation result into once , dependent on  Priority of <see cref="Statuses"/>
+        /// <para>With <see cref="Statuses.Exception"/>  Will return first exception result  used <see cref="OperationResult{TResult}.SetException(Exception)"/></para>
+        /// <para>With <see cref="Statuses.Failed"/> ,<see cref="Statuses.Forbidden"/> and <see cref="Statuses.Unauthorized"/> Will return join of message  used <see cref="OperationResult{TResult}.SetSuccess(string)"/></para>
+        /// <para>With <see cref="Statuses.Success"/> Will return TResult and  join of message used <see cref="OperationResult{TResult}.SetFailed(string, Statuses)"/> .</para>
         /// </summary>
         /// <typeparam name="TTupleResult"></typeparam>
         /// <typeparam name="TResult"></typeparam>
@@ -929,13 +929,13 @@ namespace Meteors
 
             IEnumerable<OperationResultBase> listResult = Enumerable.Repeat(0, results.Length).Select(index => results[index]).Cast<OperationResultBase>();
 
-            OperationResultBase firstException = listResult.FirstOrDefault(result => result.OperationResultType == OperationResultTypes.Exception);
+            OperationResultBase firstException = listResult.FirstOrDefault(result => result.Status == Statuses.Exception);
             if (firstException != null)
                 return operation.SetException(firstException.Exception);
 
-            if (listResult.Any(result => result.OperationResultType == OperationResultTypes.Failed || result.OperationResultType == OperationResultTypes.Forbidden || result.OperationResultType == OperationResultTypes.Unauthorized))
+            if (listResult.Any(result => result.Status == Statuses.Failed || result.Status == Statuses.Forbidden || result.Status == Statuses.Unauthorized))
                 return operation.SetFailed(String.Join(",",
-                    listResult.Select((result, iter) => result.Message.IsNullOrEmpty().NestedIF(()=>$"Result {iter} not contain Message or Success", () => result.Message))), listResult.Max(result => result.OperationResultType));
+                    listResult.Select((result, iter) => result.Message.IsNullOrEmpty().NestedIF(()=>$"Result {iter} not contain Message or Success", () => result.Message))), listResult.Max(result => result.Status));
 
             return operation.SetSuccess(result, String.Join(",",
                     listResult.Select((result, iter) => result.Message.IsNullOrEmpty().NestedIF(() => $"Result {iter} not contain Message or Success", () => result.Message))));

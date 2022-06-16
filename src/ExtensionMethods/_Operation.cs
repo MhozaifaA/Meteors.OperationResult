@@ -34,7 +34,7 @@ namespace Meteors
 
         /// <summary>
         /// Helper to pass success result 
-        /// <para>Effect in <code>base.OperationResultType</code> to <seealso cref="OperationResultTypes.Success"/></para>
+        /// <para>Effect in <code>base.OperationResultType</code> to <seealso cref="Statuses.Success"/></para>
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="result"></param>
@@ -47,19 +47,19 @@ namespace Meteors
 
         /// <summary>
         /// Helper
-        /// <para>Effect in <code>base.OperationResultType</code> to <seealso cref="OperationResultTypes.Success"/></para>
+        /// <para>Effect in <code>base.OperationResultType</code> to <seealso cref="Statuses.Success"/></para>
         /// <para>Effect in <code>base.Message</code> .</para>
         /// </summary>
         /// <param name="message"></param>
         /// <returns> <see cref="OperationResultBase"/> </returns>
         public static OperationResultBase SetSuccess(string message)
         {
-            return new OperationResultBase() { Message=message,OperationResultType=OperationResultTypes.Success };
+            return new OperationResultBase() { Message=message,Status=Statuses.Success };
         }
 
         /// <summary>
         /// Helper to pass success result 
-        /// <para>Effect in <code>base.OperationResultType</code> to <seealso cref="OperationResultTypes.Success"/></para>
+        /// <para>Effect in <code>base.OperationResultType</code> to <seealso cref="Statuses.Success"/></para>
         /// <para>Effect in <code>base.Message</code> .</para>
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -74,35 +74,35 @@ namespace Meteors
 
         /// <summary>
         /// Helper  
-        /// <para>Effect in <code>base.OperationResultType</code> to <seealso cref="OperationResultTypes.Failed"/></para>
+        /// <para>Effect in <code>base.OperationResultType</code> to <seealso cref="Statuses.Failed"/></para>
         /// <para>Effect in <code>base.Message</code> .</para>
-        /// <para>Effect in <code>base.OperationResultType</code> default value <see cref=" OperationResultTypes.Failed"/> , <see cref="OperationResultTypes.Forbidden"/> and <see cref="OperationResultTypes.Unauthorized"/> </para>
+        /// <para>Effect in <code>base.OperationResultType</code> default value <see cref=" Statuses.Failed"/> , <see cref="Statuses.Forbidden"/> and <see cref="Statuses.Unauthorized"/> </para>
         /// <para>Exception :  <see langword="throw"/> <see cref="ArgumentException"/> if type not kind of Failed .</para>
         /// </summary>
         /// <param name="message"></param>
         /// <param name="type"></param>
         /// <returns> <see cref="OperationResultBase"/> </returns>
-        public static OperationResultBase SetFailed(string message, OperationResultTypes type = OperationResultTypes.Failed)
+        public static OperationResultBase SetFailed(string message, Statuses type = Statuses.Failed)
         {
-            if (type != OperationResultTypes.Failed && type != OperationResultTypes.Forbidden && type != OperationResultTypes.Unauthorized)
-                throw new ArgumentException($"{nameof(SetFailed)} in {nameof(OperationResultBase)} take {type} should use with {OperationResultTypes.Failed}, {OperationResultTypes.Forbidden} or {OperationResultTypes.Unauthorized} .");
+            if (type != Statuses.Failed && type != Statuses.Forbidden && type != Statuses.Unauthorized)
+                throw new ArgumentException($"{nameof(SetFailed)} in {nameof(OperationResultBase)} take {type} should use with {Statuses.Failed}, {Statuses.Forbidden} or {Statuses.Unauthorized} .");
 
-            return new OperationResultBase() { Message = message, OperationResultType = type };
+            return new OperationResultBase() { Message = message, Status = type };
         }
 
 
         /// <summary>
         /// Helper  
-        /// <para>Effect in <code>base.OperationResultType</code> to <seealso cref="OperationResultTypes.Failed"/></para>
+        /// <para>Effect in <code>base.OperationResultType</code> to <seealso cref="Statuses.Failed"/></para>
         /// <para>Effect in <code>base.Message</code> .</para>
-        /// <para>Effect in <code>base.OperationResultType</code> default value <see cref=" OperationResultTypes.Failed"/> , <see cref="OperationResultTypes.Forbidden"/> and <see cref="OperationResultTypes.Unauthorized"/> </para>
+        /// <para>Effect in <code>base.OperationResultType</code> default value <see cref=" Statuses.Failed"/> , <see cref="Statuses.Forbidden"/> and <see cref="Statuses.Unauthorized"/> </para>
         /// <para>Exception :  <see langword="throw"/> <see cref="ArgumentException"/> if type not kind of Failed .</para>
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="message"></param>
         /// <param name="type"></param>
         /// <returns> <see cref="OperationResult{T}"/> </returns>
-        public static OperationResult<T> SetFailed<T>(string message, OperationResultTypes type = OperationResultTypes.Failed)
+        public static OperationResult<T> SetFailed<T>(string message, Statuses type = Statuses.Failed)
         {
             return new OperationResult<T>().SetFailed(message,type);
         }
@@ -110,19 +110,19 @@ namespace Meteors
 
         /// <summary>
         /// Helper to pass exception result 
-        /// <para>Effect in <code>base.OperationResultType</code> to <seealso cref="OperationResultTypes.Exception"/> .</para>
+        /// <para>Effect in <code>base.OperationResultType</code> to <seealso cref="Statuses.Exception"/> .</para>
         /// </summary>
         /// <param name="exception"></param>
         /// <returns> <see cref="OperationResultBase"/> </returns>
         public static OperationResultBase SetException(Exception exception)
         {
-            return new OperationResultBase() { Exception = exception, OperationResultType = OperationResultTypes.Exception };
+            return new OperationResultBase() { Exception = exception, Status = Statuses.Exception };
         }
 
 
         /// <summary>
         /// Helper to pass exception result 
-        /// <para>Effect in <code>base.OperationResultType</code> to <seealso cref="OperationResultTypes.Exception"/> .</para>
+        /// <para>Effect in <code>base.OperationResultType</code> to <seealso cref="Statuses.Exception"/> .</para>
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="exception"></param>
@@ -136,7 +136,7 @@ namespace Meteors
 
         /// <summary>
         /// Helper  
-        /// <para>Effect in <code>base.OperationResultType</code> to <seealso cref="OperationResultTypes.Exist"/> or <seealso cref="OperationResultTypes.NotExist"/>  </para>
+        /// <para>Effect in <code>base.OperationResultType</code> to <seealso cref="Statuses.Exist"/> or <seealso cref="Statuses.NotExist"/>  </para>
         /// <para>Effect in <code>base.Message</code> .</para>
         /// <para>Exception :  <see langword="throw"/> <see cref="ArgumentException"/> if type not kind of Content .</para>
         /// </summary>
@@ -144,18 +144,18 @@ namespace Meteors
         /// <param name="type"></param>
         /// <param name="message"></param>
         /// <returns> <see cref="OperationResultBase"/> </returns>
-        public static OperationResultBase SetContent(OperationResultTypes type, string message)
+        public static OperationResultBase SetContent(Statuses type, string message)
         {
-            if (type != OperationResultTypes.Exist && type != OperationResultTypes.NotExist)
-                throw new ArgumentException($"Directly return {nameof(OperationResultBase)} take {type} should use with {OperationResultTypes.Exist} or {OperationResultTypes.NotExist} .");
+            if (type != Statuses.Exist && type != Statuses.NotExist)
+                throw new ArgumentException($"Directly return {nameof(OperationResultBase)} take {type} should use with {Statuses.Exist} or {Statuses.NotExist} .");
 
-            return new OperationResultBase() { OperationResultType = type, Message = message };
+            return new OperationResultBase() { Status = type, Message = message };
         }
 
 
         /// <summary>
         /// Helper  
-        /// <para>Effect in <code>base.OperationResultType</code> to <seealso cref="OperationResultTypes.Exist"/> or <seealso cref="OperationResultTypes.NotExist"/>  </para>
+        /// <para>Effect in <code>base.OperationResultType</code> to <seealso cref="Statuses.Exist"/> or <seealso cref="Statuses.NotExist"/>  </para>
         /// <para>Effect in <code>base.Message</code> .</para>
         /// <para>Exception :  <see langword="throw"/> <see cref="ArgumentException"/> if type not kind of Content .</para>
         /// </summary>
@@ -163,7 +163,7 @@ namespace Meteors
         /// <param name="type"></param>
         /// <param name="message"></param>
         /// <returns> <see cref="OperationResult{T}"/> </returns>
-        public static OperationResult<T> SetContent<T>(OperationResultTypes type, string message)
+        public static OperationResult<T> SetContent<T>(Statuses type, string message)
         {
             return new OperationResult<T>().SetContent(type, message);
         }
