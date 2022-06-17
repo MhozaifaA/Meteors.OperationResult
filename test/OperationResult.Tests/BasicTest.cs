@@ -1,6 +1,7 @@
 using Meteors;
 using Meteors.OperationResult;
 using OperationResult.Tests.Mocks;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -51,6 +52,81 @@ namespace OperationResult.Tests
             Assert.Equal(Statuses.UnKnown, operation.Status);
 
             return operation;
+        }
+
+
+        [Fact]
+        public void TupleList()
+        {
+            var type1 = Seed.RandomStatus();
+            var type2 = Seed.RandomStatus();
+            var type3 = Seed.RandomStatus();
+
+            var operation1 = Seed.Create<FooUser>(type1);
+            var operation2 = Seed.Create<FooUser>(type1); //random type
+            var operation3 = Seed.Create<FooUser>(type3);
+
+            Tuple<OperationResult<FooUser>, OperationResult<FooUser>, OperationResult<FooUser>> results = new (
+                operation1,
+                operation2,
+                operation3);
+
+            System.Runtime.CompilerServices.ITuple Iresults = results;
+
+            List<OperationResultBase> listResult = new();
+            for (int i = 0; i < Iresults.Length; i++)
+            {
+                listResult.Add((OperationResultBase)Iresults[i]);
+            }
+            //List<OperationResultBase> listResult = Enumerable.Repeat(0, Iresults.Length)
+            //    .Select(index => Iresults[index]).Cast<OperationResultBase>().ToList();
+
+
+            Assert.Equal(operation1.Status, listResult[0].Status);
+            Assert.Equal(operation2.Status, listResult[1].Status);
+            Assert.Equal(operation3.Status, listResult[2].Status);
+
+            //act as success
+        }
+
+
+
+        [Theory]
+        [MemberData(nameof(ExtensionTest.FactData), MemberType = typeof(ExtensionTest))]
+        public void CastToBase(Statuses type)
+        {
+            OperationResult<FooUser> operation = Seed.Create<FooUser>(type);
+            var operationBase = (OperationResultBase) operation;
+
+            Assert.Equal(operation.Status ,operationBase.Status);
+            Assert.Equal(operation.StatusCode, operationBase.StatusCode);
+            Assert.Equal(operation.Message ,operationBase.Message);
+            Assert.Equal(operation.Exception ,operationBase.Exception);
+        }
+
+        [Theory]
+        [MemberData(nameof(ExtensionTest.FactData), MemberType = typeof(ExtensionTest))]
+        public void IsSuccess(Statuses type)
+        {
+            var operation = Seed.Create<FooUser>(type);
+
+            if (type == Statuses.Success)
+                Assert.True(operation.IsSuccess);
+             else
+                Assert.False(operation.IsSuccess);
+        }
+
+
+        [Theory]
+        [MemberData(nameof(ExtensionTest.FactData), MemberType = typeof(ExtensionTest))]
+        public void HasException(Statuses type)
+        {
+            var operation = Seed.Create<FooUser>(type);
+
+            if (type == Statuses.Exception)
+                Assert.True(operation.HasException);
+            else
+                Assert.False(operation.HasException);
         }
 
 

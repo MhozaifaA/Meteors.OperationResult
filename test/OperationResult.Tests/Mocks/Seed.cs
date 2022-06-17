@@ -10,7 +10,7 @@ namespace OperationResult.Tests.Mocks
 {
     public class Seed
     {
-        public static OperationResult<T> Create<T>(Statuses type)
+        internal static OperationResult<T> Create<T>(Statuses type)
         {
             switch (type)
             {
@@ -44,6 +44,21 @@ namespace OperationResult.Tests.Mocks
                 if (deep.InnerException is null) return FullMessage.ToString();
                 return Recursive(deep.InnerException);
             }
+        }
+
+        private static Statuses[] StatusList = new[] {
+            //Statuses.UnKnown,
+            Statuses.Unauthorized,
+            Statuses.Success,
+            Statuses.Exist,
+            Statuses.NotExist,
+            Statuses.Failed,
+            Statuses.Forbidden,
+            Statuses.Exception,
+        };
+        internal static Statuses RandomStatus()
+        {
+           return StatusList[Random.Shared.Next(1, StatusList.Length) - 1];
         }
 
     }

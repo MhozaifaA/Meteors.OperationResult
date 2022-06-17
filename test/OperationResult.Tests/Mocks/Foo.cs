@@ -22,7 +22,7 @@ namespace OperationResult.Tests.Mocks
     public class FooInto
     {
         public FooUser User { get; set; }
-        public FooUser OtherUser { get; set; }
+        public IEnumerable<FooUser> OtherUsers { get; set; }        
         public int StatusCode { get; set; }
     }
 }

@@ -907,7 +907,6 @@ namespace Meteors
                 return operation.SetFailed(Result.Message, Result.Status);
 
             return operation.SetSuccess(result, Result.Message);
-
         }
 
 
@@ -928,7 +927,9 @@ namespace Meteors
         {
             OperationResult<TResult> operation = new();
 
-            IEnumerable<OperationResultBase> listResult = Enumerable.Repeat(0, results.Length).Select(index => results[index]).Cast<OperationResultBase>();
+            List<OperationResultBase> listResult = new();
+            for (int i = 0; i < results.Length; i++)
+                listResult.Add((OperationResultBase)results[i]);
 
             OperationResultBase firstException = listResult.FirstOrDefault(result => result.Status == Statuses.Exception);
             if (firstException != null)
@@ -936,10 +937,10 @@ namespace Meteors
 
             if (listResult.Any(result => result.Status == Statuses.Failed || result.Status == Statuses.Forbidden || result.Status == Statuses.Unauthorized))
                 return operation.SetFailed(String.Join(",",
-                    listResult.Select((result, iter) => result.Message.IsNullOrEmpty().NestedIF(()=>$"Result {iter} not contain Message or Success", () => result.Message))), listResult.Max(result => result.Status));
+                    listResult.Select((result, iter) => result.Message)), listResult.Max(result => result.Status));
 
             return operation.SetSuccess(result, String.Join(",",
-                    listResult.Select((result, iter) => result.Message.IsNullOrEmpty().NestedIF(() => $"Result {iter} not contain Message or Success", () => result.Message))));
+                    listResult.Select((result, iter) => result.Message)));
 
         }
 
