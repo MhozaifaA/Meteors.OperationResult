@@ -15,7 +15,7 @@ namespace OperationResult.Tests.Mocks
             switch (type)
             {
                 case Statuses.Success:
-                    return _Operation.SetSuccess<T>(Activator.CreateInstance<T>());
+                    return _Operation.SetSuccess<T>(Activator.CreateInstance<T>(), type.ToString());
                 case Statuses.Exist:
                     return _Operation.SetContent<T>(type, type.ToString());
                 case Statuses.NotExist:
