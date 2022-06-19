@@ -3,14 +3,23 @@ using Meteors.OperationResult;
 using OperationResult.Tests.Mocks;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace OperationResult.Tests
 {
 
     public class BasicTest
     {
+
+        private readonly ITestOutputHelper output;
+        public BasicTest(ITestOutputHelper output)
+        {
+            this.output = output;
+        }
+
         public static IEnumerable<FooUser> Users => new List<FooUser>() {
             new ("Admin","P@$$W0rd"),
             new ("user","1234"),
@@ -56,6 +65,39 @@ namespace OperationResult.Tests
 
 
         [Fact]
+        public void TupleLinqList()
+        {
+            var type1 = Seed.RandomStatus();
+            var type2 = Seed.RandomStatus();
+            var type3 = Seed.RandomStatus();
+
+            var operation1 = Seed.Create<FooUser>(type1);
+            var operation2 = Seed.Create<FooUser>(type1); //random type
+            var operation3 = Seed.Create<FooUser>(type3);
+            output.WriteLine($"{type1}");
+            output.WriteLine($"{type2}");
+            output.WriteLine($"{type3}");
+
+            Tuple<OperationResult<FooUser>, OperationResult<FooUser>, OperationResult<FooUser>> results = new(
+                operation1,
+                operation2,
+                operation3);
+
+            System.Runtime.CompilerServices.ITuple Iresults = results;
+
+            List<OperationResultBase> listResult = Enumerable.Range(0, Iresults.Length)
+                .Select(index => { 
+                    output.WriteLine($"{index}");
+                    return Iresults[index];
+                }).Cast<OperationResultBase>().ToList();
+
+            Assert.Equal(operation1.Status, listResult[0].Status);
+            Assert.Equal(operation2.Status, listResult[1].Status);
+            Assert.Equal(operation3.Status, listResult[2].Status);
+
+        }
+
+        [Fact]
         public void TupleList()
         {
             var type1 = Seed.RandomStatus();
@@ -78,15 +120,10 @@ namespace OperationResult.Tests
             {
                 listResult.Add((OperationResultBase)Iresults[i]);
             }
-            //List<OperationResultBase> listResult = Enumerable.Repeat(0, Iresults.Length)
-            //    .Select(index => Iresults[index]).Cast<OperationResultBase>().ToList();
-
-
+        
             Assert.Equal(operation1.Status, listResult[0].Status);
             Assert.Equal(operation2.Status, listResult[1].Status);
             Assert.Equal(operation3.Status, listResult[2].Status);
-
-            //act as success
         }
 
 

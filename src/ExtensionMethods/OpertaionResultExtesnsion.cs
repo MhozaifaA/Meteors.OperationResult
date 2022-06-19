@@ -927,17 +927,18 @@ namespace Meteors
         {
             OperationResult<TResult> operation = new();
 
-            List<OperationResultBase> listResult = new();
-            for (int i = 0; i < results.Length; i++)
-                listResult.Add((OperationResultBase)results[i]);
+            IEnumerable<OperationResultBase> listResult = Enumerable.Range(0, results.Length).Select(index => results[index]).Cast<OperationResultBase>();
 
             OperationResultBase firstException = listResult.FirstOrDefault(result => result.Status == Statuses.Exception);
             if (firstException != null)
                 return operation.SetException(firstException.Exception);
 
-            if (listResult.Any(result => result.Status == Statuses.Failed || result.Status == Statuses.Forbidden || result.Status == Statuses.Unauthorized))
+            Statuses? maxFailded = listResult.Where(result => result.Status == Statuses.Failed || result.Status == Statuses.Forbidden ||
+            result.Status == Statuses.Unauthorized).Max(result => (Statuses?)result.Status);
+
+            if (maxFailded is not null)
                 return operation.SetFailed(String.Join(",",
-                    listResult.Select((result, iter) => result.Message)), listResult.Max(result => result.Status));
+                    listResult.Select((result, iter) => result.Message)), maxFailded!.Value);
 
             return operation.SetSuccess(result, String.Join(",",
                     listResult.Select((result, iter) => result.Message)));

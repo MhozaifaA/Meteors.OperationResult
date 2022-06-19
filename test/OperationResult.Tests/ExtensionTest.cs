@@ -426,11 +426,15 @@ namespace OperationResult.Tests
                 Assert.Equal(Statuses.Exception, result.Status);
             }
             else
-            if (!result.IsSuccess)
+            if (!result.IsSuccess && result.Status != Statuses.Exist && result.Status != Statuses.NotExist)
             {
                 var priorityFailed = types.Any(o => o == Statuses.Failed || o == Statuses.Forbidden || o == Statuses.Unauthorized);
                 Assert.True(priorityFailed, userMessage: $" {type} - {type1} - {type2} ");
-                Assert.Equal(types.Max(), result.Status);
+
+                var maxFailded  = types.Where(result => result == Statuses.Failed || result == Statuses.Forbidden ||
+                        result == Statuses.Unauthorized).Max(result => (Statuses?)result);
+
+                Assert.Equal(maxFailded, result.Status);
             }
             else //success
             {
@@ -438,6 +442,54 @@ namespace OperationResult.Tests
                 
                 var prioritySuccess = types.All(o => o == Statuses.Success || o == Statuses.Exist || o == Statuses.NotExist);
                 Assert.True(prioritySuccess,userMessage: $" {type} - {type1} - {type2} " );
+                Assert.Equal(Statuses.Success, result.Status);
+            }
+
+        }
+
+        [Theory]
+        [MemberData(nameof(FactData))]
+        public async Task IntoAsync(Statuses type)
+        {
+            var type1 = Seed.RandomStatus();
+            var type2 = Seed.RandomStatus();
+            var operation1 = Task.FromResult(Seed.Create<FooUser>(type));
+            var operation2 = Task.FromResult(Seed.Create<FooUser>(type1)); //random type
+            var operation3 = Task.FromResult(Seed.Create<FooUser>(type2));
+            await Task.WhenAll(operation1, operation2, operation3);
+            var result = await  Task.FromResult((await operation1, await operation2, await operation3)).
+                            IntoAsync((r1, r2, r3) => new FooInto
+                            {
+                                StatusCode = r1.StatusCode ?? 0,
+                                OtherUsers = new List<FooUser>() { r2.Data, r3.Data }.ToList(),
+                                User = r1.Data
+                            });
+            List<Statuses> types = new() { type, type1, type2 };
+
+            //order requierd
+            if (result.HasException)
+            {
+                var priorityException = types.Any(o => o == Statuses.Exception);
+                Assert.True(priorityException, userMessage: $" {type} - {type1} - {type2} ");
+                Assert.Equal(Statuses.Exception, result.Status);
+            }
+            else
+            if (!result.IsSuccess && result.Status != Statuses.Exist && result.Status != Statuses.NotExist)
+            {
+                var priorityFailed = types.Any(o => o == Statuses.Failed || o == Statuses.Forbidden || o == Statuses.Unauthorized);
+                Assert.True(priorityFailed, userMessage: $" {type} - {type1} - {type2} ");
+
+                var maxFailded = types.Where(result => result == Statuses.Failed || result == Statuses.Forbidden ||
+                       result == Statuses.Unauthorized).Max(result => (Statuses?)result);
+
+                Assert.Equal(maxFailded, result.Status);
+            }
+            else //success
+            {
+                //unknow ! 
+
+                var prioritySuccess = types.All(o => o == Statuses.Success || o == Statuses.Exist || o == Statuses.NotExist);
+                Assert.True(prioritySuccess, userMessage: $" {type} - {type1} - {type2} ");
                 Assert.Equal(Statuses.Success, result.Status);
             }
 
