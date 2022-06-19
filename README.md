@@ -2,7 +2,7 @@
 > `version 1.3 net6.0`
 
 
-*Meteors Operation Result came with new and redesigned to accept more than container for status and data. **OperationResult** is isolated but stuck with kernel of your business logic , with out if/else and some corrupted code to handle results.*
+*Meteors Operation Result came with new and redesigned to accept more than container for status and data. **OperationResult** is isolated but stuck with kernel of your business logic , without if/else and some corrupted code to handle results.*
 
 Install-Package Meteors.OperationResult -Version 1.0.1
 
@@ -11,7 +11,7 @@ Install-Package Meteors.OperationResult -Version 1.0.1
 
 
 This lib belongs to the **Meteors**,
-Meteorites helps you write less and clean code with the power of design patterns and full support for the most popular programming for perpetual project
+Meteorites helps you write less and clean code with the power of design patterns and full support for the most popular programming for perpetual projects
 
 All you need in your project is to use meteorites,
 Simplicity is one in all,
