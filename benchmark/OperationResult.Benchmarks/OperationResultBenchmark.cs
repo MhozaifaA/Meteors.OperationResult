@@ -14,118 +14,7 @@ namespace OperationResult.Benchmarks
     [SimpleJob(warmupCount: 3, targetCount: 1)]
     public class OperationResultBenchmark
     {
-        public class OperationNewBase
-        {
-            public int status { get; set; }
-
-            /// <summary>
-            /// Flag enter disposed
-            /// </summary>
-            bool disposed = false;
-
-            /// <summary>
-            /// Destructor
-            /// </summary>
-            ~OperationNewBase()
-            {
-                this.Dispose(false);
-            }
-
-
-
-
-            /// <summary>
-            /// The virtual dispose method that allows
-            /// classes inherited from this one to dispose their resources.
-            /// </summary>
-            /// <param name="disposing"></param>
-            protected virtual void Dispose(bool disposing)
-            {
-                if (!disposed)
-                {
-                    //if (disposing) {//}
-                    status = 0;
-                }
-
-                disposed = true;
-            }
-
-        }
-        public class OperationNew<T>: OperationNewBase
-        {
-            public T Result { get; set; }
-
-
-
-        }
-        private string ExecuteFun()
-        {
-            return "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"; ;
-        }
-
-        private async Task<string> ExecuteFunAsync()
-        {
-            await Task.Delay(0);
-            return "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
-        }
-
-        private OperationNew<string> ExecuteFunNew()
-        {
-            OperationNew<string> op = new();
-            op.Result = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
-            op.status = 200;
-            return op;
-        }
-
-        private async Task<OperationNew<string>> ExecuteFunNewAsync()
-        {
-            await Task.Delay(0);
-            OperationNew<string> op = new();
-            op.Result = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
-
-            op.status = 200;
-            return op;
-
-        }
-
-        private OperationResult<int> ExecuteFunImplicity() {
-            return 0.ToOperationResult();                            
-        }
-       
-        private async Task<OperationResult<int>> ExecuteFunImplicityAsync()
-        {
-            await Task.Delay(0);
-            return 0.ToOperationResult();
-        }
-
-        private OperationResult<int> ExecuteFunEx()
-        {
-            return _Operation.SetSuccess(0);
-        }
-
-        private async Task<OperationResult<int>> ExecuteFunExAsync()
-        {
-            await Task.Delay(0);
-            return _Operation.SetSuccess(0);
-        }
-
-
-        private OperationResult<int> ExecuteFunOp()
-        {
-            OperationResult<int> op = new();
-            op.Data = 0;
-            op.Status = Statuses.Success;
-            return op;
-        }
-
-        private async Task<OperationResult<int>> ExecuteFunOpAsync()
-        {
-            await Task.Delay(0);
-            OperationResult<int> op = new();
-            op.Data = 0;
-            op.Status = Statuses.Success;
-            return op;
-        }
+      
         private Statuses[] StatusList = new[] { 
             Statuses.UnKnown,
             Statuses.Unauthorized,
@@ -136,6 +25,7 @@ namespace OperationResult.Benchmarks
             Statuses.Forbidden,        
             Statuses.Exception,        
         };
+
         [Benchmark]
         public void StatusToString()
         {
@@ -155,75 +45,76 @@ namespace OperationResult.Benchmarks
         }
 
 
-        //[Benchmark]
-        //public void ExecuteFunTo()
-        //{
-        //    new JsonResult(ExecuteFun()) { StatusCode = 200 };
-        //}
 
 
+        [Benchmark]
+        public void IntoSimple()
+        {
+            var operation1 = _Operation.SetSuccess(new object());
+            var operation2 = _Operation.SetSuccess(new object());
+            var operation3 = _Operation.SetSuccess(new object());
 
-        //[Benchmark]
-        //public async Task ExecuteFunToAsync()
-        //{
-        //    new JsonResult(await ExecuteFunAsync()) { StatusCode = 200 };
-        //}
+            var result = operation1.Collect(operation1, operation2).
+                Into((r1, r2, r3) => new { r1, r2, r3 });
+        }
 
+        [Benchmark]
+        public async Task IntoSimpleAsync()
+        {
+            var operation1 = Task.FromResult(_Operation.SetSuccess(new object()));
+            var operation2 = Task.FromResult(_Operation.SetSuccess(new object()));
+            var operation3 = Task.FromResult(_Operation.SetSuccess(new object()));
 
-
-
-        //[Benchmark]
-        //public void ExecuteFunNewTo()
-        //{
-        //    new JsonResult(ExecuteFunNew()) { StatusCode = 200 };
-        //}
-
-
-
-        //[Benchmark]
-        //public async Task ExecuteFunToNewAsync()
-        //{
-        //    new JsonResult(await ExecuteFunNewAsync()) { StatusCode = 200 };
-        //}
+            var result = await  operation1.CollectAsync(operation1, operation2).
+                IntoAsync((r1, r2, r3) => new { r1,r2,r3 });
+        }
 
 
-        //[Benchmark]
-        //public void ImplicityToJsonResult()
-        //{
-        //    ExecuteFunImplicity().ToJsonResult();
-        //}
+        private async Task<OperationResult<object>> Job()
+        {
+            await Task.Delay(40);
+            return new OperationResult<object>();
+        }
 
-      
+        private OperationResult<object> JobSync()
+        {
+            Task.Delay(40).ConfigureAwait(false).GetAwaiter().GetResult();
+            return new OperationResult<object>();
+        }
 
-        //[Benchmark]
-        //public async Task ImplicityToJsonResultAsync()
-        //{
-        //    await ExecuteFunImplicityAsync().ToJsonResultAsync();
-        //}
+        [Benchmark]
+        public void Into()
+        {
+            var operation1 = JobSync();
+            var operation2 = JobSync();
+            var operation3 = JobSync();
+
+            var result = operation1.Collect(operation1, operation2).
+                Into((r1, r2, r3) => new { r1, r2, r3 });
+        }
 
 
-        //[Benchmark]
-        //public void ExToJsonResult()
-        //{
-        //    ExecuteFunEx().ToJsonResult();
-        //}
+        [Benchmark]
+        public async Task IntoAwait()
+        {
+            var operation1 = await Job();
+            var operation2 = await Job();
+            var operation3 = await Job();
 
-        //[Benchmark]
-        //public async Task ExToJsonResultAsync()
-        //{
-        //    await ExecuteFunExAsync().ToJsonResultAsync();
-        //}
+            var result = operation1.Collect(operation1, operation2).
+                Into((r1, r2, r3) => new { r1, r2, r3 });
+        }
 
-        //[Benchmark]
-        //public void OpToJsonResult()
-        //{
-        //    ExecuteFunOp().ToJsonResult();
-        //}
+        [Benchmark]
+        public async Task IntoAsync()
+        {
+            var operation1 =  Job();
+            var operation2 =  Job();
+            var operation3 =  Job();
 
-        //[Benchmark]
-        //public async Task OpToJsonResultAsync()
-        //{
-        //    await ExecuteFunOpAsync().ToJsonResultAsync();
-        //}
+            var result = await operation1.CollectAsync(operation1, operation2).
+                IntoAsync((r1, r2, r3) => new { r1, r2, r3 });
+        }
+
     }
 }
