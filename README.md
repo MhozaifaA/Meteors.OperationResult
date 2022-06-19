@@ -56,7 +56,20 @@ Simplicity is one in all,
 
     `SetSuccess, SetFailed, SetException, SetContent`
 
-  ​
+  - ##### Extension Schema
+
+    ▸ `ToOperationResult<T>(),`
+    `WithStatusCode<T>(statuscode:int),`
+    `WithStatusCodeAsync<T>(statuscode:int),`
+    `ToJsonResult<T>(),`
+    `ToJsonResult<T>(body:bool),`
+    `ToJsonResultAsync<T>(),`
+    `ToJsonResultAsync<T>(body:bool),`
+    `Collect<T1.....T7>(T2....T7),`
+    `Into<T1.....T7,T>((T1....T7),`
+    `CollectAsync<T1.....T7>(T2....T7),`
+    `IntoAsync<T1.....T7,T>((T1....T7),`
+    ​
 
 - ###  How to use
 
@@ -175,7 +188,7 @@ TODO
 - [x] fix HasCustomeStatusCode cond inside to json result and value/ better not to mapping to json only fix internal value status>0 `1.3`
 - [x] fix with not set operation types with = 0 `1.3`
 - linq to for in priority funcs to increase 200ns
-- [X]enable to retuen data with other success status
+- [X] enable to retuen data with other success status
 - build ToProString enum prof `1.3`
 - [ ] implicti and explicti from status types to Status code <-> `1.3` `remove issue - this will not be in lib , can be extension or any spsific not fit with only 5 statuses with all statusCode of http `
 - [x] find new name for OperationResultTypes `1.3`
@@ -183,5 +196,6 @@ TODO
 - Helper to convert from any operation type to other with out take data (this too useful when need to get un-success to return operation from other) 'note: this will work agenst ** enable to retuen data with other success status** , later i well see how to enable two side (smart mapping can be)
 - Find more pritty way when return generic "_Operation" with out need to generic only fill *base
 - write extension methods for Http operation results, this can done by users, but Meteors is some internal using extensions of OperationResult, so they can be public and more what users need
+- [ ] Support message with SetException with all shape , look like (exception , message).
 
 **Feature [X] will braking change and effect in some features**
