@@ -46,6 +46,33 @@ namespace OperationResult.Tests
             Assert.Equal(jsontxt, jsonResult);
         }
 
+        [Theory]
+        [MemberData(nameof(ExtensionTest.FactData), MemberType = typeof(ExtensionTest))]
+        public async Task OperationToJsonResultAsync(Statuses type)
+        {
+            var operation =await Task.FromResult(Seed.Create<FooUser>(type));
+            var result =await Task.FromResult(Seed.Create<FooUser>(type)).ToJsonResultAsync();
+
+            var jsontxt = string.Empty;
+            if (operation.HasException)
+            {
+                jsontxt = System.Text.Json.JsonSerializer.Serialize(operation.FullExceptionMessage);
+            }
+            else
+            if (operation.IsSuccess)
+            {
+                jsontxt = System.Text.Json.JsonSerializer.Serialize(operation.Data);
+            }
+            else
+            {
+                jsontxt = System.Text.Json.JsonSerializer.Serialize(operation.Message);
+            }
+
+            var jsonResult = System.Text.Json.JsonSerializer.Serialize(result.Value);
+
+            Assert.Equal(jsontxt, jsonResult);
+        }
+
 
 
         [Theory]
@@ -64,7 +91,21 @@ namespace OperationResult.Tests
             Assert.Equal(jsontxt, jsonResult);
         }
 
+        [Theory]
+        [MemberData(nameof(ExtensionTest.FactData), MemberType = typeof(ExtensionTest))]
+        public async Task OperationToJsonResultBodyAsync(Statuses type)
+        {
+            var operation =await Task.FromResult(Seed.Create<FooUser>(type));
+            operation.StatusCode = (int)type;
+            var result =await Task.FromResult(Seed.Create<FooUser>(type)).ToJsonResultAsync(true);
 
+            var jsontxt = string.Empty;
+            jsontxt = System.Text.Json.JsonSerializer.Serialize(operation);
+
+            var jsonResult = System.Text.Json.JsonSerializer.Serialize(result.Value);
+
+            Assert.Equal(jsontxt, jsonResult);
+        }
 
 
         [Theory]
@@ -73,6 +114,34 @@ namespace OperationResult.Tests
         {
             var operation = Seed.Create<FooUser>(type);
             var result = Seed.Create<FooUser>(type).WithStatusCode(467).ToJsonResult();
+
+            operation.StatusCode = 467;
+            var jsontxt = string.Empty;
+            if (operation.HasException)
+            {
+                jsontxt = System.Text.Json.JsonSerializer.Serialize(operation.FullExceptionMessage);
+            }
+            else
+            if (operation.IsSuccess)
+            {
+                jsontxt = System.Text.Json.JsonSerializer.Serialize(operation.Data);
+            }
+            else
+            {
+                jsontxt = System.Text.Json.JsonSerializer.Serialize(operation.Message);
+            }
+
+            var jsonResult = System.Text.Json.JsonSerializer.Serialize(result.Value);
+
+            Assert.Equal(jsontxt, jsonResult);
+        }
+
+        [Theory]
+        [MemberData(nameof(ExtensionTest.FactData), MemberType = typeof(ExtensionTest))]
+        public async Task OperationWithStatusCodeToJsonResultAsync(Statuses type)
+        {
+            var operation =await Task.FromResult(Seed.Create<FooUser>(type));
+            var result =await Task.FromResult(Seed.Create<FooUser>(type)).WithStatusCodeAsync(467).ToJsonResultAsync();
 
                 operation.StatusCode = 467;
             var jsontxt = string.Empty;
@@ -102,6 +171,24 @@ namespace OperationResult.Tests
         {
             var operation = Seed.Create<FooUser>(type);
             var result = Seed.Create<FooUser>(type).WithStatusCode(476).ToJsonResult(true);
+
+            operation.StatusCode = 476;
+            var jsontxt = string.Empty;
+            jsontxt = System.Text.Json.JsonSerializer.Serialize(operation);
+
+            var jsonResult = System.Text.Json.JsonSerializer.Serialize(result.Value);
+            output.WriteLine(jsontxt);
+            output.WriteLine(jsonResult);
+            Assert.Equal(jsontxt, jsonResult);
+        }
+
+
+        [Theory]
+        [MemberData(nameof(ExtensionTest.FactData), MemberType = typeof(ExtensionTest))]
+        public async Task OperationWithStatusCodeToJsonResultBodyAsync(Statuses type)
+        {
+            var operation =await Task.FromResult(Seed.Create<FooUser>(type));
+            var result = await Task.FromResult(Seed.Create<FooUser>(type)).WithStatusCodeAsync(476).ToJsonResultAsync(true);
 
             operation.StatusCode = 476;
             var jsontxt = string.Empty;
