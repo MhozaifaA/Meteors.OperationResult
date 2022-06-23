@@ -49,11 +49,138 @@ namespace OperationResult.Tests
         }
 
 
+
+        [Fact]
+        public void SetSuccess()
+        {
+            OperationResult<FooUser> operation1 = new OperationResult<FooUser>();
+            OperationResult<FooUser> operation2 = new OperationResult<FooUser>();
+            OperationResult<FooUser> operation3 = new OperationResult<FooUser>();
+            OperationResult<FooUser> operation4 = new OperationResult<FooUser>();
+
+            operation1.SetSuccess();
+            operation2.SetSuccess(nameof(SetSuccess));
+
+            FooUser data3=new FooUser();
+            operation3.SetSuccess(data3);
+
+            FooUser data4 = new FooUser();
+            operation4.SetSuccess(data4, nameof(SetSuccess));
+
+
+            Assert.Equal(Statuses.Success, operation1.Status);
+            Assert.Null(operation1.Data);
+
+            Assert.Equal(Statuses.Success, operation2.Status);
+            Assert.Null(operation2.Data);
+            Assert.Equal(nameof(SetSuccess), operation2.Message);
+
+
+            Assert.Equal(Statuses.Success, operation3.Status);
+            Assert.Equal(data3 ,operation3.Data);
+
+            Assert.Equal(Statuses.Success, operation4.Status);
+            Assert.Equal(data4, operation4.Data);
+            Assert.Equal(nameof(SetSuccess), operation4.Message);
+
+        }
+
+
+        [Fact]
+        public void SetFailed()
+        {
+            OperationResult<FooUser> operation1 = new OperationResult<FooUser>();
+            OperationResult<FooUser> operation2 = new OperationResult<FooUser>();
+            OperationResult<FooUser> operation3 = new OperationResult<FooUser>();
+            OperationResult<FooUser> operation4 = new OperationResult<FooUser>();
+            OperationResult<FooUser> operation5 = new OperationResult<FooUser>();
+            OperationResult<FooUser> operation6 = new OperationResult<FooUser>();
+
+            operation1.SetFailed();
+            operation2.SetFailed(nameof(SetFailed));
+            operation3.SetFailed(Statuses.Forbidden);
+            operation4.SetFailed(Statuses.Unauthorized);
+            operation5.SetFailed(nameof(SetFailed), Statuses.Unauthorized);
+            operation6.SetFailed(nameof(SetFailed), Statuses.Forbidden);
+
+            Assert.Equal(Statuses.Failed, operation1.Status);
+
+            Assert.Equal(Statuses.Failed, operation2.Status);
+            Assert.Equal(nameof(SetFailed), operation2.Message);
+
+
+            Assert.Equal(Statuses.Forbidden, operation3.Status);
+
+            Assert.Equal(Statuses.Unauthorized, operation4.Status);
+
+            Assert.Equal(Statuses.Unauthorized, operation5.Status);
+            Assert.Equal(nameof(SetFailed), operation5.Message);
+
+            Assert.Equal(Statuses.Forbidden, operation6.Status);
+            Assert.Equal(nameof(SetFailed), operation6.Message);
+
+        }
+
+
+        [Fact]
+        public void SetContent()
+        {
+            OperationResult<FooUser> operation1 = new OperationResult<FooUser>();
+            OperationResult<FooUser> operation2 = new OperationResult<FooUser>();
+            OperationResult<FooUser> operation3 = new OperationResult<FooUser>();
+            OperationResult<FooUser> operation4 = new OperationResult<FooUser>();
+
+
+            operation1.SetContent(Statuses.Exist);
+            operation2.SetContent(Statuses.NotExist);
+
+
+            operation3.SetContent(Statuses.Exist, nameof(SetContent));
+            operation4.SetContent(Statuses.NotExist, nameof(SetContent));
+
+
+            Assert.Equal(Statuses.Exist, operation1.Status);
+            Assert.Equal(Statuses.NotExist, operation2.Status);
+
+            Assert.Equal(Statuses.Exist, operation3.Status);
+            Assert.Equal(nameof(SetContent), operation3.Message);
+
+            Assert.Equal(Statuses.NotExist, operation4.Status);
+            Assert.Equal(nameof(SetContent), operation4.Message);
+
+        }
+
+
+        [Fact]
+        public void SetException()
+        {
+            OperationResult<FooUser> operation1 = new OperationResult<FooUser>();
+            OperationResult<FooUser> operation2 = new OperationResult<FooUser>();
+            OperationResult<FooUser> operation3 = new OperationResult<FooUser>();
+            OperationResult<FooUser> operation4 = new OperationResult<FooUser>();
+
+
+            operation1.SetException(new Exception());
+            operation2.SetException(new Exception(), nameof(SetException));
+
+   
+            Assert.Equal(Statuses.Exception, operation1.Status);
+            Assert.NotNull(operation1.Exception);
+
+
+            Assert.Equal(Statuses.Exception, operation2.Status);
+            Assert.NotNull(operation1.Exception);
+            Assert.Equal(nameof(SetException), operation2.Message);
+
+        }
+
+
+
         [Fact]
         public OperationResult<FooUser> UnknownStatus()
         {
             OperationResult<FooUser> operation = new OperationResult<FooUser>();
-
+            
             //act as success
             operation.Data = new FooUser();
             operation.Message = "Success";

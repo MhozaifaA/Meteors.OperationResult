@@ -17,6 +17,11 @@ namespace OperationResult.Tests.Mocks
 
         public string UserName { get; set; }
         public string Password { get; set; }
+
+        public bool EqulaInner(FooUser foo)
+        {
+            return foo.UserName.Equals(UserName) && foo.Password.Equals(Password);
+        }
     }
 
     public class FooInto

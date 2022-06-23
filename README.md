@@ -197,5 +197,6 @@ TODO
 - Find more pritty way when return generic "_Operation" with out need to generic only fill *base
 - write extension methods for Http operation results, this can done by users, but Meteors is some internal using extensions of OperationResult, so they can be public and more what users need
 - [ ] Support message with SetException with all shape , look like (exception , message).
+- Is operation , virtual/abstract , set val
 
 **Feature [X] will braking change and effect in some features**
