@@ -49,6 +49,28 @@ namespace OperationResult.Tests
         }
 
 
+        [Fact]
+        public void AppendMessage()
+        {
+            OperationResult<FooUser> operation = new OperationResult<FooUser>();
+            foreach (var item in "Meteors")
+                operation.Append(item.ToString());
+            Assert.Equal("M e t e o r s", operation.Message);
+            operation.Message = null;
+
+
+            operation.Append("Meteors" ,"..","soon");
+            Assert.Equal("Meteors .. soon", operation.Message);
+            operation.Message = null;
+
+            foreach (var item in "Meteors")
+                operation.Append(item.ToString(),space:false);
+            Assert.Equal("Meteors", operation.Message);
+            operation.Message = null;
+
+        }
+
+
 
         [Fact]
         public void SetSuccess()

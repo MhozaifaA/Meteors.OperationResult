@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Meteors.OperationResult.ExtensionMethods;
+using System;
 using System.Text.Json.Serialization;
 
 namespace Meteors.OperationResult
@@ -31,6 +32,69 @@ namespace Meteors.OperationResult
         /// <para>Not effect with native C# code lib as un-host-web projects or responses.</para>
         /// </summary>
         public int? StatusCode { get; set; }
+
+        /// <summary>
+        /// Helper to append messge, this will affect on base,
+        /// <para>Effect in <code>base.Message</code> .</para>
+        /// </summary>
+        /// <param name="Message">start with capital as base</param>
+        /// <param name="space">join with space " " or ""</param>
+        /// <returns> <see cref="OperationResultBase"/> </returns>
+        public OperationResultBase Append(string Message,bool space = true)
+        {
+            //can be null
+            if (this.Message.IsNullOrEmpty())
+                this.Message = Message.ToString();
+            else
+                this.Message = string.Join(space ?" ":string.Empty , this.Message, Message);
+            return this;
+        }
+
+
+        /// <summary>
+        /// Helper to append messge, this will affect on base,
+        /// <para>Effect in <code>base.Message</code> .</para>
+        /// </summary>
+        /// <param name="Message">start with capital as base</param
+        /// <returns> <see cref="OperationResultBase"/> </returns>
+        public OperationResultBase Append(params string[] Message)
+        {
+            //can be null
+            if (this.Message.IsNullOrEmpty())
+                this.Message = string.Join(" ", Message);
+            else
+                this.Message = string.Join(" ", this.Message, Message);
+            return this;
+        }
+
+        ///// <summary>
+        ///// Helper to append messge, this will affect on base,
+        ///// <para>Effect in <code>base.Message</code> .</para>
+        ///// </summary>
+        ///// <param name="Message">start with capital as base</param>
+        ///// <returns> <see cref="OperationResultBase"/> </returns>
+        //public OperationResultBase Append( Readonly<char> Message)
+        //{
+        //    //can be null
+        //    if (this.Message.IsNullOrEmpty())
+        //        this.Message = Message.ToString();
+        //    else
+        //        this.Message = string.Join(" ", this.Message, Message.ToString());
+
+        //    return this;
+        //}
+
+        /// <summary>
+        /// Helper to pass messge, this will affect on base
+        /// <para>Effect in <code>base.Status</code> .</para>
+        /// </summary>
+        /// <param name="Status"> start with capital as base </param>
+        /// <returns> <see cref="OperationResultBase"/> </returns>
+        public OperationResultBase Append(Statuses Status)
+        {
+            this.Status = Status;
+            return this;
+        }
 
         /// <summary>
         /// <inheritdoc/>
