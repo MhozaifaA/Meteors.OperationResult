@@ -126,7 +126,7 @@ namespace Meteors
             if (isBody)
             {
                 if (jsonMessageIsNullOrEmpty)
-                    result.Message = result.Status.ToString();
+                    result.Message = result.Status.ToPerString();
               
                 return new JsonResult(result) { StatusCode = result.StatusCode };
             }
@@ -135,7 +135,7 @@ namespace Meteors
                 return new JsonResult(result.Data) { StatusCode = result.StatusCode };
 
             if (jsonMessageIsNullOrEmpty)
-                return new JsonResult(result.Status.ToString()) { StatusCode = result.StatusCode };
+                return new JsonResult(result.Status.ToPerString()) { StatusCode = result.StatusCode };
 
             return new JsonResult(jsonMessage) { StatusCode = result.StatusCode };
         }

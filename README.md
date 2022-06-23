@@ -189,7 +189,7 @@ TODO
 - [x] fix with not set operation types with = 0 `1.3`
 - linq to for in priority funcs to increase 200ns
 - [X] enable to retuen data with other success status
-- build ToProString enum prof `1.3`
+- [X] build ToProString enum prof `1.3`
 - [ ] implicti and explicti from status types to Status code <-> `1.3` `remove issue - this will not be in lib , can be extension or any spsific not fit with only 5 statuses with all statusCode of http `
 - [x] find new name for OperationResultTypes `1.3`
 - warrning when use unable object in multi thread like (EF Context)
