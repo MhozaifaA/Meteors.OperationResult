@@ -48,6 +48,15 @@ namespace OperationResult.Tests
             }
         }
 
+        [Theory]
+        [MemberData(nameof(ExtensionTest.FactData), MemberType = typeof(ExtensionTest))]
+        public void AppendStatus(Statuses status)
+        {
+            var operation = Seed.Create<FooUser>(status);
+
+            Assert.Equal(status, operation.Status);
+        }   
+
 
         [Fact]
         public void AppendMessage()
@@ -55,17 +64,24 @@ namespace OperationResult.Tests
             OperationResult<FooUser> operation = new OperationResult<FooUser>();
             foreach (var item in "Meteors")
                 operation.Append(item.ToString());
-            Assert.Equal("M e t e o r s", operation.Message);
+            operation.Append("@");
+
+            Assert.Equal("M e t e o r s @", operation.Message);
             operation.Message = null;
 
-
+            //-----
             operation.Append("Meteors" ,"..","soon");
-            Assert.Equal("Meteors .. soon", operation.Message);
+            operation.Append("@");
+
+            Assert.Equal("Meteors .. soon @", operation.Message);
             operation.Message = null;
+            //----
 
             foreach (var item in "Meteors")
                 operation.Append(item.ToString(),space:false);
-            Assert.Equal("Meteors", operation.Message);
+            operation.Append("@",false);
+
+            Assert.Equal("Meteors@", operation.Message);
             operation.Message = null;
 
         }
