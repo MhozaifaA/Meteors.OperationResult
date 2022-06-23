@@ -21,12 +21,12 @@ namespace Meteors
         /// <summary>
         /// Check <see cref="Statuses.Success"/>.
         /// </summary>
-        public bool IsSuccess => Status == Statuses.Success;
+        public bool IsSuccess => Status is Statuses.Success;
 
         /// <summary>
         /// Check <see cref="Statuses.Exception"/>.
         /// </summary>
-        public bool HasException => this.Status == Statuses.Exception;
+        public bool HasException => this.Status is Statuses.Exception;
 
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace Meteors
         /// <returns> <see cref="OperationResult{T}"/> </returns>
         public OperationResult<T> SetFailed(string message, Statuses type = Statuses.Failed)
         {
-            if (type != Statuses.Failed && type != Statuses.Forbidden && type != Statuses.Unauthorized)
+            if (type is not Statuses.Failed && type is not Statuses.Forbidden && type is not Statuses.Unauthorized)
                 throw new ArgumentException($"{nameof(SetFailed)} in {nameof(OperationResult<T>)} take {type} should use with {Statuses.Failed}, {Statuses.Forbidden} or {Statuses.Unauthorized} .");
 
             Message = message;
@@ -136,7 +136,7 @@ namespace Meteors
         /// <returns> <see cref="OperationResult{T}"/> </returns>
         public OperationResult<T> SetFailed(Statuses type = Statuses.Failed)
         {
-            if (type != Statuses.Failed && type != Statuses.Forbidden && type != Statuses.Unauthorized)
+            if (type is not Statuses.Failed && type is not Statuses.Forbidden && type is not Statuses.Unauthorized)
                 throw new ArgumentException($"{nameof(SetFailed)} in {nameof(OperationResult<T>)} take {type} should use with {Statuses.Failed}, {Statuses.Forbidden} or {Statuses.Unauthorized} .");
 
             Status = type;
@@ -186,7 +186,7 @@ namespace Meteors
         /// <returns> <see cref="OperationResult{T}"/> </returns>
         public OperationResult<T> SetContent(Statuses type, string message)
         {
-            if (type != Statuses.Exist && type != Statuses.NotExist)
+            if (type is not Statuses.Exist && type is not Statuses.NotExist)
                 throw new ArgumentException($"Directly  return {nameof(OperationResult<T>)} take {type} should use with {Statuses.Exist} or {Statuses.NotExist} .");
 
             Message = message;
@@ -204,7 +204,7 @@ namespace Meteors
         /// <returns> <see cref="OperationResult{T}"/> </returns>
         public OperationResult<T> SetContent(Statuses type)
         {
-            if (type != Statuses.Exist && type != Statuses.NotExist)
+            if (type is not Statuses.Exist && type is not Statuses.NotExist)
                 throw new ArgumentException($"Directly  return {nameof(OperationResult<T>)} take {type} should use with {Statuses.Exist} or {Statuses.NotExist} .");
 
             Status = type;
@@ -219,7 +219,7 @@ namespace Meteors
         /// <param name="type"></param>
         public static implicit operator OperationResult<T>(Statuses type)
         {
-            if (type != Statuses.Exist && type != Statuses.NotExist)
+            if (type is not Statuses.Exist && type is not Statuses.NotExist)
                 throw new ArgumentException($"Directly return {nameof(OperationResult<T>)} take {type} should use with {Statuses.Exist} or {Statuses.NotExist} .");
 
             return new OperationResult<T>() { Status = type };
@@ -233,7 +233,7 @@ namespace Meteors
         /// <param name="type_message"></param>
         public static implicit operator OperationResult<T>((Statuses type, string message) type_message)
         {
-            if (type_message.type != Statuses.Exist && type_message.type != Statuses.NotExist)
+            if (type_message.type is not Statuses.Exist && type_message.type is not Statuses.NotExist)
                 throw new ArgumentException($"Directly return {nameof(OperationResult<T>)} take {type_message.type} should use with {Statuses.Exist} or {Statuses.NotExist} .");
 
             return new OperationResult<T>() { Status = type_message.type, Message = type_message.message };
@@ -247,7 +247,7 @@ namespace Meteors
         /// <param name="type_message"></param>
         public static implicit operator OperationResult<T>((string message, Statuses type) type_message)
         {
-            if (type_message.type != Statuses.Failed && type_message.type != Statuses.Forbidden && type_message.type != Statuses.Unauthorized)
+            if (type_message.type is not Statuses.Failed && type_message.type is not Statuses.Forbidden && type_message.type is not Statuses.Unauthorized)
                 throw new ArgumentException($"{nameof(SetFailed)} in {nameof(OperationResult<T>)} take {type_message.type} should use with {Statuses.Failed}, {Statuses.Forbidden} or {Statuses.Unauthorized} .");
 
             return new OperationResult<T>() { Status = type_message.type, Message = type_message.message };

@@ -120,7 +120,7 @@ namespace Meteors
         /// <returns> <see cref="OperationResultBase"/> </returns>
         public static OperationResultBase SetFailed(string message, Statuses type = Statuses.Failed)
         {
-            if (type != Statuses.Failed && type != Statuses.Forbidden && type != Statuses.Unauthorized)
+            if (type is not Statuses.Failed && type is not Statuses.Forbidden && type is not Statuses.Unauthorized)
                 throw new ArgumentException($"{nameof(SetFailed)} in {nameof(OperationResultBase)} take {type} should use with {Statuses.Failed}, {Statuses.Forbidden} or {Statuses.Unauthorized} .");
 
             return new OperationResultBase() { Message = message, Status = type };
@@ -155,7 +155,7 @@ namespace Meteors
         /// <returns> <see cref="OperationResultBase"/> </returns>
         public static OperationResultBase SetFailed(Statuses type = Statuses.Failed)
         {
-            if (type != Statuses.Failed && type != Statuses.Forbidden && type != Statuses.Unauthorized)
+            if (type is not Statuses.Failed && type is not Statuses.Forbidden && type is not Statuses.Unauthorized)
                 throw new ArgumentException($"{nameof(SetFailed)} in {nameof(OperationResultBase)} take {type} should use with {Statuses.Failed}, {Statuses.Forbidden} or {Statuses.Unauthorized} .");
 
             return new OperationResultBase() { Status = type };
@@ -246,7 +246,7 @@ namespace Meteors
         /// <returns> <see cref="OperationResultBase"/> </returns>
         public static OperationResultBase SetContent(Statuses type, string message)
         {
-            if (type != Statuses.Exist && type != Statuses.NotExist)
+            if (type is not Statuses.Exist && type is not Statuses.NotExist)
                 throw new ArgumentException($"Directly return {nameof(OperationResultBase)} take {type} should use with {Statuses.Exist} or {Statuses.NotExist} .");
 
             return new OperationResultBase() { Status = type, Message = message };
@@ -279,7 +279,7 @@ namespace Meteors
         /// <returns> <see cref="OperationResultBase"/> </returns>
         public static OperationResultBase SetContent(Statuses type)
         {
-            if (type != Statuses.Exist && type != Statuses.NotExist)
+            if (type is not Statuses.Exist && type is not Statuses.NotExist)
                 throw new ArgumentException($"Directly return {nameof(OperationResultBase)} take {type} should use with {Statuses.Exist} or {Statuses.NotExist} .");
 
             return new OperationResultBase() { Status = type };

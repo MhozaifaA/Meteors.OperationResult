@@ -930,7 +930,7 @@ namespace Meteors
             IEnumerable<OperationResultBase> listResult = Enumerable.Range(0, results.Length).Select(index => results[index]).Cast<OperationResultBase>();
 
             OperationResultBase firstException = listResult.FirstOrDefault(result => result.Status == Statuses.Exception);
-            if (firstException != null)
+            if (firstException is not null)
                 return operation.SetException(firstException.Exception);
 
             Statuses? maxFailded = listResult.Where(result => result.Status == Statuses.Failed || result.Status == Statuses.Forbidden ||
