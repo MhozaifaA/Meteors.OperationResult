@@ -1,20 +1,16 @@
-# [Meteors] OperationResult 6.1.3 
-> `version 1.3 net6.0`
+# [Meteors] OperationResult 6.1.6 
+> `version 1.6 net6.0`
 
 
 *Meteors Operation Result came with new and redesigned to accept more than container for status and data. **OperationResult** is isolated but stuck with kernel of your business logic , without if/else and some corrupted code to handle results.*
 
-Install-Package Meteors.OperationResult -Version 1.0.1
+Install-Package Meteors.OperationResult -Version 6.1.6
 
-> Soon to lunch with full doc 60%
+[nuget ](https://www.nuget.org/packages/Meteors.OperationResult/)
 
+[Source Code]: https://github.com/MhozaifaA/OperationResult	"Github"
 
-
-This lib belongs to the **Meteors**,
-Meteorites helps you write less and clean code with the power of design patterns and full support for the most popular programming for perpetual projects
-
-All you need in your project is to use meteorites,
-Simplicity is one in all,
+[Source Code](https://github.com/MhozaifaA/OperationResult)
 
 
 
@@ -26,7 +22,7 @@ Simplicity is one in all,
 
     ▸ Types/Statuses
 
-    `Unknown, Success, Exist, NotExist,Failed,Forbidden,Exception,Unauthorized`
+    `Unknown, Success, Exist, NotExist, Failed, Forbidden, Exception, Unauthorized`
 
      ▸ Fields/Props
 
@@ -34,7 +30,7 @@ Simplicity is one in all,
 
     ▸ Methods/Func Helper
 
-    `SetSuccess, SetFailed, SetException, SetContent`
+    `SetSuccess, SetFailed, SetException, SetContent, Append `
 
     ▸ Implicit
 
@@ -71,7 +67,7 @@ Simplicity is one in all,
     `IntoAsync<T1.....T7,T>((T1....T7),`
     ​
 
-- ###  How to use
+- ###  How to use *- `before get operation`* 
 
   ```c#
     public class FooUser { UserName, Password }
@@ -93,7 +89,7 @@ Simplicity is one in all,
         if(!IsCurrect(user))
         {
            operation.OperationResultType = OperationResultTypes.Failed;
-           operation.Message = $"{user.UserName} faild to access";
+           operation.Message = $"{user.UserName} failed to access";
           return operation;
         }
         operation.OperationResultType = OperationResultTypes.Success;
@@ -119,7 +115,7 @@ Simplicity is one in all,
       OperationResult<FooUserDetails> operation = new ();
 
       if(!IsCurrect(user))
-      	return operation.SetFailed($"{user.UserName} faild to access");
+      	return operation.SetFailed($"{user.UserName} failed to access");
       
       return operation.SetSuccess(result);
 
@@ -137,7 +133,7 @@ Simplicity is one in all,
     try
     { 
       if(!IsCurrect(user))
-      	return _Operation.SetFailed($"{user.UserName} faild to access");
+      	return _Operation.SetFailed($"{user.UserName} failed to access");
       
       return _Operation.SetSuccess(result);
     }
@@ -155,7 +151,7 @@ Simplicity is one in all,
     try
     { 
       if(!IsCurrect(user))
-      	return ($"{user.UserName} faild to access",OperationResultTypes.Failed);
+      	return ($"{user.UserName} failed to access",OperationResultTypes.Failed);
       
       return result; // mean success
     }
@@ -173,12 +169,241 @@ Simplicity is one in all,
   ```c#
    { 
       if(!IsCurrect(user))
-      	return ($"{user.UserName} faild to access",OperationResultTypes.Failed);
+      	return ($"{user.UserName} failed to access",OperationResultTypes.Failed);
       return result;
     }
   ```
 
-  ​
+- ### How to use - *`After get operation`*
+
+  - Most OperationResult used with WebAPIs and Responses  Sync/Async :
+
+    ```C#
+    private IRepository repository;
+    public IActionResult Index()
+    {
+      return repository.Example()...all controlling ...;
+    }
+
+    public async Task<IActionResult> Index()
+    {
+      return await repository.Example()...all controlling ...;
+    }
+    ```
+
+    - ToJsonResult()
+
+      ```C#
+       return repository.Example().ToJsonResult();
+       return await repository.Example().ToJsonResultAsync();
+
+      /*
+      success 200: { fullName:"Admin" , age:24 }
+      other [statuscode]: "message.."
+      exception: ""System.Exception. .. . .. line ... . inner exception ...""
+      */
+      ```
+
+    - ToJsonResult(true)
+
+      ```C#
+      return repository.Example().ToJsonResult(isbody:true);
+       return await repository.Example().ToJsonResultAsync(isbody:true);
+
+      /*
+      success 200: {
+      "Data":{"UserName":null,"Password":null},
+      "IsSuccess":true, "HasException":false,
+      "FullExceptionMessage":null,"Message":"message..",
+      "Status":200,"StatusCode":200
+      }
+
+      other [statuscode]: {
+      "Data":null,
+      "IsSuccess":false,"HasException":false,
+      "FullExceptionMessage":null,"Message":"message..",
+      "Status":[statuscode],"StatusCode":[statuscode]
+      }
+
+      exception: {
+      "Data":null,
+      "IsSuccess":false,"HasException":true,
+      "FullExceptionMessage":"System.Exception. .. . .. line ... . inner exception ...","Message":"message..",
+      "Status":500,"StatusCode":[statuscode]
+      }
+      */
+      ```
+
+    - WithStatusCode()
+
+      ```c#
+      return repository.Example().WithStatusCode(415).ToJsonResult();
+      return await repository.Example().WithStatusCodeAsync(415).ToJsonResultAsync();
+
+      /*
+      success 415: "expected body"
+      other 415: "expected body"
+      exception 415: "expected body"
+      */
+      ```
+
+    - Collect
+
+      ```c#
+      {
+           // value: Tuple (operation1,operation3.....)
+           Operation1().Collect(Operation2(),Operation3()...) 
+            
+             // value: Tuple (operation1,operation3.....)
+           (await Operation1Async()).Collect(await Operation2Async(),await Operation3Async()...) 
+           
+           // value:Task Tuple ( operation1,operation3.....)
+           Operation1Async().CollectAsync(Operation2Async(),Operation3Async()...) 
+       
+      }
+
+      ```
+
+    - Into   [see](https://www.nuget.org/packages/Meteors.OperationResult/)
+
+      ```C#
+      /*
+      success[Success,Exit,NotExit] 200:  OperationResult<>(data)
+      failed [Failed,Forbidden,Unauthorized] 400: "message.."
+      exception 500: ""System.Exception. .. . .. line ... . inner exception ...""
+      */
+         Operation1().Into(o=>o) 
+           
+        /*
+      success[Success,Exit,NotExit] 200:  OperationResult<Foo>(newdata)
+      failed [Failed,Forbidden,Unauthorized] 400: "message.."
+      exception 500: ""System.Exception. .. . .. line ... . inner exception ...""
+      */
+         Operation1().Into(o=> new Foo{  
+         Result = o.Data,
+           StatusMessage =  o.Status.ToString()
+         }) 
+           
+           /* Async */
+           
+        Operation1Async().IntoAsync(o=>o) 
+           
+      ```
+
+    - Collect.Into
+
+      ```C#
+      /*
+      success[Success,Exit,NotExit] 200:  (perationResult<foo>(o1,o2)
+      failed [Failed,Forbidden,Unauthorized] 400: "message.."
+      exception 500: ""System.Exception. .. . .. line ... . inner exception ...""
+      */
+         Operation1().Collect(Operation2()).Into((o1,o2)=> new foo(){
+         
+           //do what want with  operation o1 
+            //do what want with  operation o2
+         
+         }) 
+           
+           
+           /*
+      success[Success,Exit,NotExit] 200:  OperationResult<foo>(o1,o2)
+      failed [Failed,Forbidden,Unauthorized] 400: "message1 + message2 + ... message7"
+      exception 500: ""System.Exception. .. . .. line ... . inner exception ...""
+      */
+         Operation1().Collect(Operation2(),...Operation7()).Into((o1,o2....o7)=> new foo(){
+         
+           //do what want with  operation o1 
+            //do what want with  operation o2 ...... o7
+         
+         }) 
+           
+           
+           success[Success,Exit,NotExit] 200:  (OperationResult<foo>(o1,o2) , "message..","message...")
+      failed [Failed,Forbidden,Unauthorized] 400: "message1 + message2 + ... message7",
+      exception 500: ""System.Exception. .. . .. line ... . inner exception ...""
+      */
+         Operation1Async().CollectAsync(Operation2Async(),...Operation7Async()).IntoAsync((o1,o2....o7)=> new foo(){
+         
+           //do what want with  operation o1 
+            //do what want with  operation o2 ...... o7
+         
+         })     
+      ```
+
+    - Collect.Into.ToJsonResult  [see](https://www.nuget.org/packages/Meteors.OperationResult/)
+
+      ```C#
+      return Operation1().Collect(Operation2(),...Operation7()).Into((o1,....o7)=>{
+        new foo(){
+          //fill 
+        }
+      }).ToJsonResult(isbody);
+      return Operation1Async().CollectAsync(Operation2Async(),...Operation7Async()).IntoAsync((o1,....o7)=>{
+        new foo(){
+          Operation1Data = o1.Data,
+          :
+          Operation7Data = o7.Data
+          //fill 
+        }
+      }).ToJsonResultAsync(isbody);
+
+      /*
+      isbody: false
+
+      success[Success,Exit,NotExit] 200:  (OperationResult<foo>(o1,o2..o7)
+      failed [Failed,Forbidden,Unauthorized] 400: "message1 + message2 + ... message7"
+      exception 500: ""System.Exception. .. . .. line ... . inner exception ...""
+      */
+
+
+      /*
+      isbody: true
+
+      success [Success,Exit,NotExit] 200: {
+      "Data": { "operation1Data": data1...... "operation7Data": data17} ,
+      "IsSuccess":true, "HasException":false,
+      "FullExceptionMessage":null,"Message":"message..",
+      "Status":200,"StatusCode":200
+      }
+
+      failed [Failed,Forbidden,Unauthorized] 400: {
+      "Data":null,
+      "IsSuccess":false,"HasException":false,
+      "FullExceptionMessage":null,"Message":"message1 + message2 + ... message7",
+      "Status":[statuscode],"StatusCode":[statuscode]
+      }
+
+      exception: 500 {
+      "Data":null,
+      "IsSuccess":false,"HasException":true,
+      "FullExceptionMessage":"System.Exception. .. . .. line ... . inner exception ...","Message":"message1 + message2 + ... message7",
+      "Status":500,"StatusCode":[statuscode]
+      }
+      */
+      ```
+
+
+## Guide  [Medium](https://www.nuget.org/packages/Meteors.OperationResult/)
+
+Collect and Into extensions build to handle multi operations and choice the correct status(**Priority**) with new object.
+
+# **How Priority works**
+
+1- Find Statuses.Exception and change status to exception.
+
+2- Sort OperationResultTypes and join message failed (Failed, Forbidden, Unauthorized) and set status to max failed.
+
+3- Collect message and return Result data with success status.
+
+4- WithStatusCode after done Priority you can control with status.
+
+> **Synchronized and Asynchronized - check **[**Task.WhenAll**](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task.whenall?view=net-6.0)
+
+
+
+________________________________________________
+
 
 
 
@@ -196,6 +421,15 @@ TODO
 - Helper to convert from any operation type to other with out take data (this too useful when need to get un-success to return operation from other) 'note: this will work agenst ** enable to retuen data with other success status** , later i well see how to enable two side (smart mapping can be)
 - Find more pritty way when return generic "_Operation" with out need to generic only fill *base
 - write extension methods for Http operation results, this can done by users, but Meteors is some internal using extensions of OperationResult, so they can be public and more what users need
-- [ ] Support message with SetException with all shape , look like (exception , message).
+- [x] Support message with SetException with all shape , look like (exception , message).
 
 **Feature [X] will braking change and effect in some features**
+
+
+
+> This lib belongs to the **Meteors**,
+> Meteorites helps you write less and clean code with the power of design patterns and full support for the most popular programming for perpetual projects
+>
+> All you need in your project is to use meteorites,
+> Simplicity is one in all,
+

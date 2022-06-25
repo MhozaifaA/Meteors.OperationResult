@@ -67,6 +67,13 @@
             <param name="other"></param>
             <returns></returns>
         </member>
+        <member name="M:Meteors.OperationResult.OperationResultBase.Equals(System.Object)">
+            <summary>
+            Indicates whether the current object is equal to another object of the same type.
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
         <member name="T:Meteors.OperationResult.Statuses">
             <summary>
             Logical  result type
@@ -1205,6 +1212,13 @@
             <inheritdoc/>
             </summary>
             <param name="other"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Meteors.OperationResult`1.Equals(System.Object)">
+            <summary>
+            Indicates whether the current object is equal to another object of the same type.
+            </summary>
+            <param name="obj"></param>
             <returns></returns>
         </member>
     </members>
