@@ -42,6 +42,24 @@
             <para>Not effect with native C# code lib as un-host-web projects or responses.</para>
             </summary>
         </member>
+        <member name="M:Meteors.OperationResult.OperationResultBase.Append(System.String,System.Boolean)">
+            <summary>
+            Helper to append messge, this will affect on base,
+            <para>Effect in <code>base.Message</code> .</para>
+            </summary>
+            <param name="Message">start with capital as base</param>
+            <param name="space">join with space " " or ""</param>
+            <returns> <see cref="T:Meteors.OperationResult.OperationResultBase"/> </returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Meteors.OperationResult.OperationResultBase.Append(System.String[])" -->
+        <member name="M:Meteors.OperationResult.OperationResultBase.Append(Meteors.OperationResult.Statuses)">
+            <summary>
+            Helper to pass messge, this will affect on base
+            <para>Effect in <code>base.Status</code> .</para>
+            </summary>
+            <param name="Status"> start with capital as base </param>
+            <returns> <see cref="T:Meteors.OperationResult.OperationResultBase"/> </returns>
+        </member>
         <member name="M:Meteors.OperationResult.OperationResultBase.Equals(Meteors.OperationResult.OperationResultBase)">
             <summary>
             <inheritdoc/>

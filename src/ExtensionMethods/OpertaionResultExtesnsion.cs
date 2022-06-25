@@ -117,7 +117,7 @@ namespace Meteors
         /// <param name="hasResult"> boolean value if return json of main type T </param>
         /// <param name="isBody"> boolean value if return json complete body of operation</param>
         /// <returns><see cref="JsonResult"/></returns>
-        private static JsonResult GetValidResult<T>(this OperationResult<T> result, string jsonMessage = null, bool hasResult = false, bool isBody = false)
+        private static JsonResult GetValidResult<T>(this OperationResult<T> result, string? jsonMessage = null, bool hasResult = false, bool isBody = false)
         {
             if (!result.HasCustomStatusCode && (result.StatusCode??0) == 0)
                 result.StatusCode = (int)result.Status;
@@ -191,7 +191,7 @@ namespace Meteors
         /// <returns><see cref="OperationResult{TResult1}"/></returns>
         public static async Task<OperationResult<TResult1>> CollectAsync<TResult1>(this Task<OperationResult<TResult1>> result1)
         {
-            await Task.WhenAll(result1);
+            //await Task.WhenAll(result1); //ca1842
             return (await result1);
         }
 
@@ -898,7 +898,8 @@ namespace Meteors
         {
             OperationResult<TResult> operation = new();
 
-            OperationResultBase Result = oneResult as OperationResultBase;
+            if (oneResult is not OperationResultBase Result)
+                throw new ArgumentNullException(nameof(oneResult));
 
             if (Result.Status == Statuses.Exception)
                 return operation.SetException(Result.Exception);
@@ -929,7 +930,7 @@ namespace Meteors
 
             IEnumerable<OperationResultBase> listResult = Enumerable.Range(0, results.Length).Select(index => results[index]).Cast<OperationResultBase>();
 
-            OperationResultBase firstException = listResult.FirstOrDefault(result => result.Status == Statuses.Exception);
+            OperationResultBase? firstException = listResult.FirstOrDefault(result => result.Status == Statuses.Exception);
             if (firstException is not null)
                 return operation.SetException(firstException.Exception);
 

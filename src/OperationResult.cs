@@ -10,13 +10,17 @@ namespace Meteors
     /// <para>Depends on context repository/http/mvc/response/request .</para>
     /// </summary>
     /// <typeparam name="T"> Type of class </typeparam>
+#pragma warning disable CS0659 // Type overrides Object.Equals(object o) but does not override Object.GetHashCode()
     public class OperationResult<T> : OperationResultBase, IResult<T>, IEquatable<OperationResult<T>>//, IDisposable
+#pragma warning restore CS0659 // Type overrides Object.Equals(object o) but does not override Object.GetHashCode()
     {
 
         /// <summary>
         /// Main object result.
         /// </summary>
-        public T Data { get; set; }
+#pragma warning disable CS8766 // Nullability of reference types in return type doesn't match implicitly implemented member (possibly because of nullability attributes).
+        public T? Data { get; set; }
+#pragma warning restore CS8766 // Nullability of reference types in return type doesn't match implicitly implemented member (possibly because of nullability attributes).
 
         /// <summary>
         /// Check <see cref="Statuses.Success"/>.
@@ -32,7 +36,7 @@ namespace Meteors
         /// <summary>
         /// Return deep inner exceptions messages.
         /// </summary>
-        public string FullExceptionMessage => Exception?.ToFullException();
+        public string? FullExceptionMessage => Exception?.ToFullException();
 
 
         /// <summary>
@@ -94,7 +98,7 @@ namespace Meteors
         /// <param name="result"></param>
         /// <param name="message"></param>
         /// <returns> <see cref="OperationResult{T}"/> </returns>
-        public OperationResult<T> SetSuccess(T result, string message)
+        public OperationResult<T> SetSuccess(T result, string? message)
         {
             Message = message;
             Data = result;
@@ -114,7 +118,7 @@ namespace Meteors
         /// <param name="message"></param>
         /// <param name="type"></param>
         /// <returns> <see cref="OperationResult{T}"/> </returns>
-        public OperationResult<T> SetFailed(string message, Statuses type = Statuses.Failed)
+        public OperationResult<T> SetFailed(string? message, Statuses type = Statuses.Failed)
         {
             if (type is not Statuses.Failed && type is not Statuses.Forbidden && type is not Statuses.Unauthorized)
                 throw new ArgumentException($"{nameof(SetFailed)} in {nameof(OperationResult<T>)} take {type} should use with {Statuses.Failed}, {Statuses.Forbidden} or {Statuses.Unauthorized} .");
@@ -166,7 +170,7 @@ namespace Meteors
         /// </summary>
         /// <param name="exception"></param>
         /// <returns> <see cref="OperationResult{T}"/> </returns>
-        public OperationResult<T> SetException(Exception exception)
+        public OperationResult<T> SetException(Exception? exception)
         {
             Exception = exception;
             Status = Statuses.Exception;
@@ -292,9 +296,19 @@ namespace Meteors
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public bool Equals(OperationResult<T> other)
+        public bool Equals(OperationResult<T>? other)
         {
-            return base.Equals(other) && ((Data is null && other.Data is null) || Data.Equals(other.Data));
+            return base.Equals(other) && ((Data is null && other.Data is null) || Data!.Equals(other.Data));
+        }
+
+        /// <summary>
+        /// Indicates whether the current object is equal to another object of the same type.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as OperationResult<T>);
         }
 
 

@@ -13,9 +13,10 @@ namespace Meteors.OperationResult.ExtensionMethods
         /// </summary>
         /// <param name="exception"></param>
         /// <returns></returns>
-        internal static string ToFullException(this System.Exception exception)
+        internal static string? ToFullException(this System.Exception? exception)
         {
-            StringBuilder FullMessage = new StringBuilder();
+            if (exception is null) return null;
+            StringBuilder FullMessage = new();
             return Recursive(exception);
             //local function
             string Recursive(System.Exception deep)

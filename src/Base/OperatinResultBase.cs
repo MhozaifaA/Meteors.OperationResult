@@ -8,12 +8,14 @@ namespace Meteors.OperationResult
     /// Main prop not changed or effect on return
     /// abstract of for <see cref="_Operation"/>
     /// </summary>
+#pragma warning disable CS0659 // Type overrides Object.Equals(object o) but does not override Object.GetHashCode()
     public class OperationResultBase : IEquatable<OperationResultBase>//, IDisposable
+#pragma warning restore CS0659 // Type overrides Object.Equals(object o) but does not override Object.GetHashCode()
     {
         /// <summary>
         /// Any validation text or result-message.
         /// </summary>
-        public string Message { get; set; }
+        public string? Message { get; set; }
 
         /// <summary>
         /// Result type/status.
@@ -25,7 +27,7 @@ namespace Meteors.OperationResult
         ///  protected of for <see cref="_Operation"/>
         /// </summary>
         [JsonIgnore]
-        public Exception Exception { get; set; }
+        public Exception? Exception { get; set; }
 
         /// <summary>
         /// custom return StatusCode-HTTP used with web-requests.
@@ -101,10 +103,26 @@ namespace Meteors.OperationResult
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public bool Equals(OperationResultBase other)
+        public bool Equals(OperationResultBase? other)
         {
-            return Message == other.Message && Status == other.Status &&
-                (Exception == other.Exception || Exception.Message == other.Exception.Message) && StatusCode == other.StatusCode;
+            if (other is null)
+                return false;
+
+            return Message == other!.Message && Status == other!.Status &&
+                (Exception == other!.Exception || Exception?.Message == other!.Exception?.Message)
+                && StatusCode == other!.StatusCode;
+        }
+
+        /// <summary>
+        /// Indicates whether the current object is equal to another object of the same type.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+#pragma warning disable CS8765 // Nullability of type of parameter doesn't match overridden member (possibly because of nullability attributes).
+        public override bool Equals(object obj)
+#pragma warning restore CS8765 // Nullability of type of parameter doesn't match overridden member (possibly because of nullability attributes).
+        {
+            return Equals(obj as OperationResultBase);
         }
 
         ///// <summary>
