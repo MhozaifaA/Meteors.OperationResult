@@ -14,6 +14,9 @@ Install-Package Meteors.OperationResult -Version 6.1.6
 
 [nuget ](https://www.nuget.org/packages/Meteors.OperationResult/)
 
+
+[medium ](https://medium.com/@botchey.mha/build-powerful-operation-result-structure-with-any-transform-layers-c-c310b790865f)
+
 [Source Code]: https://github.com/MhozaifaA/OperationResult	"Github"
 
 [Source Code](https://github.com/MhozaifaA/OperationResult)
@@ -271,7 +274,7 @@ Install-Package Meteors.OperationResult -Version 6.1.6
 
       ```
 
-    - Into   [see]([https://www.nuget.org/packages/Meteors.OperationResult/](https://medium.com/@botchey.mha/build-powerful-operation-result-structure-with-any-transform-layers-c-c310b790865f))
+    - Into   [see](https://medium.com/@botchey.mha/build-powerful-operation-result-structure-with-any-transform-layers-c-c310b790865f)
 
       ```C#
       /*
@@ -338,7 +341,7 @@ Install-Package Meteors.OperationResult -Version 6.1.6
          })     
       ```
 
-    - Collect.Into.ToJsonResult  [see]([https://www.nuget.org/packages/Meteors.OperationResult/](https://medium.com/@botchey.mha/build-powerful-operation-result-structure-with-any-transform-layers-c-c310b790865f))
+    - Collect.Into.ToJsonResult  [see](https://medium.com/@botchey.mha/build-powerful-operation-result-structure-with-any-transform-layers-c-c310b790865f)
 
       ```C#
       return Operation1().Collect(Operation2(),...Operation7()).Into((o1,....o7)=>{
@@ -391,7 +394,7 @@ Install-Package Meteors.OperationResult -Version 6.1.6
       ```
 
 
-## Guide  [Medium]([https://www.nuget.org/packages/Meteors.OperationResult/](https://medium.com/@botchey.mha/build-powerful-operation-result-structure-with-any-transform-layers-c-c310b790865f))
+## Guide  [Medium](https://medium.com/@botchey.mha/build-powerful-operation-result-structure-with-any-transform-layers-c-c310b790865f)
 
 Collect and Into extensions build to handle multi operations and choice the correct status(**Priority**) with new object.
 
