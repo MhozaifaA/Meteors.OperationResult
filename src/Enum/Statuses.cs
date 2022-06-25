@@ -1,4 +1,26 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿/* MIT License
+
+Copyright (c) 2022 Huzaifa Aseel
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.*/
+
+using Microsoft.AspNetCore.Http;
 
 namespace Meteors.OperationResult
 {
@@ -57,35 +79,18 @@ namespace Meteors.OperationResult
         /// <returns></returns>
         public static string ToPerString(this Statuses status)
         {
-            switch (status)
+            return status switch
             {
-                case Statuses.UnKnown:
-                    return "UnKnown";
-
-                case Statuses.Success:
-                    return "Success";
-
-                case Statuses.Exist:
-                    return "Exist";
-
-                case Statuses.NotExist:
-                    return "NotExist";
-
-                case Statuses.Failed:
-                    return "Failed";
-
-                case Statuses.Forbidden:
-                    return "Forbidden";
-
-                case Statuses.Exception:
-                    return "Exception";
-
-                case Statuses.Unauthorized:
-                    return "Unauthorized";
-
-                default:
-                    throw new System.NotImplementedException();
-            }
+                Statuses.UnKnown => "UnKnown",
+                Statuses.Success => "Success",
+                Statuses.Exist => "Exist",
+                Statuses.NotExist => "NotExist",
+                Statuses.Failed => "Failed",
+                Statuses.Forbidden => "Forbidden",
+                Statuses.Exception => "Exception",
+                Statuses.Unauthorized => "Unauthorized",
+                _ => throw new System.NotImplementedException(),
+            };
         }
     }
 }
