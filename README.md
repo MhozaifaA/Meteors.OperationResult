@@ -1,9 +1,9 @@
 # [Meteors] OperationResult 6.1.6
 
 
-![](https://img.shields.io/github/license/MhozaifaA/OperationResult)
+[![](https://img.shields.io/github/license/MhozaifaA/OperationResult)](https://github.com/MhozaifaA/Meteors.OperationResult/blob/master/LICENSE.md)
 ![](https://img.shields.io/nuget/dt/Meteors.OperationResult)
-![](https://img.shields.io/nuget/v/Meteors.OperationResult)
+[![](https://img.shields.io/nuget/v/Meteors.OperationResult)](https://www.nuget.org/packages/Meteors.OperationResult)
 ![](https://img.shields.io/badge/Unit%20Test-%E2%80%89238%E2%80%89Passed-green)
 > `version 1.6 net6.0`
 
