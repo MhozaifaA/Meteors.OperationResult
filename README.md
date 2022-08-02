@@ -12,16 +12,54 @@
 
 Install-Package Meteors.OperationResult -Version 6.1.6
 
-[nuget ](https://www.nuget.org/packages/Meteors.OperationResult/)
 
+<div style="display: flex;"> 
 
-[medium ](https://medium.com/@botchey.mha/build-powerful-operation-result-structure-with-any-transform-layers-c-c310b790865f)
+[nuget](https://www.nuget.org/packages/Meteors.OperationResult/) - [medium](https://medium.com/@botchey.mha/build-powerful-operation-result-structure-with-any-transform-layers-c-c310b790865f) - [Source Code](https://github.com/MhozaifaA/OperationResult)
 
-[Source Code]: https://github.com/MhozaifaA/OperationResult	"Github"
+</div>
 
-[Source Code](https://github.com/MhozaifaA/OperationResult)
+<!-- ![Meteor logo pack](https://user-images.githubusercontent.com/48151918/175791394-3913f060-5551-435c-adda-5bc487964f1c.png) -->
 
-![Meteor logo pack](https://user-images.githubusercontent.com/48151918/175791394-3913f060-5551-435c-adda-5bc487964f1c.png)
+<p align="center">
+<img width="10%" src="https://user-images.githubusercontent.com/48151918/175791394-3913f060-5551-435c-adda-5bc487964f1c.png" />
+</p>
+
+## Highlighted 💻
+- [ ] move WithStatusCode extension to Base,
+- [ ] think if we replace OperationResultbase to -> OperationResult without Base! as abstract (this feature allow to save same concept and add more extensions later)
+- [ ] Build interfaces for each prop, that take operation result to make once extension for interface and able to inhrent this extensions (customers build over Meteors).
+
+- [ ] Add ctr/method to revice all props as 'Create Instance' (more useing when you have un-know operation-prop take value after plh of condig  ).
+  ex:
+  
+  ```C# 
+    Status status;
+    string message = String.Empty();
+    :
+    Int statuscode...
+    :
+    
+    if(--cond--){ ..//change status } 
+    else if( .... cond ---.... }....
+    :
+
+    _Operation.Set(status,message,statuscode....); //auto know exactly operationResult
+    ```
+ - [ ] Global static Isbody, Global static checkin object to serialize , sme to add xtensions for oepration.
+ - [ ] Singletone/IEnumrable service inject to control (five 5 services as Status we have for customize).
+      ```C#
+       readonly ISuccessOperation<>  successOperation; //has custome options and custome global(scop)
+       readonly IFailedOperation<>  failedOperation; //has custome options and custome global(scop)
+      ```
+ - [ ] appsettings attr.
+ - [ ] IOptions for (custome default messages, handle statuscodes(->staatus)..,http,.. ).
+ - [ ] HttpResponseMessage to OperationResult (support full options).
+ - [ ] back to implicity (success) 😉 but for limited types (IList<>,ICollection<>,IEnumerable<>,INumber(int,double,...) .Net7.0) not supported (Tuple,Object, dynamic, any not basic) under see (string) 
+      ``` C#
+      OperationResult<List<Foo>> Get() 
+      {  return new ();   };
+      ```
 
 
 ### Documentation 
