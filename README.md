@@ -60,7 +60,7 @@ Install-Package Meteors.OperationResult -Version 6.1.6
       OperationResult<List<Foo>> Get() 
       {  return new ();   };
       ```
-
+ - [ ] Stop return null/by default value as Json like as ("", [], {}) 
 
 ### Documentation 
 
