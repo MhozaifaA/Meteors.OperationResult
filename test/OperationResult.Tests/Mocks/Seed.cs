@@ -1,12 +1,12 @@
 ﻿using Meteors;
-using Meteors.OperationResult;
+using Meteors.OperationContext;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OperationResult.Tests.Mocks
+namespace OperationContext.Tests.Mocks
 {
     public class Seed
     {
@@ -15,19 +15,19 @@ namespace OperationResult.Tests.Mocks
             switch (type)
             {
                 case Statuses.Success:
-                    return _Operation.SetSuccess<T>(Activator.CreateInstance<T>(), nameof(OperationResultBase.Message) + type.ToString());
+                    return _Operation.SetSuccess<T>(Activator.CreateInstance<T>(), nameof(OperationResult.Message) + type.ToString());
                 case Statuses.Exist:
-                    return _Operation.SetContent<T>(type, nameof(OperationResultBase.Message) + type.ToString());
+                    return _Operation.SetContent<T>(type, nameof(OperationResult.Message) + type.ToString());
                 case Statuses.NotExist:
-                    return _Operation.SetContent<T>(type, nameof(OperationResultBase.Message) + type.ToString());
+                    return _Operation.SetContent<T>(type, nameof(OperationResult.Message) + type.ToString());
                 case Statuses.Failed:
-                    return _Operation.SetFailed<T>(nameof(OperationResultBase.Message) + type.ToString());
+                    return _Operation.SetFailed<T>(nameof(OperationResult.Message) + type.ToString());
                 case Statuses.Forbidden:
-                    return _Operation.SetFailed<T>(nameof(OperationResultBase.Message) + type.ToString(), type);
+                    return _Operation.SetFailed<T>(nameof(OperationResult.Message) + type.ToString(), type);
                 case Statuses.Exception:
-                    return _Operation.SetException<T>(new Exception(nameof(OperationResultBase.Message) + type.ToString()));
+                    return _Operation.SetException<T>(new Exception(nameof(OperationResult.Message) + type.ToString()));
                 case Statuses.Unauthorized:
-                    return _Operation.SetFailed<T>(nameof(OperationResultBase.Message) + type.ToString(), type);
+                    return _Operation.SetFailed<T>(nameof(OperationResult.Message) + type.ToString(), type);
                 default:
                     return new NotImplementedException();
             }

@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Meteors.OperationResult;
+using Meteors.OperationContext;
 
-namespace OperationResult.Benchmarks
+namespace OperationContext.Benchmarks
 {
     [MemoryDiagnoser]
     [SimpleJob(warmupCount: 3, targetCount: 1)]

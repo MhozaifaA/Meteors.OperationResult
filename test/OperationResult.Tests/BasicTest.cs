@@ -1,6 +1,6 @@
 using Meteors;
-using Meteors.OperationResult;
-using OperationResult.Tests.Mocks;
+using Meteors.OperationContext;
+using OperationContext.Tests.Mocks;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,7 +8,7 @@ using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace OperationResult.Tests
+namespace OperationContext.Tests
 {
 
     public class BasicTest
@@ -250,11 +250,11 @@ namespace OperationResult.Tests
 
             System.Runtime.CompilerServices.ITuple Iresults = results;
 
-            List<OperationResultBase> listResult = Enumerable.Range(0, Iresults.Length)
+            List<OperationResult> listResult = Enumerable.Range(0, Iresults.Length)
                 .Select(index => { 
                     output.WriteLine($"{index}");
                     return Iresults[index];
-                }).Cast<OperationResultBase>().ToList();
+                }).Cast<OperationResult>().ToList();
 
             Assert.Equal(operation1.Status, listResult[0].Status);
             Assert.Equal(operation2.Status, listResult[1].Status);
@@ -280,10 +280,10 @@ namespace OperationResult.Tests
 
             System.Runtime.CompilerServices.ITuple Iresults = results;
 
-            List<OperationResultBase> listResult = new();
+            List<OperationResult> listResult = new();
             for (int i = 0; i < Iresults.Length; i++)
             {
-                listResult.Add((OperationResultBase)Iresults[i]);
+                listResult.Add((OperationResult)Iresults[i]);
             }
         
             Assert.Equal(operation1.Status, listResult[0].Status);
@@ -298,7 +298,7 @@ namespace OperationResult.Tests
         public void CastToBase(Statuses type)
         {
             OperationResult<FooUser> operation = Seed.Create<FooUser>(type);
-            var operationBase = (OperationResultBase) operation;
+            var operationBase = (OperationResult) operation;
 
             Assert.Equal(operation.Status ,operationBase.Status);
             Assert.Equal(operation.StatusCode, operationBase.StatusCode);

@@ -20,8 +20,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using Meteors.OperationResult;
-using Meteors.OperationResult.ExtensionMethods;
+using Meteors.OperationContext;
+using Meteors.OperationContext.ExtensionMethods;
 using System;
 using System.Text.Json.Serialization;
 
@@ -33,7 +33,7 @@ namespace Meteors
     /// </summary>
     /// <typeparam name="T"> Type of class </typeparam>
 #pragma warning disable CS0659 // Type overrides Object.Equals(object o) but does not override Object.GetHashCode()
-    public class OperationResult<T> : OperationResultBase, IResult<T>, IEquatable<OperationResult<T>>//, IDisposable
+    public class OperationResult<T> : OperationResult, IResult<T>, IEquatable<OperationResult<T>>//, IDisposable
 #pragma warning restore CS0659 // Type overrides Object.Equals(object o) but does not override Object.GetHashCode()
     {
 
@@ -62,7 +62,7 @@ namespace Meteors
 
 
         /// <summary>
-        /// Check <see cref="OperationResultBase.StatusCode"/> if init with value > 0.
+        /// Check <see cref="OperationResult.StatusCode"/> if init with value > 0.
         /// <para>Custom return StatusCode-http used with web-requests.
         /// Not effect with native C# code lib as un-host-web projects or responses.</para>
         /// <remark>

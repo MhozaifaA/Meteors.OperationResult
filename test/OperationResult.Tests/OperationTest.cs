@@ -1,6 +1,6 @@
 ﻿using Meteors;
-using Meteors.OperationResult;
-using OperationResult.Tests.Mocks;
+using Meteors.OperationContext;
+using OperationContext.Tests.Mocks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace OperationResult.Tests
+namespace OperationContext.Tests
 {
     public class OperationTest
     {

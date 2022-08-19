@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OperationResult.Tests.Mocks
+namespace OperationContext.Tests.Mocks
 {
     public class FooUser
     {

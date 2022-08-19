@@ -20,8 +20,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using Meteors.OperationResult;
-using Meteors.OperationResult.ExtensionMethods;
+using Meteors.OperationContext;
+using Meteors.OperationContext.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -919,7 +919,7 @@ namespace Meteors
         {
             OperationResult<TResult> operation = new();
 
-            if (oneResult is not OperationResultBase Result)
+            if (oneResult is not OperationResult Result)
                 throw new ArgumentNullException(nameof(oneResult));
 
             if (Result.Status == Statuses.Exception)
@@ -949,9 +949,9 @@ namespace Meteors
         {
             OperationResult<TResult> operation = new();
 
-            IEnumerable<OperationResultBase> listResult = Enumerable.Range(0, results.Length).Select(index => results[index]).Cast<OperationResultBase>();
+            IEnumerable<OperationResult> listResult = Enumerable.Range(0, results.Length).Select(index => results[index]).Cast<OperationResult>();
 
-            OperationResultBase? firstException = listResult.FirstOrDefault(result => result.Status == Statuses.Exception);
+            OperationResult? firstException = listResult.FirstOrDefault(result => result.Status == Statuses.Exception);
             if (firstException is not null)
                 return operation.SetException(firstException.Exception);
 

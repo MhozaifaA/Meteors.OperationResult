@@ -20,18 +20,19 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using Meteors.OperationResult.ExtensionMethods;
+using Meteors.OperationContext;
+using Meteors.OperationContext.ExtensionMethods;
 using System;
 using System.Text.Json.Serialization;
 
-namespace Meteors.OperationResult
+namespace Meteors
 {
     /// <summary>
     /// Main prop not changed or effect on return
     /// abstract of for <see cref="_Operation"/>
     /// </summary>
 #pragma warning disable CS0659 // Type overrides Object.Equals(object o) but does not override Object.GetHashCode()
-    public class OperationResultBase : IEquatable<OperationResultBase>//, IDisposable
+    public class OperationResult : IEquatable<OperationResult>//, IDisposable
 #pragma warning restore CS0659 // Type overrides Object.Equals(object o) but does not override Object.GetHashCode()
     {
         /// <summary>
@@ -63,8 +64,8 @@ namespace Meteors.OperationResult
         /// </summary>
         /// <param name="Message">start with capital as base</param>
         /// <param name="space">join with space " " or ""</param>
-        /// <returns> <see cref="OperationResultBase"/> </returns>
-        public OperationResultBase Append(string Message, bool space = true)
+        /// <returns> <see cref="OperationResult"/> </returns>
+        public OperationResult Append(string Message, bool space = true)
         {
             //can be null
             if (this.Message.IsNullOrEmpty())
@@ -80,8 +81,8 @@ namespace Meteors.OperationResult
         /// <para>Effect in <code>base.Message</code> .</para>
         /// </summary>
         /// <param name="Message">start with capital as base</param
-        /// <returns> <see cref="OperationResultBase"/> </returns>
-        public OperationResultBase Append(params string[] Message)
+        /// <returns> <see cref="OperationResult"/> </returns>
+        public OperationResult Append(params string[] Message)
         {
             //can be null
             if (this.Message.IsNullOrEmpty())
@@ -114,7 +115,7 @@ namespace Meteors.OperationResult
         /// </summary>
         /// <param name="Status"> start with capital as base </param>
         /// <returns> <see cref="OperationResultBase"/> </returns>
-        public OperationResultBase Append(Statuses Status)
+        public OperationResult Append(Statuses Status)
         {
             this.Status = Status;
             return this;
@@ -125,7 +126,7 @@ namespace Meteors.OperationResult
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
-        public bool Equals(OperationResultBase? other)
+        public bool Equals(OperationResult? other)
         {
             if (other is null)
                 return false;
@@ -144,7 +145,7 @@ namespace Meteors.OperationResult
         public override bool Equals(object obj)
 #pragma warning restore CS8765 // Nullability of type of parameter doesn't match overridden member (possibly because of nullability attributes).
         {
-            return Equals(obj as OperationResultBase);
+            return Equals(obj as OperationResult);
         }
 
         ///// <summary>

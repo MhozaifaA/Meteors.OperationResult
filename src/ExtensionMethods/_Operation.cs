@@ -20,13 +20,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
-using Meteors.OperationResult;
+using Meteors.OperationContext;
 using System;
 
 namespace Meteors
 {
     /// <summary>
-    /// Quick return from <see cref="OperationResultBase"/> and <see cref="IResult{T}"/>
+    /// Quick return from <see cref="OperationResult"/> and <see cref="IResult{T}"/>
     /// <para>Used when un-enable Handler.</para>
     /// </summary>
 #pragma warning disable IDE1006 // Naming Styles
@@ -36,10 +36,10 @@ namespace Meteors
         /// <summary>
         /// Normal init used for end return
         /// </summary>
-        /// <returns><see cref="OperationResultBase"/></returns>
-        public static OperationResultBase Operation()
+        /// <returns><see cref="OperationResult"/></returns>
+        public static OperationResult Operation()
         {
-            return new OperationResultBase();
+            return new OperationResult();
         }
 
 
@@ -58,10 +58,10 @@ namespace Meteors
         /// Helper
         /// <para>Effect in <code>base.OperationResultType</code> to <seealso cref="Statuses.Success"/></para>
         /// </summary>
-        /// <returns> <see cref="OperationResultBase"/> </returns>
-        public static OperationResultBase SetSuccess()
+        /// <returns> <see cref="OperationResult"/> </returns>
+        public static OperationResult SetSuccess()
         {
-            return new OperationResultBase() { Status = Statuses.Success };
+            return new OperationResult() { Status = Statuses.Success };
         }
 
         /// <summary>
@@ -95,10 +95,10 @@ namespace Meteors
         /// <para>Effect in <code>base.Message</code> .</para>
         /// </summary>
         /// <param name="message"></param>
-        /// <returns> <see cref="OperationResultBase"/> </returns>
-        public static OperationResultBase SetSuccess(string message)
+        /// <returns> <see cref="OperationResult"/> </returns>
+        public static OperationResult SetSuccess(string message)
         {
-            return new OperationResultBase() { Message = message, Status = Statuses.Success };
+            return new OperationResult() { Message = message, Status = Statuses.Success };
         }
 
         /// <summary>
@@ -139,13 +139,13 @@ namespace Meteors
         /// </summary>
         /// <param name="message"></param>
         /// <param name="type"></param>
-        /// <returns> <see cref="OperationResultBase"/> </returns>
-        public static OperationResultBase SetFailed(string message, Statuses type = Statuses.Failed)
+        /// <returns> <see cref="OperationResult"/> </returns>
+        public static OperationResult SetFailed(string message, Statuses type = Statuses.Failed)
         {
             if (type is not Statuses.Failed && type is not Statuses.Forbidden && type is not Statuses.Unauthorized)
-                throw new ArgumentException($"{nameof(SetFailed)} in {nameof(OperationResultBase)} take {type} should use with {Statuses.Failed}, {Statuses.Forbidden} or {Statuses.Unauthorized} .");
+                throw new ArgumentException($"{nameof(SetFailed)} in {nameof(OperationResult)} take {type} should use with {Statuses.Failed}, {Statuses.Forbidden} or {Statuses.Unauthorized} .");
 
-            return new OperationResultBase() { Message = message, Status = type };
+            return new OperationResult() { Message = message, Status = type };
         }
 
 
@@ -174,13 +174,13 @@ namespace Meteors
         /// </summary>
         /// <exception cref="ArgumentException"></exception>
         /// <param name="type"></param>
-        /// <returns> <see cref="OperationResultBase"/> </returns>
-        public static OperationResultBase SetFailed(Statuses type = Statuses.Failed)
+        /// <returns> <see cref="OperationResult"/> </returns>
+        public static OperationResult SetFailed(Statuses type = Statuses.Failed)
         {
             if (type is not Statuses.Failed && type is not Statuses.Forbidden && type is not Statuses.Unauthorized)
-                throw new ArgumentException($"{nameof(SetFailed)} in {nameof(OperationResultBase)} take {type} should use with {Statuses.Failed}, {Statuses.Forbidden} or {Statuses.Unauthorized} .");
+                throw new ArgumentException($"{nameof(SetFailed)} in {nameof(OperationResult)} take {type} should use with {Statuses.Failed}, {Statuses.Forbidden} or {Statuses.Unauthorized} .");
 
-            return new OperationResultBase() { Status = type };
+            return new OperationResult() { Status = type };
         }
 
 
@@ -206,10 +206,10 @@ namespace Meteors
         /// <para>Effect in <code>base.OperationResultType</code> to <seealso cref="Statuses.Exception"/> .</para>
         /// </summary>
         /// <param name="exception"></param>
-        /// <returns> <see cref="OperationResultBase"/> </returns>
-        public static OperationResultBase SetException(Exception exception)
+        /// <returns> <see cref="OperationResult"/> </returns>
+        public static OperationResult SetException(Exception exception)
         {
-            return new OperationResultBase() { Exception = exception, Status = Statuses.Exception };
+            return new OperationResult() { Exception = exception, Status = Statuses.Exception };
         }
 
 
@@ -234,10 +234,10 @@ namespace Meteors
         /// </summary>
         /// <param name="exception"></param>
         /// <param name="message"></param>
-        /// <returns> <see cref="OperationResultBase"/> </returns>
-        public static OperationResultBase SetException(Exception exception, string message)
+        /// <returns> <see cref="OperationResult"/> </returns>
+        public static OperationResult SetException(Exception exception, string message)
         {
-            return new OperationResultBase() { Exception = exception, Status = Statuses.Exception, Message = message };
+            return new OperationResult() { Exception = exception, Status = Statuses.Exception, Message = message };
         }
 
 
@@ -265,13 +265,13 @@ namespace Meteors
         /// <exception cref="ArgumentException"></exception>
         /// <param name="type"></param>
         /// <param name="message"></param>
-        /// <returns> <see cref="OperationResultBase"/> </returns>
-        public static OperationResultBase SetContent(Statuses type, string message)
+        /// <returns> <see cref="OperationResult"/> </returns>
+        public static OperationResult SetContent(Statuses type, string message)
         {
             if (type is not Statuses.Exist && type is not Statuses.NotExist)
-                throw new ArgumentException($"Directly return {nameof(OperationResultBase)} take {type} should use with {Statuses.Exist} or {Statuses.NotExist} .");
+                throw new ArgumentException($"Directly return {nameof(OperationResult)} take {type} should use with {Statuses.Exist} or {Statuses.NotExist} .");
 
-            return new OperationResultBase() { Status = type, Message = message };
+            return new OperationResult() { Status = type, Message = message };
         }
 
 
@@ -298,13 +298,13 @@ namespace Meteors
         /// </summary>
         /// <exception cref="ArgumentException"></exception>
         /// <param name="type"></param>
-        /// <returns> <see cref="OperationResultBase"/> </returns>
-        public static OperationResultBase SetContent(Statuses type)
+        /// <returns> <see cref="OperationResult"/> </returns>
+        public static OperationResult SetContent(Statuses type)
         {
             if (type is not Statuses.Exist && type is not Statuses.NotExist)
-                throw new ArgumentException($"Directly return {nameof(OperationResultBase)} take {type} should use with {Statuses.Exist} or {Statuses.NotExist} .");
+                throw new ArgumentException($"Directly return {nameof(OperationResult)} take {type} should use with {Statuses.Exist} or {Statuses.NotExist} .");
 
-            return new OperationResultBase() { Status = type };
+            return new OperationResult() { Status = type };
         }
 
 

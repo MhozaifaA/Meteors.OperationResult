@@ -22,7 +22,7 @@ SOFTWARE.*/
 
 using Microsoft.AspNetCore.Http;
 
-namespace Meteors.OperationResult
+namespace Meteors.OperationContext
 {
     /// <summary>
     /// Logical  result type

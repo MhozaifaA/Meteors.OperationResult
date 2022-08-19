@@ -1,4 +1,4 @@
 ﻿using BenchmarkDotNet.Running;
-using OperationResult.Benchmarks;
+using OperationContext.Benchmarks;
 
 var summary = BenchmarkRunner.Run<OperationResultBenchmark>();

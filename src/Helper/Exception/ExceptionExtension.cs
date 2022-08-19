@@ -23,7 +23,7 @@ SOFTWARE.*/
 using System;
 using System.Text;
 
-namespace Meteors.OperationResult.ExtensionMethods
+namespace Meteors.OperationContext.ExtensionMethods
 {
     /// <summary>
     /// basics Extensions

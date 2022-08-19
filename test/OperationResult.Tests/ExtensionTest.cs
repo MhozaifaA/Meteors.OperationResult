@@ -1,13 +1,13 @@
 ﻿using Meteors;
-using Meteors.OperationResult;
+using Meteors.OperationContext;
 using Microsoft.AspNetCore.Mvc;
-using OperationResult.Tests.Mocks;
+using OperationContext.Tests.Mocks;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace OperationResult.Tests
+namespace OperationContext.Tests
 {
     public class ExtensionTest
     {
