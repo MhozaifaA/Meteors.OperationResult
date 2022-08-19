@@ -98,7 +98,7 @@ namespace Meteors
         {
             return result.Status switch
             {
-                Statuses.Success => result.GetValidResult(jsonMessage: null, hasResult: true, isBody),
+                Statuses.Success => result.GetValidResult(jsonMessage: result.Message, hasResult: true, isBody),
                 Statuses.Exist => result.GetValidResult(jsonMessage: result.Message, isBody: isBody),
                 Statuses.NotExist => result.GetValidResult(jsonMessage: result.Message, isBody: isBody),
                 Statuses.Failed => result.GetValidResult(jsonMessage: result.Message, isBody: isBody),

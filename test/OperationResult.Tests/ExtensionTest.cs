@@ -64,7 +64,7 @@ namespace OperationResult.Tests
             else
             if (type != Statuses.Success && type != Statuses.Exception)
             {
-                Assert.Equal(type.ToString(), result.Value?.ToString());
+                Assert.Equal(operation.Message, result.Value?.ToString());
             }
 
         }
@@ -95,7 +95,7 @@ namespace OperationResult.Tests
             else
             if (type != Statuses.Success && type != Statuses.Exception)
             {
-                Assert.Equal(type.ToString(), result.Value?.ToString());
+                Assert.Equal(operation.Message, result.Value?.ToString());
             }
 
         }
@@ -129,7 +129,7 @@ namespace OperationResult.Tests
             else
             if (type != Statuses.Success && type != Statuses.Exception)
             {
-                Assert.Equal(type.ToString(), bodyResult.Message.ToString());
+                Assert.Equal(operation.Message, bodyResult.Message.ToString());
             }
 
         }
@@ -163,7 +163,7 @@ namespace OperationResult.Tests
             else
             if (type != Statuses.Success && type != Statuses.Exception)
             {
-                Assert.Equal(type.ToString(), bodyResult.Message.ToString());
+                Assert.Equal(operation.Message, bodyResult.Message.ToString());
             }
 
         }
