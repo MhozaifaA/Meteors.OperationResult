@@ -66,7 +66,7 @@ namespace Meteors
         /// <para>Custom return StatusCode-http used with web-requests.
         /// Not effect with native C# code lib as un-host-web projects or responses.</para>
         /// <remark>
-        /// Always will be <see langword="true"/> after call <see cref="OpertaionResultExtesnsion.ToJsonResult{T}(OperationResult{T})"/>
+        /// Always will be <see langword="true"/> after call <see cref="OperationJsonResultExtensions.ToJsonResult{T}(OperationResult{T})"/>
         /// </remark>
         /// </summary>
         [JsonIgnore]

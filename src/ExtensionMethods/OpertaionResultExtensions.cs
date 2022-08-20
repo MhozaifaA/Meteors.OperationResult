@@ -52,6 +52,7 @@ namespace Meteors
         /// Helper to append messge, this will affect on base,
         /// <para>Effect in <code>base.Message</code> .</para>
         /// </summary>
+        /// <param name="operation"></param>
         /// <param name="Message">start with capital as base</param>
         /// <param name="space">join with space " " or ""</param>
         /// <returns> <see cref="OperationResult"/> </returns>
@@ -70,7 +71,8 @@ namespace Meteors
         /// Helper to append messge, this will affect on base,
         /// <para>Effect in <code>base.Message</code> .</para>
         /// </summary>
-        /// <param name="Message">start with capital as base</param
+        /// <param name="operation"></param>
+        /// <param name="Messages">start with capital as base</param>
         /// <returns> <see cref="OperationResult"/> </returns>
         public static OperationResult Append(this OperationResult operation, params string[] Messages)
         {
@@ -87,6 +89,7 @@ namespace Meteors
         /// Helper to pass messge, this will affect on base
         /// <para>Effect in <code>base.Status</code> .</para>
         /// </summary>
+        /// <param name="operation"></param>
         /// <param name="Status"> start with capital as base </param>
         /// <returns> <see cref="OperationResult"/> </returns>
         public static OperationResult Append(this OperationResult operation, Statuses Status)
@@ -100,6 +103,7 @@ namespace Meteors
         /// Helper to append messge, this will affect on base,
         /// <para>Effect in <code>base.Message</code> .</para>
         /// </summary>
+        /// <param name="operation"></param>
         /// <param name="Message">start with capital as base</param>
         /// <param name="space">join with space " " or ""</param>
         /// <returns> <see cref="OperationResult"/> </returns>
@@ -113,7 +117,8 @@ namespace Meteors
         /// Helper to append messge, this will affect on base,
         /// <para>Effect in <code>base.Message</code> .</para>
         /// </summary>
-        /// <param name="Message">start with capital as base</param
+        /// <param name="operation"></param>
+        /// <param name="Messages">start with capital as base</param>
         /// <returns> <see cref="OperationResult"/> </returns>
         public static OperationResult<T> Append<T>(this OperationResult<T> operation, params string[] Messages)
         {
@@ -125,6 +130,7 @@ namespace Meteors
         /// Helper to pass messge, this will affect on base
         /// <para>Effect in <code>base.Status</code> .</para>
         /// </summary>
+        /// <param name="operation"></param>
         /// <param name="Status"> start with capital as base </param>
         /// <returns> <see cref="OperationResult"/> </returns>
         public static OperationResult<T> Append<T>(this OperationResult<T> operation, Statuses Status)
@@ -137,7 +143,6 @@ namespace Meteors
         /// <summary>
         /// Set custom <see cref="OperationResult.StatusCode"/>.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="result"></param>
         /// <param name="statusCode"></param>
         /// <returns></returns>
