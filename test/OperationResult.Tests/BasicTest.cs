@@ -55,7 +55,7 @@ namespace OperationContext.Tests
             var operation = Seed.Create<FooUser>(status);
 
             Assert.Equal(status, operation.Status);
-        }   
+        }
 
 
         [Fact]
