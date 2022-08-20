@@ -194,8 +194,6 @@ namespace OperationContext.Tests
         {
             OperationResult<FooUser> operation1 = new OperationResult<FooUser>();
             OperationResult<FooUser> operation2 = new OperationResult<FooUser>();
-            OperationResult<FooUser> operation3 = new OperationResult<FooUser>();
-            OperationResult<FooUser> operation4 = new OperationResult<FooUser>();
 
 
             operation1.SetException(new Exception());
@@ -209,6 +207,22 @@ namespace OperationContext.Tests
             Assert.Equal(Statuses.Exception, operation2.Status);
             Assert.NotNull(operation1.Exception);
             Assert.Equal(nameof(SetException), operation2.Message);
+
+        }
+
+
+        [Theory]
+        [MemberData(nameof(ExtensionTest.FactData), MemberType = typeof(ExtensionTest))]
+        public void Set(Statuses statuses)
+        {
+            OperationResult<FooUser> operation1 = new OperationResult<FooUser>();
+
+            operation1.Set(statuses, new FooUser("A","B"), statuses + "Message",new Exception("ex"));
+
+            Assert.Equal(statuses , operation1.Status);
+            Assert.True(new FooUser("A", "B").EqulaInner(operation1.Data));
+            Assert.Equal(statuses + "Message", operation1.Message);
+            Assert.Equal(new Exception("ex").Message, operation1.Exception.Message);
 
         }
 

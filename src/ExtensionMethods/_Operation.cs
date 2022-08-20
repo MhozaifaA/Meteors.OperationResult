@@ -322,5 +322,34 @@ namespace Meteors
         }
 
 
+        /// <summary>
+        /// Helper  
+        /// <para>Effect in all props</para>
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="message"></param>
+        /// <param name="exception"></param>
+        /// <returns> <see cref="OperationResult"/> </returns>
+        public static OperationResult Set(Statuses type = default, string? message = default, Exception? exception = default)
+        {
+            return new OperationResult() { Status = type,Message = message , Exception = exception };
+        }
+
+        /// <summary>
+        /// Helper  
+        /// <para>Effect in all props  </para>
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="data"></param>
+        /// <param name="message"></param>
+        /// <param name="exception"></param>
+        /// <returns> <see cref="OperationResult{T}"/> </returns>
+        public static OperationResult<T> Set<T>(Statuses type = default, T? data = default, string? message = default, Exception? exception = default)
+        {
+            return new OperationResult<T>().Set(type, data,message,exception);
+        }
+
+
+
     }
 }

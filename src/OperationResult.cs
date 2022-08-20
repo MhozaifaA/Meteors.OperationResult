@@ -238,6 +238,26 @@ namespace Meteors
         }
 
 
+
+        /// <summary>
+        /// Helper to pass props without filter or throw exception if satus not correctly.
+        /// <para>method can push to handle props before <see langword="Set-"/>Methods </para>
+        /// </summary>
+        /// <param name="status"></param>
+        /// <param name="data"></param>
+        /// <param name="message"></param>
+        /// <param name="exception"></param>
+        /// <returns> <see cref="OperationResult{T}"/> </returns>
+        public OperationResult<T> Set(Statuses status = default, T? data = default, string? message = default, Exception? exception = default)
+        {
+            Status = status;
+            Data = data;
+            Message = message;
+            Exception = exception;
+            return this;
+        }
+
+
         /// <summary>
         /// Directly return implicit take assign <see cref="Statuses"/> and allow to return as <see cref="OperationResult{T}"/>
         /// </summary>
