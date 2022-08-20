@@ -31,50 +31,11 @@ using System.Threading.Tasks;
 
 namespace Meteors
 {
-
     /// <summary>
-    /// Helper extensions of <see cref="OperationResult{T}"/>.
+    /// Helper extensions of support <see cref="JsonResult"/> and <see langword="Http"/>.
     /// </summary>
-    public static class OpertaionResultExtesnsion
+    public static class OperationJsonResultExtensions
     {
-
-        /// <summary>
-        /// Encapsulation object to <see cref="OperationResult{T}"/>
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="object"></param>
-        /// <returns> <see cref="OperationResult{T}"/> </returns>
-        public static OperationResult<T> ToOperationResult<T>(this T @object)
-         => new OperationResult<T>().SetSuccess(@object);
-
-
-        /// <summary>
-        /// Set custom <see cref="OperationResultBase.StatusCode"/>.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="result"></param>
-        /// <param name="statusCode"></param>
-        /// <returns></returns>
-        public static OperationResult<T> WithStatusCode<T>(this OperationResult<T> result, int statusCode)
-        {
-            result.StatusCode = statusCode;
-            return result;
-        }
-
-        /// <summary>
-        /// Set custom <see cref="OperationResultBase.StatusCode"/>.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="result"></param>
-        /// <param name="statusCode"></param>
-        /// <returns></returns>
-        public static async Task<OperationResult<T>> WithStatusCodeAsync<T>(this Task<OperationResult<T>> result, int statusCode)
-        {
-            var _result = await result;
-            _result.StatusCode = statusCode;
-            return _result;
-        }
-
 
         /// <summary>
         /// Return <see cref="JsonResult"/> with real result completely .
@@ -974,5 +935,6 @@ namespace Meteors
         ///// <returns></returns>
         //private static Task<TResult[]> WrappedOperations<TResult>(params Task<TResult>[] tasks)
         //    => Task.WhenAll(tasks);
+
     }
 }
