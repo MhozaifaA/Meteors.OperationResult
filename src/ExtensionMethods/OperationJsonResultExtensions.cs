@@ -111,16 +111,23 @@ namespace Meteors
                 if (jsonMessageIsNullOrEmpty)
                     result.Message = result.Status.ToPerString();
 
-                return new JsonResult(result) { StatusCode = result.StatusCode };
+                return new JsonResult(result) { StatusCode = result.StatusCode ,
+                    SerializerSettings = OperationResultOptions._SerializerSettings };
             }
 
             if (hasResult)
-                return new JsonResult(result.Data) { StatusCode = result.StatusCode };
+                return new JsonResult(result.Data) { StatusCode = result.StatusCode,
+                    SerializerSettings = OperationResultOptions._SerializerSettings
+                };
 
             if (jsonMessageIsNullOrEmpty)
-                return new JsonResult(result.Status.ToPerString()) { StatusCode = result.StatusCode };
+                return new JsonResult(result.Status.ToPerString()) { StatusCode = result.StatusCode,
+                    SerializerSettings = OperationResultOptions._SerializerSettings
+                };
 
-            return new JsonResult(jsonMessage) { StatusCode = result.StatusCode };
+            return new JsonResult(jsonMessage) { StatusCode = result.StatusCode,
+                SerializerSettings = OperationResultOptions._SerializerSettings
+            };
         }
 
 
