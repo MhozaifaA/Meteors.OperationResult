@@ -23,6 +23,7 @@ SOFTWARE.*/
 using Meteors.OperationContext;
 using Meteors.OperationContext.ExtensionMethods;
 using Microsoft.AspNetCore.Mvc;
+using OperationContext;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,7 +46,7 @@ namespace Meteors
         /// <returns><see cref="JsonResult"/></returns>
         public static JsonResult ToJsonResult<T>(this OperationResult<T> result)
         {
-            return result.ToJsonResult(false); //extra to refactoring
+            return result.ToJsonResult(default); //extra to refactoring
         }
 
         /// <summary>
@@ -55,7 +56,7 @@ namespace Meteors
         /// <param name="result"></param>
         /// <param name="isBody">boolean value if return json complete body of operation</param>
         /// <returns></returns>
-        public static JsonResult ToJsonResult<T>(this OperationResult<T> result, bool isBody = false)
+        public static JsonResult ToJsonResult<T>(this OperationResult<T> result, bool? isBody = default)
         {
             return result.Status switch
             {
@@ -77,7 +78,7 @@ namespace Meteors
         /// <typeparam name="T"></typeparam>
         /// <param name="result"></param>
         /// <returns><see cref="Task{JsonResult}"/></returns>
-        public static Task<JsonResult> ToJsonResultAsync<T>(this Task<OperationResult<T>> result) => result.ToJsonResultAsync(false);
+        public static Task<JsonResult> ToJsonResultAsync<T>(this Task<OperationResult<T>> result) => result.ToJsonResultAsync(default);
 
 
         /// <summary>
@@ -87,7 +88,7 @@ namespace Meteors
         /// <param name="result"></param>
         /// <param name="isBody">boolean value if return json complete body of operation</param>
         /// <returns><see cref="Task{JsonResult}"/></returns>
-        public static async Task<JsonResult> ToJsonResultAsync<T>(this Task<OperationResult<T>> result, bool isBody = false) => (await result).ToJsonResult(isBody);
+        public static async Task<JsonResult> ToJsonResultAsync<T>(this Task<OperationResult<T>> result, bool? isBody = default) => (await result).ToJsonResult(isBody);
 
 
         /// <summary>
@@ -99,13 +100,13 @@ namespace Meteors
         /// <param name="hasResult"> boolean value if return json of main type T </param>
         /// <param name="isBody"> boolean value if return json complete body of operation</param>
         /// <returns><see cref="JsonResult"/></returns>
-        private static JsonResult GetValidResult<T>(this OperationResult<T> result, string? jsonMessage = null, bool hasResult = false, bool isBody = false)
+        private static JsonResult GetValidResult<T>(this OperationResult<T> result, string? jsonMessage = null, bool hasResult = false, bool? isBody = default)
         {
             if (!result.HasCustomStatusCode && (result.StatusCode ?? 0) == 0)
                 result.StatusCode = (int)result.Status;
 
             bool jsonMessageIsNullOrEmpty = jsonMessage.IsNullOrEmpty();
-            if (isBody)
+            if (isBody is true || (isBody is null && OperationResultOptions._IsBody is true))
             {
                 if (jsonMessageIsNullOrEmpty)
                     result.Message = result.Status.ToPerString();

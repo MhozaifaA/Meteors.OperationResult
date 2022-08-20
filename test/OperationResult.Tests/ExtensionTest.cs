@@ -77,7 +77,7 @@ namespace OperationContext.Tests
             var operationAsync = Task.FromResult(Seed.Create<FooUser>(type));
             var operation = await operationAsync;
             var result = await operationAsync.ToJsonResultAsync();
-
+            
             Assert.Equal((int)type, result.StatusCode);
 
             if (type == Statuses.Success)
