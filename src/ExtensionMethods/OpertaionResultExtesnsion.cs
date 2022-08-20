@@ -49,7 +49,20 @@ namespace Meteors
 
 
         /// <summary>
-        /// Set custom <see cref="OperationResultBase.StatusCode"/>.
+        /// Set custom <see cref="OperationResult.StatusCode"/>.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="result"></param>
+        /// <param name="statusCode"></param>
+        /// <returns></returns>
+        public static OperationResult WithStatusCode(this OperationResult result, int statusCode)
+        {
+            result.StatusCode = statusCode;
+            return result;
+        }
+
+        /// <summary>
+        /// Set custom <see cref="OperationResult.StatusCode"/>.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="result"></param>
@@ -62,7 +75,7 @@ namespace Meteors
         }
 
         /// <summary>
-        /// Set custom <see cref="OperationResultBase.StatusCode"/>.
+        /// Set custom <see cref="OperationResult.StatusCode"/>.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="result"></param>

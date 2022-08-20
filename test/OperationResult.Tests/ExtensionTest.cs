@@ -169,7 +169,15 @@ namespace OperationContext.Tests
         }
 
 
+        [Theory]
+        [MemberData(nameof(FactData))]
+        public void WithStatusCodeBase(Statuses type)
+        {
+            var operation = Seed.Create<FooUser>(type);
+            var result = ((OperationResult)operation).WithStatusCode(507);
 
+            Assert.Equal(507, result.StatusCode);
+        }
 
 
         [Theory]

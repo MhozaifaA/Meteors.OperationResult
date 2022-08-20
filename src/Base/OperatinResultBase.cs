@@ -114,7 +114,7 @@ namespace Meteors
         /// <para>Effect in <code>base.Status</code> .</para>
         /// </summary>
         /// <param name="Status"> start with capital as base </param>
-        /// <returns> <see cref="OperationResultBase"/> </returns>
+        /// <returns> <see cref="OperationResult"/> </returns>
         public OperationResult Append(Statuses Status)
         {
             this.Status = Status;
