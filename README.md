@@ -4,7 +4,7 @@
 [![](https://img.shields.io/github/license/MhozaifaA/OperationResult)](https://github.com/MhozaifaA/Meteors.OperationResult/blob/master/LICENSE.md)
 ![](https://img.shields.io/nuget/dt/Meteors.OperationResult)
 [![](https://img.shields.io/nuget/v/Meteors.OperationResult)](https://www.nuget.org/packages/Meteors.OperationResult)
-![](https://img.shields.io/badge/Unit%20Test-%E2%80%89238%E2%80%89Passed-green)
+![](https://img.shields.io/badge/Unit%20Test-%E2%80%89254%E2%80%89Passed-green)
 > `version 1.6 net6.0`
 
 
@@ -26,11 +26,11 @@ Install-Package Meteors.OperationResult -Version 6.1.6
 </p>
 
 ## Highlighted 💻
-- [ ] move WithStatusCode extension to Base,
-- [ ] think if we replace OperationResultbase to -> OperationResult without Base! as abstract (this feature allow to save same concept and add more extensions later)
+- [x] move WithStatusCode extension to Base,
+- [x] think if we replace OperationResultbase to -> OperationResult without Base! as abstract (this feature allow to save same concept and add more extensions later)
 - [ ] Build interfaces for each prop, that take operation result to make once extension for interface and able to inhrent this extensions (customers build over Meteors).
 
-- [ ] Add ctr/method to revice all props as 'Create Instance' (more useing when you have un-know operation-prop take value after plh of condig  ).
+- [x] Add ctr/method to revice all props as 'Create Instance' (more useing when you have un-know operation-prop take value after plh of condig  ).
   ex:
   
   ```C# 
@@ -46,7 +46,7 @@ Install-Package Meteors.OperationResult -Version 6.1.6
 
     _Operation.Set(status,message,statuscode....); //auto know exactly operationResult
     ```
- - [ ] Global static Isbody, Global static checkin object to serialize , sme to add xtensions for oepration.
+ - [x] Global static Isbody, Global static checkin object to serialize , sme to add xtensions for oepration.
  - [ ] Singletone/IEnumrable service inject to control (five 5 services as Status we have for customize).
       ```C#
        readonly ISuccessOperation<>  successOperation; //has custome options and custome global(scop)
@@ -55,12 +55,12 @@ Install-Package Meteors.OperationResult -Version 6.1.6
  - [ ] appsettings attr.
  - [ ] IOptions for (custome default messages, handle statuscodes(->staatus)..,http,.. ).
  - [ ] HttpResponseMessage to OperationResult (support full options).
- - [ ] back to implicity (success) 😉 but for limited types (IList<>,ICollection<>,IEnumerable<>,INumber(int,double,...) .Net7.0) not supported (Tuple,Object, dynamic, any not basic) under see (string) 
+ - [x] back to implicity (success) 😉 but for limited types (IList<>,ICollection<>,IEnumerable<>,INumber(int,double,...) .Net7.0) not supported (Tuple,Object, dynamic, any not basic) under see (string) 
       ``` C#
       OperationResult<List<Foo>> Get() 
       {  return new ();   };
       ```
- - [ ] Stop return null/by default value as Json like as ("", [], {}) 
+ - [x] Stop return null/by default value as Json like as ("", [], {}) 
 
 ### Documentation 
 
