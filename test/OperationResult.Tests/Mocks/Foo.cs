@@ -30,4 +30,12 @@ namespace OperationContext.Tests.Mocks
         public IEnumerable<FooUser> OtherUsers { get; set; }        
         public int StatusCode { get; set; }
     }
+
+    public  class FooIntoBody
+    {
+        public FooUser User { get; set; }
+        public string Message { get; set; }
+        public int StatusCode { get; set; }
+        public int PasswordLength { get; set; }
+    }
 }
