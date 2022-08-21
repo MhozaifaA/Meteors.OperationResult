@@ -309,13 +309,28 @@ namespace Meteors
         //    return new OperationResult<T>().SetSuccess(result);
         //}
 
+        ///// <summary>
+        /////  Directly return explicit take assign <see cref="Data"/> and allow to return as <see cref="OperationResult{T}"/>
+        ///// </summary>
+        ///// <param name="result"></param>
+        //public static explicit operator OperationResult<T>(T result)
+        //{
+        //    return new OperationResult<T>().SetSuccess(result);
+        //}
+
         /// <summary>
-        ///  Directly return explicit take assign <see cref="Data"/> and allow to return as <see cref="OperationResult{T}"/>
+        /// Convert not static to dynamic? data
         /// </summary>
-        /// <param name="result"></param>
-        public static explicit operator OperationResult<T>(T result)
+        /// <returns></returns>
+        public OperationResult<dynamic?> ToOperationResultDynamic()
         {
-            return new OperationResult<T>().SetSuccess(result);
+            return new OperationResult<dynamic?>() {
+                Data = this.Data,
+                Exception = this.Exception,
+                Message = this.Message,
+                Status = this.Status,
+                StatusCode = this.StatusCode
+            };
         }
 
 

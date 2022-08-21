@@ -13,8 +13,9 @@ namespace OperationContext.Tests
 {
     public class OptionsTest
     {
+        const string Skip = "contain static value";
 
-        [Fact]
+        [Fact(Skip = Skip)]
         public void IsBody()
         {
             var operation =Seed.Create<FooUser>(Statuses.Success);
@@ -62,6 +63,26 @@ namespace OperationContext.Tests
             var result8 = operation.ToJsonResult(false);
             FooUser bodyResult8 = result8.Value as FooUser;
             Assert.NotNull(bodyResult8);
+
+        }
+
+        [Fact(Skip = Skip)]
+        public void IntoBody()
+        {
+            var operation = Seed.Create<FooUser>(Statuses.Success);
+            operation.Data.Password = "P@$$w0rd";
+            OperationResultOptions.IsBody(true); //can
+            OperationResultOptions.IntoBody(op => new FooIntoBody
+            {
+             Message = op.Message + " "+ op.Status.ToPerString(),
+             User = op.Data,
+             StatusCode = op.StatusCode??500,
+             PasswordLength = ((FooUser)op.Data).Password.Length
+            });
+
+            var result = operation.ToJsonResult(); // operation.ToJsonResult(true);
+            FooIntoBody bodyResult = result.Value as FooIntoBody;
+            Assert.NotNull(bodyResult);
 
         }
     }

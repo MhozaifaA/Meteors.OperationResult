@@ -33,6 +33,21 @@ namespace OperationContext
             _IsBody = isbody;
         }
 
+        /// <summary>
+        /// Re-Fill body to select new way of return body, <para></para>  work only with <see cref="_IsBody" langword="True"/> 
+        /// </summary>
+
+        internal static Func<OperationResult<dynamic?>, object>? _IntoBody;
+
+        /// <summary>
+        /// Re-Fill body to select new way of return body, <para></para>  work only with <see cref="_IsBody" langword="True"/> 
+        /// </summary>
+        /// <param name="body">First <see cref="object"/> dynamic data type of <see cref="OperationResult{T}.Data"/>, Secound <see cref="object"/> new object to fill by user</param>
+        public static void IntoBody(Func<OperationResult<dynamic?>, object>? body)
+        {
+            _IntoBody = body;
+        }
+
 
         ///// <summary>
         ///// Enable <see cref="_SerializerSettings"/>.

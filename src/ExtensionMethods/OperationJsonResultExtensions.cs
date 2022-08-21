@@ -106,26 +106,41 @@ namespace Meteors
                 result.StatusCode = (int)result.Status;
 
             bool jsonMessageIsNullOrEmpty = jsonMessage.IsNullOrEmpty();
+
             if (isBody is true || (isBody is null && OperationResultOptions._IsBody is true))
             {
                 if (jsonMessageIsNullOrEmpty)
                     result.Message = result.Status.ToPerString();
 
-                return new JsonResult(result) { StatusCode = result.StatusCode ,
-                    SerializerSettings = OperationResultOptions._SerializerSettings };
+                if (OperationResultOptions._IntoBody is not null)
+                    return ReturnJsonResult(OperationResultOptions.
+                        _IntoBody!(result.ToOperationResultDynamic())
+                        , result.StatusCode);
+
+                return ReturnJsonResult(result, result.StatusCode);
             }
 
             if (hasResult)
-                return new JsonResult(result.Data) { StatusCode = result.StatusCode,
-                    SerializerSettings = OperationResultOptions._SerializerSettings
-                };
+                return ReturnJsonResult(result.Data, result.StatusCode);
 
             if (jsonMessageIsNullOrEmpty)
-                return new JsonResult(result.Status.ToPerString()) { StatusCode = result.StatusCode,
-                    SerializerSettings = OperationResultOptions._SerializerSettings
-                };
+                return ReturnJsonResult(result.Status.ToPerString(), result.StatusCode);
 
-            return new JsonResult(jsonMessage) { StatusCode = result.StatusCode,
+            return ReturnJsonResult(jsonMessage, result.StatusCode);
+        }
+
+
+        /// <summary>
+        /// Only to create <see cref="JsonResult"/> as one place changed.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="statuscode"></param>
+        /// <returns></returns>
+        private static JsonResult ReturnJsonResult(object? value, int? statuscode)
+        {
+            return new JsonResult(value)
+            {
+                StatusCode = statuscode,
                 SerializerSettings = OperationResultOptions._SerializerSettings
             };
         }
