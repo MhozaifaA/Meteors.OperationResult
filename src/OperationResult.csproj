@@ -6,8 +6,8 @@
     <Authors>MhozaifaA</Authors>
     <PackageId>Meteors.$(AssemblyName)</PackageId>
     <AssemblyVersion>6.0.0</AssemblyVersion>
-    <FileVersion>6.1.6</FileVersion>
-    <Version>6.1.6</Version>
+    <FileVersion>6.2.1</FileVersion>
+    <Version>6.2.1</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
 	<Nullable>enable</Nullable>
 	<PackageProjectUrl>https://github.com/MhozaifaA/OperationResult/blob/master/README.md</PackageProjectUrl>
