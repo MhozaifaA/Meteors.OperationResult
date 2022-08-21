@@ -26,13 +26,13 @@ Install-Package Meteors.OperationResult -Version 6.1.6
 </p>
 
 ## Highlighted 💻
-- [X] move WithStatusCode extension to Base,
+- [x] move WithStatusCode extension to Base,
 - [x] think if we replace OperationResultbase to -> OperationResult without Base! as abstract (this feature allow to save same concept and add more extensions later)
 - [ ] Build interfaces for each prop, that take operation result to make once extension for interface and able to inhrent this extensions (customers build over Meteors).
 
 - [x] Add ctr/method to revice all props as 'Create Instance' (more useing when you have un-know operation-prop take value after plh of condig  ).
-  ex:
-  
+        ex:
+
   ```C# 
     Status status;
     string message = String.Empty();
@@ -45,7 +45,7 @@ Install-Package Meteors.OperationResult -Version 6.1.6
     :
 
     _Operation.Set(status,message,statuscode....); //auto know exactly operationResult
-    ```
+  ```
  - [ ] Global static Isbody, Global static checkin object to serialize , sme to add xtensions for oepration.
  - [ ] Singletone/IEnumrable service inject to control (five 5 services as Status we have for customize).
       ```C#
@@ -60,7 +60,7 @@ Install-Package Meteors.OperationResult -Version 6.1.6
       OperationResult<List<Foo>> Get() 
       {  return new ();   };
       ```
- - [ ] Stop return null/by default value as Json like as ("", [], {}) 
+ - [x] Stop return null/by default value as Json like as ("", [], {}) 
 
 ### Documentation 
 
@@ -78,7 +78,7 @@ Install-Package Meteors.OperationResult -Version 6.1.6
 
     ▸ Methods/Func Helper
 
-    `SetSuccess, SetFailed, SetException, SetContent, Append `
+    `SetSuccess, SetFailed, SetException, SetContent, Append, Set `
 
     ▸ Implicit
 
@@ -94,11 +94,13 @@ Install-Package Meteors.OperationResult -Version 6.1.6
 
     `(exception) as SetException`
 
+    `ToOperationDynamic`
+
   - ##### _Operation Schema
 
     ▸ Extensions  (Abstract-Base/Main Class)
 
-    `SetSuccess, SetFailed, SetException, SetContent`
+    `SetSuccess, SetFailed, SetException, SetContent, Set`
 
   - ##### Extension Schema
 
@@ -403,25 +405,26 @@ Install-Package Meteors.OperationResult -Version 6.1.6
       failed [Failed,Forbidden,Unauthorized] 400: "message1 + message2 + ... message7"
       exception 500: ""System.Exception. .. . .. line ... . inner exception ...""
       */
+      ```
 
 
       /*
       isbody: true
-
+    
       success [Success,Exit,NotExit] 200: {
       "Data": { "operation1Data": data1...... "operation7Data": data17} ,
       "IsSuccess":true, "HasException":false,
       "FullExceptionMessage":null,"Message":"message..",
       "Status":200,"StatusCode":200
       }
-
+    
       failed [Failed,Forbidden,Unauthorized] 400: {
       "Data":null,
       "IsSuccess":false,"HasException":false,
       "FullExceptionMessage":null,"Message":"message1 + message2 + ... message7",
       "Status":[statuscode],"StatusCode":[statuscode]
       }
-
+    
       exception: 500 {
       "Data":null,
       "IsSuccess":false,"HasException":true,

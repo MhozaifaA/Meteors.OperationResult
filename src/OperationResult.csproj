@@ -16,6 +16,7 @@
 	<PackageTags>OperationResult, dotnet, csharp, result, web, api</PackageTags>
 	<PackageIcon>Meteor logo pack.png</PackageIcon>
 	<GenerateDocumentationFile>True</GenerateDocumentationFile>
+	<Description>Operation result powerful to handle multi statuses, Easy to user with fancy pattern, Support json convention, Wise level state with multi operation , Able include collect and into (forkJoin) functionality.</Description>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
