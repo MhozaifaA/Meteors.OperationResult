@@ -116,6 +116,15 @@ Install-Package Meteors.OperationResult -Version 6.1.6
     `CollectAsync<T1.....T7>(T2....T7),`
     `IntoAsync<T1.....T7,T>((T1....T7),`
     ​
+    
+- ### Use Global
+
+```c#
+//in program.cs 
+OperationResultOptions.IsBody(bool)
+OperationResultOptions.IntoBody(operation=> ...)
+OperationResultOptions.SerializerSettings(...)
+```
 
 - ###  How to use *- `before get operation`* 
 
