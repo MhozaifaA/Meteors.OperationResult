@@ -1,10 +1,7 @@
-﻿using Meteors;
+using Meteors;
 using Meteors.OperationContext;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace OperationContext.Tests.Mocks
 {
@@ -12,21 +9,21 @@ namespace OperationContext.Tests.Mocks
     {
         internal static OperationResult<T> Create<T>(Statuses type)
         {
-            switch (type)
+            switch (type.value)
             {
-                case Statuses.Success:
+                case _Statuses.Success:
                     return _Operation.SetSuccess<T>(Activator.CreateInstance<T>(), nameof(OperationResult.Message) + type.ToString());
-                case Statuses.Exist:
+                case _Statuses.Exist:
                     return _Operation.SetContent<T>(type, nameof(OperationResult.Message) + type.ToString());
-                case Statuses.NotExist:
+                case _Statuses.NotExist:
                     return _Operation.SetContent<T>(type, nameof(OperationResult.Message) + type.ToString());
-                case Statuses.Failed:
+                case _Statuses.Failed:
                     return _Operation.SetFailed<T>(nameof(OperationResult.Message) + type.ToString());
-                case Statuses.Forbidden:
+                case _Statuses.Forbidden:
                     return _Operation.SetFailed<T>(nameof(OperationResult.Message) + type.ToString(), type);
-                case Statuses.Exception:
+                case _Statuses.Exception:
                     return _Operation.SetException<T>(new Exception(nameof(OperationResult.Message) + type.ToString()));
-                case Statuses.Unauthorized:
+                case _Statuses.Unauthorized:
                     return _Operation.SetFailed<T>(nameof(OperationResult.Message) + type.ToString(), type);
                 default:
                     return new NotImplementedException();
