@@ -1,4 +1,4 @@
-﻿/* MIT License
+/* MIT License
 
 Copyright (c) 2022 Huzaifa Aseel
 
@@ -47,12 +47,12 @@ namespace Meteors
         /// <summary>
         /// Check <see cref="Statuses.Success"/>.
         /// </summary>
-        public bool IsSuccess => Status is Statuses.Success;
+        public bool IsSuccess => Status.Is(Statuses.Success);
 
         /// <summary>
         /// Check <see cref="Statuses.Exception"/>.
         /// </summary>
-        public bool HasException => this.Status is Statuses.Exception;
+        public bool HasException => this.Status.Is(Statuses.Exception);
 
 
         /// <summary>
@@ -73,31 +73,7 @@ namespace Meteors
         public bool HasCustomStatusCode => StatusCode > 0;
 
 
-        /// <summary>
-        /// Helper to pass success result 
-        /// <para>Effect in <code>base.OperationResultType</code> to <seealso cref="Statuses.Success"/></para>
-        /// </summary>
-        /// <returns> <see cref="OperationResult{T}"/> </returns>
-        public OperationResult<T> SetSuccess()
-        {
-            Status = Statuses.Success;
-            return this;
-        }
-
-        /// <summary>
-        /// Helper to pass success result 
-        /// <para>Effect in <code>base.OperationResultType</code> to <seealso cref="Statuses.Success"/></para>
-        /// </summary>
-        /// <param name="result"></param>
-        /// <returns> <see cref="OperationResult{T}"/> </returns>
-        public OperationResult<T> SetSuccess(T result)
-        {
-            Data = result;
-            Status = Statuses.Success;
-            return this;
-        }
-
-
+       
         /// <summary>
         /// Helper
         /// <para>Effect in <code>base.OperationResultType</code> to <seealso cref="Statuses.Success"/></para>
@@ -105,7 +81,7 @@ namespace Meteors
         /// </summary>
         /// <param name="message"></param>
         /// <returns> <see cref="OperationResult{T}"/> </returns>
-        public OperationResult<T> SetSuccess(string message)
+        public OperationResult<T> SetSuccess(string? message = null)
         {
             Message = message;
             Status = Statuses.Success;
@@ -120,7 +96,7 @@ namespace Meteors
         /// <param name="result"></param>
         /// <param name="message"></param>
         /// <returns> <see cref="OperationResult{T}"/> </returns>
-        public OperationResult<T> SetSuccess(T result, string? message)
+        public OperationResult<T> SetSuccess(T result, string? message = null)
         {
             Message = message;
             Data = result;
@@ -138,11 +114,26 @@ namespace Meteors
         /// </summary>
         /// <exception cref="ArgumentException"></exception>
         /// <param name="message"></param>
+        /// <returns> <see cref="OperationResult{T}"/> </returns>
+        public OperationResult<T> SetFailed(string? message = null)
+        {   
+            return SetFailed(message, Statuses.Failed);
+        }
+
+        /// <summary>
+        /// Helper  
+        /// <para>Effect in <code>base.OperationResultType</code> to <seealso cref="Statuses.Failed"/></para>
+        /// <para>Effect in <code>base.Message</code> .</para>
+        /// <para>Effect in <code>base.OperationResultType</code> default value <see cref=" Statuses.Failed"/> , <see cref="Statuses.Forbidden"/> and <see cref="Statuses.Unauthorized"/> </para>
+        /// <para>Exception :  <see langword="throw"/> <see cref="ArgumentException"/> if type not kind of Failed .</para>
+        /// </summary>
+        /// <exception cref="ArgumentException"></exception>
+        /// <param name="message"></param>
         /// <param name="type"></param>
         /// <returns> <see cref="OperationResult{T}"/> </returns>
-        public OperationResult<T> SetFailed(string? message, Statuses type = Statuses.Failed)
+        public OperationResult<T> SetFailed(string? message,Statuses type)
         {
-            if (type is not Statuses.Failed && type is not Statuses.Forbidden && type is not Statuses.Unauthorized)
+            if (type.IsNot(Statuses.Failed) && type.IsNot(Statuses.Forbidden) && type.IsNot(Statuses.Unauthorized))
                 throw new ArgumentException($"{nameof(SetFailed)} in {nameof(OperationResult<T>)} take {type} should use with {Statuses.Failed}, {Statuses.Forbidden} or {Statuses.Unauthorized} .");
 
             Message = message;
@@ -160,13 +151,9 @@ namespace Meteors
         /// <exception cref="ArgumentException"></exception>
         /// <param name="type"></param>
         /// <returns> <see cref="OperationResult{T}"/> </returns>
-        public OperationResult<T> SetFailed(Statuses type = Statuses.Failed)
+        public OperationResult<T> SetFailed(Statuses type)
         {
-            if (type is not Statuses.Failed && type is not Statuses.Forbidden && type is not Statuses.Unauthorized)
-                throw new ArgumentException($"{nameof(SetFailed)} in {nameof(OperationResult<T>)} take {type} should use with {Statuses.Failed}, {Statuses.Forbidden} or {Statuses.Unauthorized} .");
-
-            Status = type;
-            return this;
+            return SetFailed(null, type);
         }
 
 
@@ -178,24 +165,11 @@ namespace Meteors
         /// <param name="exception"></param>
         /// <param name="message"></param>
         /// <returns> <see cref="OperationResult{T}"/> </returns>
-        public OperationResult<T> SetException(Exception exception, string message)
+        public OperationResult<T> SetException(Exception exception, string? message = null)
         {
             Exception = exception;
             Status = Statuses.Exception;
             Message = message;
-            return this;
-        }
-
-        /// <summary>
-        /// Helper to pass exception result 
-        /// <para>Effect in <code>base.OperationResultType</code> to <seealso cref="Statuses.Exception"/> .</para>
-        /// </summary>
-        /// <param name="exception"></param>
-        /// <returns> <see cref="OperationResult{T}"/> </returns>
-        public OperationResult<T> SetException(Exception? exception)
-        {
-            Exception = exception;
-            Status = Statuses.Exception;
             return this;
         }
 
@@ -210,29 +184,12 @@ namespace Meteors
         /// <param name="type"></param>
         /// <param name="message"></param>
         /// <returns> <see cref="OperationResult{T}"/> </returns>
-        public OperationResult<T> SetContent(Statuses type, string message)
+        public OperationResult<T> SetContent(Statuses type, string? message = null)
         {
-            if (type is not Statuses.Exist && type is not Statuses.NotExist)
+            if (type.IsNot(Statuses.Exist) && type.IsNot(Statuses.NotExist))
                 throw new ArgumentException($"Directly  return {nameof(OperationResult<T>)} take {type} should use with {Statuses.Exist} or {Statuses.NotExist} .");
 
             Message = message;
-            Status = type;
-            return this;
-        }
-
-        /// <summary>
-        /// Helper  
-        /// <para>Effect in <code>base.OperationResultType</code> to <seealso cref="Statuses.Exist"/> or <seealso cref="Statuses.NotExist"/>  </para>
-        /// <para>Exception :  <see langword="throw"/> <see cref="ArgumentException"/> if type not kind of Content .</para>
-        /// </summary>
-        /// <exception cref="ArgumentException"></exception>
-        /// <param name="type"></param>
-        /// <returns> <see cref="OperationResult{T}"/> </returns>
-        public OperationResult<T> SetContent(Statuses type)
-        {
-            if (type is not Statuses.Exist && type is not Statuses.NotExist)
-                throw new ArgumentException($"Directly  return {nameof(OperationResult<T>)} take {type} should use with {Statuses.Exist} or {Statuses.NotExist} .");
-
             Status = type;
             return this;
         }
@@ -265,7 +222,7 @@ namespace Meteors
         /// <param name="type"></param>
         public static implicit operator OperationResult<T>(Statuses type)
         {
-            if (type is not Statuses.Exist && type is not Statuses.NotExist)
+            if (type.IsNot(Statuses.Exist) && type.IsNot(Statuses.NotExist))
                 throw new ArgumentException($"Directly return {nameof(OperationResult<T>)} take {type} should use with {Statuses.Exist} or {Statuses.NotExist} .");
 
             return new OperationResult<T>() { Status = type };
@@ -277,9 +234,9 @@ namespace Meteors
         /// </summary>
         /// <exception cref="ArgumentException"></exception>
         /// <param name="type_message"></param>
-        public static implicit operator OperationResult<T>((Statuses type, string message) type_message)
+        public static implicit operator OperationResult<T>((Statuses type, string? message) type_message)
         {
-            if (type_message.type is not Statuses.Exist && type_message.type is not Statuses.NotExist)
+            if (type_message.type.IsNot(Statuses.Exist) && type_message.type.IsNot(Statuses.NotExist))
                 throw new ArgumentException($"Directly return {nameof(OperationResult<T>)} take {type_message.type} should use with {Statuses.Exist} or {Statuses.NotExist} .");
 
             return new OperationResult<T>() { Status = type_message.type, Message = type_message.message };
@@ -291,9 +248,9 @@ namespace Meteors
         /// </summary>
         /// <exception cref="ArgumentException"></exception>
         /// <param name="type_message"></param>
-        public static implicit operator OperationResult<T>((string message, Statuses type) type_message)
+        public static implicit operator OperationResult<T>((string? message, Statuses type) type_message)
         {
-            if (type_message.type is not Statuses.Failed && type_message.type is not Statuses.Forbidden && type_message.type is not Statuses.Unauthorized)
+            if (type_message.type.IsNot(Statuses.Failed) && type_message.type.IsNot(Statuses.Forbidden) && type_message.type.IsNot(Statuses.Unauthorized))
                 throw new ArgumentException($"{nameof(SetFailed)} in {nameof(OperationResult<T>)} take {type_message.type} should use with {Statuses.Failed}, {Statuses.Forbidden} or {Statuses.Unauthorized} .");
 
             return new OperationResult<T>() { Status = type_message.type, Message = type_message.message };
