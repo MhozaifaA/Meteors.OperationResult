@@ -1,17 +1,12 @@
-﻿using BenchmarkDotNet.Attributes;
-using Microsoft.AspNetCore.Mvc;
+using BenchmarkDotNet.Attributes;
 using Meteors;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Meteors.OperationContext;
+using System.Text.Json.Serialization;
 
 namespace OperationContext.Benchmarks
 {
     [MemoryDiagnoser]
-    [SimpleJob(warmupCount: 3, targetCount: 1)]
+    [SimpleJob(warmupCount: 3, iterationCount: 1)]
     public class OperationResultBenchmark
     {
       
@@ -26,6 +21,7 @@ namespace OperationContext.Benchmarks
             Statuses.Exception,        
         };
 
+
         [Benchmark]
         public void StatusToString()
         {
@@ -35,16 +31,49 @@ namespace OperationContext.Benchmarks
             }
         }
 
-        [Benchmark]
-        public void StatusToPerString()
+
+        public class ResultContainer(string? message, _Statuses status, int? code = null, Exception? e = null);
+        public class ResultContainer<T>(T? data, string? message, _Statuses status, int? code = null, Exception? e = null) :
+            ResultContainer(message,status,code,e)
         {
-            foreach (var status in StatusList)
-            {
-                var name = status.ToPerString();
-            }
+            public bool IsSuccess => status == _Statuses.Success;
+            public bool HasException => status == _Statuses.Exception;
+            public string? FullExceptionMessage => e?.Message + e?.InnerException?.Message;
+
+            [JsonIgnore]
+            public bool HasCustomStatusCode => code > 0;
         }
 
+        [Benchmark]
+        public void WithNormalResult()
+        {
+            string result = "Hello World!";
 
+            var _ret = new ResultContainer<string>(result,"M",_Statuses.Success);
+        }
+
+        [Benchmark]
+        public void WithOperatoinResult()
+        {
+            string result = "Hello World!";
+
+            var op = new OperationResult<string>()
+            {
+                Data = result,
+                Message = "M",
+                Status = Statuses.Success,
+               // StatusCode = 200,
+            };
+           
+        }
+
+        [Benchmark]
+        public void WithOperatoinResultExtension()
+        {
+            string result = "Hello World!";
+
+            var op = _Operation.SetSuccess(result, "M");//.WithStatusCode(200);
+        }
 
 
         [Benchmark]
@@ -65,8 +94,8 @@ namespace OperationContext.Benchmarks
             var operation2 = Task.FromResult(_Operation.SetSuccess(new object()));
             var operation3 = Task.FromResult(_Operation.SetSuccess(new object()));
 
-            var result = await  operation1.CollectAsync(operation1, operation2).
-                IntoAsync((r1, r2, r3) => new { r1,r2,r3 });
+            var result = await operation1.CollectAsync(operation1, operation2).
+                IntoAsync((r1, r2, r3) => new { r1, r2, r3 });
         }
 
 
@@ -108,9 +137,9 @@ namespace OperationContext.Benchmarks
         [Benchmark]
         public async Task IntoAsync()
         {
-            var operation1 =  Job();
-            var operation2 =  Job();
-            var operation3 =  Job();
+            var operation1 = Job();
+            var operation2 = Job();
+            var operation3 = Job();
 
             var result = await operation1.CollectAsync(operation1, operation2).
                 IntoAsync((r1, r2, r3) => new { r1, r2, r3 });
