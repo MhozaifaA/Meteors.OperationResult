@@ -1,6 +1,5 @@
-﻿using Meteors;
+using Meteors;
 using Meteors.OperationContext;
-using Microsoft.AspNetCore.Mvc;
 using OperationContext.Tests.Mocks;
 using System.Collections.Generic;
 using System.Linq;
