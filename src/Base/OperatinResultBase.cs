@@ -1,4 +1,4 @@
-﻿/* MIT License
+/* MIT License
 
 Copyright (c) 2022 Huzaifa Aseel
 
@@ -21,7 +21,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 
 using Meteors.OperationContext;
-using Meteors.OperationContext.ExtensionMethods;
 using System;
 using System.Text.Json.Serialization;
 
@@ -43,7 +42,7 @@ namespace Meteors
         /// <summary>
         /// Result type/status.
         /// </summary>
-        public Statuses Status { get; set; }
+        public Statuses Status { get; set; } = new Statuses();
 
         /// <summary>
         ///  Represents errors that occur during CONTEXT execution.
