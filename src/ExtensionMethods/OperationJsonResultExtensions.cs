@@ -1,4 +1,4 @@
-﻿/* MIT License
+/* MIT License
 
 Copyright (c) 2022 Huzaifa Aseel
 
@@ -58,15 +58,15 @@ namespace Meteors
         /// <returns></returns>
         public static JsonResult ToJsonResult<T>(this OperationResult<T> result, bool? isBody = default)
         {
-            return result.Status switch
+            return result.Status.value switch
             {
-                Statuses.Success => result.GetValidResult(jsonMessage: result.Message, hasResult: true, isBody),
-                Statuses.Exist => result.GetValidResult(jsonMessage: result.Message, isBody: isBody),
-                Statuses.NotExist => result.GetValidResult(jsonMessage: result.Message, isBody: isBody),
-                Statuses.Failed => result.GetValidResult(jsonMessage: result.Message, isBody: isBody),
-                Statuses.Forbidden => result.GetValidResult(jsonMessage: result.Message, isBody: isBody),
-                Statuses.Unauthorized => result.GetValidResult(jsonMessage: result.Message, isBody: isBody),
-                Statuses.Exception => result.GetValidResult(jsonMessage: result.FullExceptionMessage, isBody: isBody),
+                _Statuses.Success => result.GetValidResult(jsonMessage: result.Message, hasResult: true, isBody),
+                _Statuses.Exist => result.GetValidResult(jsonMessage: result.Message, isBody: isBody),
+                _Statuses.NotExist => result.GetValidResult(jsonMessage: result.Message, isBody: isBody),
+                _Statuses.Failed => result.GetValidResult(jsonMessage: result.Message, isBody: isBody),
+                _Statuses.Forbidden => result.GetValidResult(jsonMessage: result.Message, isBody: isBody),
+                _Statuses.Unauthorized => result.GetValidResult(jsonMessage: result.Message, isBody: isBody),
+                _Statuses.Exception => result.GetValidResult(jsonMessage: result.FullExceptionMessage, isBody: isBody),
                 _ => throw new NotImplementedException($"Update source code to catch new {nameof(Statuses)} value: {result.Status}"),
             };
         }
@@ -110,7 +110,7 @@ namespace Meteors
             if (isBody is true || (isBody is null && OperationResultOptions._IsBody is true))
             {
                 if (jsonMessageIsNullOrEmpty)
-                    result.Message = result.Status.ToPerString();
+                    result.Message = result.Status.ToString();
 
                 if (OperationResultOptions._IntoBody is not null)
                     return ReturnJsonResult(OperationResultOptions.
@@ -124,7 +124,7 @@ namespace Meteors
                 return ReturnJsonResult(result.Data, result.StatusCode);
 
             if (jsonMessageIsNullOrEmpty)
-                return ReturnJsonResult(result.Status.ToPerString(), result.StatusCode);
+                return ReturnJsonResult(result.Status.ToString(), result.StatusCode);
 
             return ReturnJsonResult(jsonMessage, result.StatusCode);
         }
@@ -890,7 +890,7 @@ namespace Meteors
 
         /// <summary>
         /// Condition to collect many operation result into once , dependent on  Priority of <see cref="Statuses"/>
-        /// <para>With <see cref="Statuses.Exception"/>  Will return first exception result  used <see cref="OperationResult{TResult}.SetException(Exception)"/></para>
+        /// <para>With <see cref="Statuses.Exception"/>  Will return first exception result  used <see cref="OperationResult{TResult}.SetException(Exception, string?)"/></para>
         /// <para>With <see cref="Statuses.Failed"/> ,<see cref="Statuses.Forbidden"/> and <see cref="Statuses.Unauthorized"/> Will return join of message  used <see cref="OperationResult{TResult}.SetSuccess(string)"/></para>
         /// <para>With <see cref="Statuses.Success"/> Will return TResult and  join of message used <see cref="OperationResult{TResult}.SetFailed(string, Statuses)"/> .</para>
         /// </summary>
@@ -920,7 +920,7 @@ namespace Meteors
 
         /// <summary>
         /// Condition to collect many operation result into once , dependent on  Priority of <see cref="Statuses"/>
-        /// <para>With <see cref="Statuses.Exception"/>  Will return first exception result  used <see cref="OperationResult{TResult}.SetException(Exception)"/></para>
+        /// <para>With <see cref="Statuses.Exception"/>  Will return first exception result  used <see cref="OperationResult{TResult}.SetException(Exception, string?)"/></para>
         /// <para>With <see cref="Statuses.Failed"/> ,<see cref="Statuses.Forbidden"/> and <see cref="Statuses.Unauthorized"/> Will return join of message  used <see cref="OperationResult{TResult}.SetSuccess(string)"/></para>
         /// <para>With <see cref="Statuses.Success"/> Will return TResult and  join of message used <see cref="OperationResult{TResult}.SetFailed(string, Statuses)"/> .</para>
         /// </summary>
@@ -939,12 +939,16 @@ namespace Meteors
             if (firstException is not null)
                 return operation.SetException(firstException.Exception);
 
+            var maxasdFailded = listResult.Where(result => result.Status == Statuses.Failed || result.Status == Statuses.Forbidden ||
+                 result.Status == Statuses.Unauthorized).ToList();
+
             Statuses? maxFailded = listResult.Where(result => result.Status == Statuses.Failed || result.Status == Statuses.Forbidden ||
-            result.Status == Statuses.Unauthorized).Max(result => (Statuses?)result.Status);
+            result.Status == Statuses.Unauthorized).MaxBy(result => (int)result.Status)?.Status;
+
 
             if (maxFailded is not null)
                 return operation.SetFailed(String.Join(",",
-                    listResult.Select((result, iter) => result.Message)), maxFailded!.Value);
+                    listResult.Select((result, iter) => result.Message)), maxFailded);
 
             return operation.SetSuccess(result, String.Join(",",
                     listResult.Select((result, iter) => result.Message)));
