@@ -25,6 +25,9 @@ Install-Package Meteors.OperationResult -Version 8.0.0
 <img width="10%" src="https://user-images.githubusercontent.com/48151918/175791394-3913f060-5551-435c-adda-5bc487964f1c.png" />
 </p>
 
+> [!Important]
+> Old enum Statues(OperationStatues) become record Statuses. [See New Statues](https://github.com/MhozaifaA/Meteors.OperationResult/blob/develop/src/Enum/Statuses.cs)
+
 
 ### Documentation 
 
