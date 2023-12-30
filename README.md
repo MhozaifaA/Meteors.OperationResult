@@ -10,7 +10,7 @@
 
 *Meteors Operation Result came with new and redesigned to accept more than container for status and data. **OperationResult** is isolated but stuck with kernel of your business logic , without if/else and some corrupted code to handle results.*
 
-Install-Package Meteors.OperationResult -Version 6.2.1
+Install-Package Meteors.OperationResult -Version 8.0.0
 
 
 <div style="display: flex;"> 
@@ -25,42 +25,6 @@ Install-Package Meteors.OperationResult -Version 6.2.1
 <img width="10%" src="https://user-images.githubusercontent.com/48151918/175791394-3913f060-5551-435c-adda-5bc487964f1c.png" />
 </p>
 
-## Highlighted 💻
-- [x] move WithStatusCode extension to Base,
-- [x] think if we replace OperationResultbase to -> OperationResult without Base! as abstract (this feature allow to save same concept and add more extensions later)
-- [ ] Build interfaces for each prop, that take operation result to make once extension for interface and able to inhrent this extensions (customers build over Meteors).
-
-- [x] Add ctr/method to revice all props as 'Create Instance' (more useing when you have un-know operation-prop take value after plh of condig  ).
-        ex:
-
-  ```C# 
-    Status status;
-    string message = String.Empty();
-    :
-    Int statuscode...
-    :
-    
-    if(--cond--){ ..//change status } 
-    else if( .... cond ---.... }....
-    :
-
-    _Operation.Set(status,message,statuscode....); //auto know exactly operationResult
-  ```
- - [ ] Global static Isbody, Global static checkin object to serialize , sme to add xtensions for oepration.
- - [ ] Singletone/IEnumrable service inject to control (five 5 services as Status we have for customize).
-      ```C#
-       readonly ISuccessOperation<>  successOperation; //has custome options and custome global(scop)
-       readonly IFailedOperation<>  failedOperation; //has custome options and custome global(scop)
-      ```
- - [ ] appsettings attr.
- - [ ] IOptions for (custome default messages, handle statuscodes(->staatus)..,http,.. ).
- - [ ] HttpResponseMessage to OperationResult (support full options).
- - [x] back to implicity (success) 😉 but for limited types (IList<>,ICollection<>,IEnumerable<>,INumber(int,double,...) .Net7.0) not supported (Tuple,Object, dynamic, any not basic) under see (string) 
-      ``` C#
-      OperationResult<List<Foo>> Get() 
-      {  return new ();   };
-      ```
- - [x] Stop return null/by default value as Json like as ("", [], {}) 
 
 ### Documentation 
 
@@ -465,6 +429,42 @@ Collect and Into extensions build to handle multi operations and choice the corr
 ________________________________________________
 
 
+## Highlighted 💻
+- [x] move WithStatusCode extension to Base,
+- [x] think if we replace OperationResultbase to -> OperationResult without Base! as abstract (this feature allow to save same concept and add more extensions later)
+- [ ] Build interfaces for each prop, that take operation result to make once extension for interface and able to inhrent this extensions (customers build over Meteors).
+
+- [x] Add ctr/method to revice all props as 'Create Instance' (more useing when you have un-know operation-prop take value after plh of condig  ).
+        ex:
+
+  ```C# 
+    Status status;
+    string message = String.Empty();
+    :
+    Int statuscode...
+    :
+    
+    if(--cond--){ ..//change status } 
+    else if( .... cond ---.... }....
+    :
+
+    _Operation.Set(status,message,statuscode....); //auto know exactly operationResult
+  ```
+ - [ ] Global static Isbody, Global static checkin object to serialize , sme to add xtensions for oepration.
+ - [ ] Singletone/IEnumrable service inject to control (five 5 services as Status we have for customize).
+      ```C#
+       readonly ISuccessOperation<>  successOperation; //has custome options and custome global(scop)
+       readonly IFailedOperation<>  failedOperation; //has custome options and custome global(scop)
+      ```
+ - [ ] appsettings attr.
+ - [ ] IOptions for (custome default messages, handle statuscodes(->staatus)..,http,.. ).
+ - [ ] HttpResponseMessage to OperationResult (support full options).
+ - [x] back to implicity (success) 😉 but for limited types (IList<>,ICollection<>,IEnumerable<>,INumber(int,double,...) .Net7.0) not supported (Tuple,Object, dynamic, any not basic) under see (string) 
+      ``` C#
+      OperationResult<List<Foo>> Get() 
+      {  return new ();   };
+      ```
+ - [x] Stop return null/by default value as Json like as ("", [], {}) 
 
 
 TODO
