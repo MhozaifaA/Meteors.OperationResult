@@ -1,4 +1,4 @@
-# [Meteors] OperationResult 6.2.1
+# [Meteors] OperationResult 8.0.0
 
 
 [![](https://img.shields.io/github/license/MhozaifaA/OperationResult)](https://github.com/MhozaifaA/Meteors.OperationResult/blob/master/LICENSE.md)
@@ -10,7 +10,7 @@
 
 *Meteors Operation Result came with new and redesigned to accept more than container for status and data. **OperationResult** is isolated but stuck with kernel of your business logic , without if/else and some corrupted code to handle results.*
 
-Install-Package Meteors.OperationResult -Version 6.1.6
+Install-Package Meteors.OperationResult -Version 6.2.1
 
 
 <div style="display: flex;"> 
@@ -116,6 +116,15 @@ Install-Package Meteors.OperationResult -Version 6.1.6
     `CollectAsync<T1.....T7>(T2....T7),`
     `IntoAsync<T1.....T7,T>((T1....T7),`
     ​
+    
+- ### Use Global
+
+```c#
+//in program.cs 
+OperationResultOptions.IsBody(bool)
+OperationResultOptions.IntoBody(operation=> ...)
+OperationResultOptions.SerializerSettings(...)
+```
 
 - ###  How to use *- `before get operation`* 
 

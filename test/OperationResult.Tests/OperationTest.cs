@@ -1,10 +1,8 @@
-﻿using Meteors;
+using Meteors;
 using Meteors.OperationContext;
 using OperationContext.Tests.Mocks;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;

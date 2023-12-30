@@ -1,4 +1,4 @@
-﻿/* MIT License
+/* MIT License
 
 Copyright (c) 2022 Huzaifa Aseel
 
@@ -28,13 +28,5 @@ namespace Meteors.OperationContext
         /// Main object result.
         /// </summary>
         public T Data { get; set; }
-    }
-
-    internal interface IDynamicResult
-    {
-        /// <summary>
-        /// Main object result.
-        /// </summary>
-        public dynamic Data { get; set; }
     }
 }

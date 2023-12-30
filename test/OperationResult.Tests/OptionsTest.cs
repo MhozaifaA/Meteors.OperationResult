@@ -1,12 +1,6 @@
-﻿using Meteors;
+using Meteors;
 using Meteors.OperationContext;
-using OperationContext;
 using OperationContext.Tests.Mocks;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace OperationContext.Tests
@@ -74,7 +68,7 @@ namespace OperationContext.Tests
             OperationResultOptions.IsBody(true); //can
             OperationResultOptions.IntoBody(op => new FooIntoBody
             {
-             Message = op.Message + " "+ op.Status.ToPerString(),
+             Message = op.Message + " "+ op.Status.ToString(),
              User = op.Data,
              StatusCode = op.StatusCode??500,
              PasswordLength = ((FooUser)op.Data).Password.Length

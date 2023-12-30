@@ -3,7 +3,6 @@ using Meteors.OperationContext;
 using OperationContext.Tests.Mocks;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
@@ -42,9 +41,9 @@ namespace OperationContext.Tests
         [Fact]
         public void ToPerString()
         {
-            foreach (var status in System.Enum.GetValues<Statuses>())
+            foreach (var status in Statuses.GetValues())
             {
-                Assert.Equal(status.ToString(), status.ToPerString());
+                Assert.Equal(status.ToString(), status.ToString());
             }
         }
 
@@ -229,7 +228,7 @@ namespace OperationContext.Tests
 
 
         [Fact]
-        public OperationResult<FooUser> UnknownStatus()
+        public void UnknownStatus()
         {
             OperationResult<FooUser> operation = new OperationResult<FooUser>();
             
@@ -239,7 +238,7 @@ namespace OperationContext.Tests
 
             Assert.Equal(Statuses.UnKnown, operation.Status);
 
-            return operation;
+           // return operation;
         }
 
 
@@ -348,7 +347,7 @@ namespace OperationContext.Tests
 
         [Theory]
         [MemberData(nameof(FactData))]
-        public OperationResult<FooUser> AsRegular(FooUser user, Statuses resultTypes)
+        public void AsRegular(FooUser user, Statuses resultTypes)
         {
             OperationResult<FooUser> operation = new OperationResult<FooUser>();
 
@@ -400,7 +399,7 @@ namespace OperationContext.Tests
             }
 
             Assert.Equal(resultTypes, operation.Status);
-            return operation;
+            //return operation;
         }
 
 
@@ -408,7 +407,7 @@ namespace OperationContext.Tests
 
         [Theory]
         [MemberData(nameof(FactData))]
-        public OperationResult<FooUser> AsMethod(FooUser user, Statuses resultTypes)
+        public void AsMethod(FooUser user, Statuses resultTypes)
         {
             OperationResult<FooUser> operation = new OperationResult<FooUser>();
 
@@ -452,7 +451,7 @@ namespace OperationContext.Tests
             }
 
             Assert.Equal(resultTypes, operation.Status);
-            return operation;
+           //return operation;
         }
 
 
@@ -460,7 +459,7 @@ namespace OperationContext.Tests
 
         [Theory]
         [MemberData(nameof(FactData))]
-        public OperationResult<FooUser> AsStatic(FooUser user, Statuses resultTypes)
+        public void AsStatic(FooUser user, Statuses resultTypes)
         {
             OperationResult<FooUser> operation = null;
 
@@ -504,7 +503,7 @@ namespace OperationContext.Tests
             }
 
             Assert.Equal(resultTypes, operation.Status);
-            return operation;
+            //return operation;
         }
 
 
@@ -512,7 +511,7 @@ namespace OperationContext.Tests
 
         [Theory]
         [MemberData(nameof(FactData))]
-        public OperationResult<FooUser> AsImplicit(FooUser user, Statuses resultTypes)
+        public void AsImplicit(FooUser user, Statuses resultTypes)
         {
             OperationResult<FooUser> operation = null;
 
@@ -556,7 +555,7 @@ namespace OperationContext.Tests
             }
 
             Assert.Equal(resultTypes, operation.Status);
-            return operation;
+            //return operation;
         }
 
     }

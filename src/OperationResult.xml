@@ -16,47 +16,97 @@
         </member>
         <member name="T:Meteors.OperationContext.Statuses">
             <summary>
+            Logical  result type over <see cref="T:Meteors.OperationContext._Statuses"/>
+            </summary>
+        </member>
+        <member name="M:Meteors.OperationContext.Statuses.#ctor(Meteors.OperationContext._Statuses)">
+            <summary>
+            Logical  result type over <see cref="T:Meteors.OperationContext._Statuses"/>
+            </summary>
+        </member>
+        <member name="F:Meteors.OperationContext.Statuses.UnKnown">
+            <summary>
+            <see cref="F:Meteors.OperationContext._Statuses.UnKnown"/> = 0
+            </summary>
+        </member>
+        <member name="F:Meteors.OperationContext.Statuses.Success">
+            <summary>
+            <see cref="F:Meteors.OperationContext._Statuses.UnKnown"/> = 200
+            </summary>
+        </member>
+        <member name="F:Meteors.OperationContext.Statuses.Exist">
+            <summary>
+            <see cref="F:Meteors.OperationContext._Statuses.Exist"/> = 202
+            </summary>
+        </member>
+        <member name="F:Meteors.OperationContext.Statuses.NotExist">
+            <summary>
+            <see cref="F:Meteors.OperationContext._Statuses.NotExist"/> = 404
+            </summary>
+        </member>
+        <member name="F:Meteors.OperationContext.Statuses.Failed">
+            <summary>
+            <see cref="F:Meteors.OperationContext._Statuses.Failed"/> = 400
+            </summary>
+        </member>
+        <member name="F:Meteors.OperationContext.Statuses.Forbidden">
+            <summary>
+            <see cref="F:Meteors.OperationContext._Statuses.Forbidden"/> = 403
+            </summary>
+        </member>
+        <member name="F:Meteors.OperationContext.Statuses.Exception">
+            <summary>
+            <see cref="F:Meteors.OperationContext._Statuses.Exception"/> = 500
+            </summary>
+        </member>
+        <member name="F:Meteors.OperationContext.Statuses.Unauthorized">
+            <summary>
+            <see cref="F:Meteors.OperationContext._Statuses.Unauthorized"/> = 401
+            </summary>
+        </member>
+        <member name="T:Meteors.OperationContext._Statuses">
+            <summary>
             Logical  result type
             <para> Warning: don't uses cast to any numbers <see cref="T:System.Int32"/> ... 
             only checked by <see langword="enum"/></para>
             </summary>
         </member>
-        <member name="F:Meteors.OperationContext.Statuses.UnKnown">
+        <member name="F:Meteors.OperationContext._Statuses.UnKnown">
             <summary>
             Unknown status take zero(default) value when not assert  
             </summary>
         </member>
-        <member name="F:Meteors.OperationContext.Statuses.Success">
+        <member name="F:Meteors.OperationContext._Statuses.Success">
             <summary>
             As <see cref="F:Microsoft.AspNetCore.Http.StatusCodes.Status200OK"/>
             </summary>
         </member>
-        <member name="F:Meteors.OperationContext.Statuses.Exist">
+        <member name="F:Meteors.OperationContext._Statuses.Exist">
             <summary>
             As <see cref="F:Microsoft.AspNetCore.Http.StatusCodes.Status202Accepted"/>
             </summary>
         </member>
-        <member name="F:Meteors.OperationContext.Statuses.NotExist">
+        <member name="F:Meteors.OperationContext._Statuses.NotExist">
             <summary>
             As <see cref="F:Microsoft.AspNetCore.Http.StatusCodes.Status404NotFound"/>
             </summary>
         </member>
-        <member name="F:Meteors.OperationContext.Statuses.Failed">
+        <member name="F:Meteors.OperationContext._Statuses.Failed">
             <summary>
             As <see cref="F:Microsoft.AspNetCore.Http.StatusCodes.Status400BadRequest"/>
             </summary>
         </member>
-        <member name="F:Meteors.OperationContext.Statuses.Forbidden">
+        <member name="F:Meteors.OperationContext._Statuses.Forbidden">
             <summary>
             As <see cref="F:Microsoft.AspNetCore.Http.StatusCodes.Status403Forbidden"/>
             </summary>
         </member>
-        <member name="F:Meteors.OperationContext.Statuses.Exception">
+        <member name="F:Meteors.OperationContext._Statuses.Exception">
             <summary>
             As <see cref="F:Microsoft.AspNetCore.Http.StatusCodes.Status500InternalServerError"/>
             </summary>
         </member>
-        <member name="F:Meteors.OperationContext.Statuses.Unauthorized">
+        <member name="F:Meteors.OperationContext._Statuses.Unauthorized">
             <summary>
             Useful in third party API
             As <see cref="F:Microsoft.AspNetCore.Http.StatusCodes.Status401Unauthorized"/>
@@ -67,7 +117,7 @@
             Extension methods for <see cref="T:Meteors.OperationContext.Statuses"/> only support some extra feature to <see cref="T:System.Enum"/> <see cref="T:Meteors.OperationContext.Statuses"/>
             </summary>
         </member>
-        <member name="M:Meteors.OperationContext.StatusesExtensions.ToPerString(Meteors.OperationContext.Statuses)">
+        <member name="M:Meteors.OperationContext.StatusesExtensions.ToPerString(Meteors.OperationContext._Statuses)">
             <summary>
             Like <see cref="M:System.Object.ToString"/> but no Allocated with enum and the most efficient way to performance
             </summary>
@@ -776,7 +826,7 @@
         <member name="M:Meteors.OperationJsonResultExtensions.OnePriority``2(``0,``1)">
             <summary>
             Condition to collect many operation result into once , dependent on  Priority of <see cref="T:Meteors.OperationContext.Statuses"/>
-            <para>With <see cref="F:Meteors.OperationContext.Statuses.Exception"/>  Will return first exception result  used <see cref="M:Meteors.OperationResult`1.SetException(System.Exception)"/></para>
+            <para>With <see cref="F:Meteors.OperationContext.Statuses.Exception"/>  Will return first exception result  used <see cref="!:OperationResult&lt;TResult&gt;.SetException(Exception)"/></para>
             <para>With <see cref="F:Meteors.OperationContext.Statuses.Failed"/> ,<see cref="F:Meteors.OperationContext.Statuses.Forbidden"/> and <see cref="F:Meteors.OperationContext.Statuses.Unauthorized"/> Will return join of message  used <see cref="M:Meteors.OperationResult`1.SetSuccess(System.String)"/></para>
             <para>With <see cref="F:Meteors.OperationContext.Statuses.Success"/> Will return TResult and  join of message used <see cref="M:Meteors.OperationResult`1.SetFailed(System.String,Meteors.OperationContext.Statuses)"/> .</para>
             </summary>
@@ -789,7 +839,7 @@
         <member name="M:Meteors.OperationJsonResultExtensions.OncePriority``2(``0,``1)">
             <summary>
             Condition to collect many operation result into once , dependent on  Priority of <see cref="T:Meteors.OperationContext.Statuses"/>
-            <para>With <see cref="F:Meteors.OperationContext.Statuses.Exception"/>  Will return first exception result  used <see cref="M:Meteors.OperationResult`1.SetException(System.Exception)"/></para>
+            <para>With <see cref="F:Meteors.OperationContext.Statuses.Exception"/>  Will return first exception result  used <see cref="!:OperationResult&lt;TResult&gt;.SetException(Exception)"/></para>
             <para>With <see cref="F:Meteors.OperationContext.Statuses.Failed"/> ,<see cref="F:Meteors.OperationContext.Statuses.Forbidden"/> and <see cref="F:Meteors.OperationContext.Statuses.Unauthorized"/> Will return join of message  used <see cref="M:Meteors.OperationResult`1.SetSuccess(System.String)"/></para>
             <para>With <see cref="F:Meteors.OperationContext.Statuses.Success"/> Will return TResult and  join of message used <see cref="M:Meteors.OperationResult`1.SetFailed(System.String,Meteors.OperationContext.Statuses)"/> .</para>
             </summary>
@@ -913,39 +963,6 @@
             <typeparam name="T"></typeparam>
             <returns><see cref="T:Meteors.OperationResult`1"/></returns>
         </member>
-        <member name="M:Meteors._Operation.SetSuccess">
-            <summary>
-            Helper
-            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:Meteors.OperationContext.Statuses.Success"/></para>
-            </summary>
-            <returns> <see cref="T:Meteors.OperationResult"/> </returns>
-        </member>
-        <member name="M:Meteors._Operation.SetSuccess``1">
-            <summary>
-            Helper to pass success result 
-            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:Meteors.OperationContext.Statuses.Success"/></para>
-            </summary>
-            <typeparam name="T"></typeparam>
-            <returns> <see cref="T:Meteors.OperationResult`1"/> </returns>
-        </member>
-        <member name="M:Meteors._Operation.SetSuccess``1(``0)">
-            <summary>
-            Helper to pass success result 
-            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:Meteors.OperationContext.Statuses.Success"/></para>
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="result"></param>
-            <returns> <see cref="T:Meteors.OperationResult`1"/> </returns>
-        </member>
-        <member name="M:Meteors._Operation.SetSuccess(System.String)">
-            <summary>
-            Helper
-            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:Meteors.OperationContext.Statuses.Success"/></para>
-            <para>Effect in <code>base.Message</code> .</para>
-            </summary>
-            <param name="message"></param>
-            <returns> <see cref="T:Meteors.OperationResult"/> </returns>
-        </member>
         <member name="M:Meteors._Operation.SetSuccess``1(System.String)">
             <summary>
             Helper to pass success result 
@@ -967,7 +984,7 @@
             <param name="message"></param>
             <returns> <see cref="T:Meteors.OperationResult`1"/> </returns>
         </member>
-        <member name="M:Meteors._Operation.SetFailed(System.String,Meteors.OperationContext.Statuses)">
+        <member name="M:Meteors._Operation.SetFailed``1(System.String)">
             <summary>
             Helper  
             <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:Meteors.OperationContext.Statuses.Failed"/></para>
@@ -975,9 +992,9 @@
             <para>Effect in <code>base.OperationResultType</code> default value <see cref="F:Meteors.OperationContext.Statuses.Failed"/> , <see cref="F:Meteors.OperationContext.Statuses.Forbidden"/> and <see cref="F:Meteors.OperationContext.Statuses.Unauthorized"/> </para>
             <para>Exception :  <see langword="throw"/> <see cref="T:System.ArgumentException"/> if type not kind of Failed .</para>
             </summary>
+            <typeparam name="T"></typeparam>
             <param name="message"></param>
-            <param name="type"></param>
-            <returns> <see cref="T:Meteors.OperationResult"/> </returns>
+            <returns> <see cref="T:Meteors.OperationResult`1"/> </returns>
         </member>
         <member name="M:Meteors._Operation.SetFailed``1(System.String,Meteors.OperationContext.Statuses)">
             <summary>
@@ -992,17 +1009,6 @@
             <param name="type"></param>
             <returns> <see cref="T:Meteors.OperationResult`1"/> </returns>
         </member>
-        <member name="M:Meteors._Operation.SetFailed(Meteors.OperationContext.Statuses)">
-            <summary>
-            Helper  
-            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:Meteors.OperationContext.Statuses.Failed"/></para>
-            <para>Effect in <code>base.OperationResultType</code> default value <see cref="F:Meteors.OperationContext.Statuses.Failed"/> , <see cref="F:Meteors.OperationContext.Statuses.Forbidden"/> and <see cref="F:Meteors.OperationContext.Statuses.Unauthorized"/> </para>
-            <para>Exception :  <see langword="throw"/> <see cref="T:System.ArgumentException"/> if type not kind of Failed .</para>
-            </summary>
-            <exception cref="T:System.ArgumentException"></exception>
-            <param name="type"></param>
-            <returns> <see cref="T:Meteors.OperationResult"/> </returns>
-        </member>
         <member name="M:Meteors._Operation.SetFailed``1(Meteors.OperationContext.Statuses)">
             <summary>
             Helper  
@@ -1014,14 +1020,6 @@
             <param name="type"></param>
             <returns> <see cref="T:Meteors.OperationResult`1"/> </returns>
         </member>
-        <member name="M:Meteors._Operation.SetException(System.Exception)">
-            <summary>
-            Helper to pass exception result 
-            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:Meteors.OperationContext.Statuses.Exception"/> .</para>
-            </summary>
-            <param name="exception"></param>
-            <returns> <see cref="T:Meteors.OperationResult"/> </returns>
-        </member>
         <member name="M:Meteors._Operation.SetException``1(System.Exception)">
             <summary>
             Helper to pass exception result 
@@ -1030,16 +1028,6 @@
             <typeparam name="T"></typeparam>
             <param name="exception"></param>
             <returns><see cref="T:Meteors.OperationResult`1"/>  </returns>
-        </member>
-        <member name="M:Meteors._Operation.SetException(System.Exception,System.String)">
-            <summary>
-            Helper to pass exception result 
-            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:Meteors.OperationContext.Statuses.Exception"/> .</para>
-            <para>Effect in <code>base.Message</code> .</para>
-            </summary>
-            <param name="exception"></param>
-            <param name="message"></param>
-            <returns> <see cref="T:Meteors.OperationResult"/> </returns>
         </member>
         <member name="M:Meteors._Operation.SetException``1(System.Exception,System.String)">
             <summary>
@@ -1050,18 +1038,6 @@
             <param name="exception"></param>
             <param name="message"></param>
             <returns> <see cref="T:Meteors.OperationResult`1"/> </returns>
-        </member>
-        <member name="M:Meteors._Operation.SetContent(Meteors.OperationContext.Statuses,System.String)">
-            <summary>
-            Helper  
-            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:Meteors.OperationContext.Statuses.Exist"/> or <seealso cref="F:Meteors.OperationContext.Statuses.NotExist"/>  </para>
-            <para>Effect in <code>base.Message</code> .</para>
-            <para>Exception :  <see langword="throw"/> <see cref="T:System.ArgumentException"/> if type not kind of Content .</para>
-            </summary>
-            <exception cref="T:System.ArgumentException"></exception>
-            <param name="type"></param>
-            <param name="message"></param>
-            <returns> <see cref="T:Meteors.OperationResult"/> </returns>
         </member>
         <member name="M:Meteors._Operation.SetContent``1(Meteors.OperationContext.Statuses,System.String)">
             <summary>
@@ -1074,36 +1050,6 @@
             <param name="type"></param>
             <param name="message"></param>
             <returns> <see cref="T:Meteors.OperationResult`1"/> </returns>
-        </member>
-        <member name="M:Meteors._Operation.SetContent(Meteors.OperationContext.Statuses)">
-            <summary>
-            Helper  
-            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:Meteors.OperationContext.Statuses.Exist"/> or <seealso cref="F:Meteors.OperationContext.Statuses.NotExist"/>  </para>
-            <para>Exception :  <see langword="throw"/> <see cref="T:System.ArgumentException"/> if type not kind of Content .</para>
-            </summary>
-            <exception cref="T:System.ArgumentException"></exception>
-            <param name="type"></param>
-            <returns> <see cref="T:Meteors.OperationResult"/> </returns>
-        </member>
-        <member name="M:Meteors._Operation.SetContent``1(Meteors.OperationContext.Statuses)">
-            <summary>
-            Helper  
-            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:Meteors.OperationContext.Statuses.Exist"/> or <seealso cref="F:Meteors.OperationContext.Statuses.NotExist"/>  </para>
-            <para>Exception :  <see langword="throw"/> <see cref="T:System.ArgumentException"/> if type not kind of Content .</para>
-            </summary>
-            <exception cref="T:System.ArgumentException"></exception>
-            <param name="type"></param>
-            <returns> <see cref="T:Meteors.OperationResult`1"/> </returns>
-        </member>
-        <member name="M:Meteors._Operation.Set(Meteors.OperationContext.Statuses,System.String,System.Exception)">
-            <summary>
-            Helper  
-            <para>Effect in all props</para>
-            </summary>
-            <param name="type"></param>
-            <param name="message"></param>
-            <param name="exception"></param>
-            <returns> <see cref="T:Meteors.OperationResult"/> </returns>
         </member>
         <member name="M:Meteors._Operation.Set``1(Meteors.OperationContext.Statuses,``0,System.String,System.Exception)">
             <summary>
@@ -1153,21 +1099,6 @@
             </remark>
             </summary>
         </member>
-        <member name="M:Meteors.OperationResult`1.SetSuccess">
-            <summary>
-            Helper to pass success result 
-            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:Meteors.OperationContext.Statuses.Success"/></para>
-            </summary>
-            <returns> <see cref="T:Meteors.OperationResult`1"/> </returns>
-        </member>
-        <member name="M:Meteors.OperationResult`1.SetSuccess(`0)">
-            <summary>
-            Helper to pass success result 
-            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:Meteors.OperationContext.Statuses.Success"/></para>
-            </summary>
-            <param name="result"></param>
-            <returns> <see cref="T:Meteors.OperationResult`1"/> </returns>
-        </member>
         <member name="M:Meteors.OperationResult`1.SetSuccess(System.String)">
             <summary>
             Helper
@@ -1184,6 +1115,18 @@
             <para>Effect in <code>base.Message</code> .</para>
             </summary>
             <param name="result"></param>
+            <param name="message"></param>
+            <returns> <see cref="T:Meteors.OperationResult`1"/> </returns>
+        </member>
+        <member name="M:Meteors.OperationResult`1.SetFailed(System.String)">
+            <summary>
+            Helper  
+            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:Meteors.OperationContext.Statuses.Failed"/></para>
+            <para>Effect in <code>base.Message</code> .</para>
+            <para>Effect in <code>base.OperationResultType</code> default value <see cref="F:Meteors.OperationContext.Statuses.Failed"/> , <see cref="F:Meteors.OperationContext.Statuses.Forbidden"/> and <see cref="F:Meteors.OperationContext.Statuses.Unauthorized"/> </para>
+            <para>Exception :  <see langword="throw"/> <see cref="T:System.ArgumentException"/> if type not kind of Failed .</para>
+            </summary>
+            <exception cref="T:System.ArgumentException"></exception>
             <param name="message"></param>
             <returns> <see cref="T:Meteors.OperationResult`1"/> </returns>
         </member>
@@ -1221,14 +1164,6 @@
             <param name="message"></param>
             <returns> <see cref="T:Meteors.OperationResult`1"/> </returns>
         </member>
-        <member name="M:Meteors.OperationResult`1.SetException(System.Exception)">
-            <summary>
-            Helper to pass exception result 
-            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:Meteors.OperationContext.Statuses.Exception"/> .</para>
-            </summary>
-            <param name="exception"></param>
-            <returns> <see cref="T:Meteors.OperationResult`1"/> </returns>
-        </member>
         <member name="M:Meteors.OperationResult`1.SetContent(Meteors.OperationContext.Statuses,System.String)">
             <summary>
             Helper  
@@ -1239,16 +1174,6 @@
             <exception cref="T:System.ArgumentException"></exception>
             <param name="type"></param>
             <param name="message"></param>
-            <returns> <see cref="T:Meteors.OperationResult`1"/> </returns>
-        </member>
-        <member name="M:Meteors.OperationResult`1.SetContent(Meteors.OperationContext.Statuses)">
-            <summary>
-            Helper  
-            <para>Effect in <code>base.OperationResultType</code> to <seealso cref="F:Meteors.OperationContext.Statuses.Exist"/> or <seealso cref="F:Meteors.OperationContext.Statuses.NotExist"/>  </para>
-            <para>Exception :  <see langword="throw"/> <see cref="T:System.ArgumentException"/> if type not kind of Content .</para>
-            </summary>
-            <exception cref="T:System.ArgumentException"></exception>
-            <param name="type"></param>
             <returns> <see cref="T:Meteors.OperationResult`1"/> </returns>
         </member>
         <member name="M:Meteors.OperationResult`1.Set(Meteors.OperationContext.Statuses,`0,System.String,System.Exception)">
