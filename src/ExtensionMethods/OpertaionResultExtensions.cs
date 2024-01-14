@@ -168,7 +168,7 @@ namespace Meteors
         /// <returns></returns>
         public static async Task<OperationResult<T>> WithStatusCodeAsync<T>(this Task<OperationResult<T>> result, int statusCode)
         {
-            var _result = await result;
+            var _result = await result.ConfigureAwait(false);//need test
             return (OperationResult<T>)WithStatusCode((OperationResult)_result, statusCode);
         }
 
