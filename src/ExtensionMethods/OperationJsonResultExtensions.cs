@@ -88,7 +88,7 @@ namespace Meteors
         /// <param name="result"></param>
         /// <param name="isBody">boolean value if return json complete body of operation</param>
         /// <returns><see cref="Task{JsonResult}"/></returns>
-        public static async Task<JsonResult> ToJsonResultAsync<T>(this Task<OperationResult<T>> result, bool? isBody = default) => (await result).ToJsonResult(isBody);
+        public static async Task<JsonResult> ToJsonResultAsync<T>(this Task<OperationResult<T>> result, bool? isBody = default) => (await result.ConfigureAwait(false)).ToJsonResult(isBody);
 
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Meteors
             if (!result.HasCustomStatusCode && (result.StatusCode ?? 0) == 0)
                 result.StatusCode = (int)result.Status;
 
-            bool jsonMessageIsNullOrEmpty = jsonMessage.IsNullOrEmpty();
+            bool jsonMessageIsNullOrEmpty = string.IsNullOrEmpty(jsonMessage);
 
             if (isBody is true || (isBody is null && OperationResultOptions._IsBody is true))
             {
@@ -197,7 +197,7 @@ namespace Meteors
         public static async Task<OperationResult<TResult1>> CollectAsync<TResult1>(this Task<OperationResult<TResult1>> result1)
         {
             //await Task.WhenAll(result1); //ca1842
-            return (await result1);
+            return (await result1.ConfigureAwait(false));
         }
 
 
@@ -211,7 +211,7 @@ namespace Meteors
         /// <returns><see cref="OperationResult{TResult}"/></returns>
         public static async Task<OperationResult<TResult>> IntoAsync<TResult1, TResult>(this Task<OperationResult<TResult1>> result1,
             Func<OperationResult<TResult1>, TResult> receiver)
-        => await result1.InOnceAsync(receiver(await result1));
+        => await result1.InOnceAsync(receiver(await result1.ConfigureAwait(false)));
 
 
         /// <summary>
@@ -223,7 +223,7 @@ namespace Meteors
         /// <param name="result"></param>
         /// <returns><see cref="OperationResult{TResult}"/></returns>
         private static async Task<OperationResult<TResult>> InOnceAsync<TResult1, TResult>(this Task<OperationResult<TResult1>> result1, TResult result)
-        => OnePriority(await result1, result);
+        => OnePriority(await result1.ConfigureAwait(false), result);
 
         #endregion
 
@@ -285,8 +285,8 @@ namespace Meteors
         /// <returns></returns>
         public static async Task<(OperationResult<TResult1> result1, OperationResult<TResult2> result2)> CollectAsync<TResult1, TResult2>(this Task<OperationResult<TResult1>> result1, Task<OperationResult<TResult2>> result2)
         {
-            await Task.WhenAll(result1, result2);
-            return (await result1, await result2);
+            await Task.WhenAll(result1, result2).ConfigureAwait(false);
+            return (await result1.ConfigureAwait(false), await result2.ConfigureAwait(false));
         }
 
 
@@ -301,7 +301,7 @@ namespace Meteors
         /// <returns></returns>
         public static async Task<OperationResult<TResult>> IntoAsync<TResult1, TResult2, TResult>(this Task<(OperationResult<TResult1> result1, OperationResult<TResult2> result2)> results,
             Func<OperationResult<TResult1>, OperationResult<TResult2>, TResult> receiver)
-        { var (result1, result2) = await results; return await results.InOnceAsync(receiver(result1, result2)); }
+        { var (result1, result2) = await results.ConfigureAwait(false); return await results.InOnceAsync(receiver(result1, result2)).ConfigureAwait(false); }
 
 
         /// <summary>
@@ -314,7 +314,7 @@ namespace Meteors
         /// <param name="result"></param>
         /// <returns></returns>
         private static async Task<OperationResult<TResult>> InOnceAsync<TResult1, TResult2, TResult>(this Task<(OperationResult<TResult1> result1, OperationResult<TResult2> result2)> results, TResult result)
-        => OncePriority(await results, result);
+        => OncePriority(await results.ConfigureAwait(false), result);
 
         #endregion
 
@@ -381,8 +381,8 @@ namespace Meteors
         /// <returns></returns>
         public static async Task<(OperationResult<TResult1> result1, OperationResult<TResult2> result2, OperationResult<TResult3> result3)> CollectAsync<TResult1, TResult2, TResult3>(this Task<OperationResult<TResult1>> result1, Task<OperationResult<TResult2>> result2, Task<OperationResult<TResult3>> result3)
         {
-            await Task.WhenAll(result1, result2, result3);
-            return (await result1, await result2, await result3);
+            await Task.WhenAll(result1, result2, result3).ConfigureAwait(false);
+            return (await result1.ConfigureAwait(false), await result2.ConfigureAwait(false), await result3.ConfigureAwait(false));
         }
 
         /// <summary>
@@ -397,7 +397,7 @@ namespace Meteors
         /// <returns></returns>
         public static async Task<OperationResult<TResult>> IntoAsync<TResult1, TResult2, TResult3, TResult>(this Task<(OperationResult<TResult1> result1, OperationResult<TResult2> result2, OperationResult<TResult3> result3)> results,
             Func<OperationResult<TResult1>, OperationResult<TResult2>, OperationResult<TResult3>, TResult> receiver)
-        { var (result1, result2, result3) = await results; return await results.InOnceAsync(receiver(result1, result2, result3)); }
+        { var (result1, result2, result3) = await results.ConfigureAwait(false); return await results.InOnceAsync(receiver(result1, result2, result3)).ConfigureAwait(false); }
 
 
         /// <summary>
@@ -411,7 +411,7 @@ namespace Meteors
         /// <param name="result"></param>
         /// <returns></returns>
         private static async Task<OperationResult<TResult>> InOnceAsync<TResult1, TResult2, TResult3, TResult>(this Task<(OperationResult<TResult1> result1, OperationResult<TResult2> result2, OperationResult<TResult3> result3)> results, TResult result)
-        => OncePriority(await results, result);
+        => OncePriority(await results.ConfigureAwait(false), result);
 
         #endregion
 
@@ -484,8 +484,8 @@ namespace Meteors
         /// <returns></returns>
         public static async Task<(OperationResult<TResult1> result1, OperationResult<TResult2> result2, OperationResult<TResult3> result3, OperationResult<TResult4> result4)> CollectAsync<TResult1, TResult2, TResult3, TResult4>(this Task<OperationResult<TResult1>> result1, Task<OperationResult<TResult2>> result2, Task<OperationResult<TResult3>> result3, Task<OperationResult<TResult4>> result4)
         {
-            await Task.WhenAll(result1, result2, result3, result4);
-            return (await result1, await result2, await result3, await result4);
+            await Task.WhenAll(result1, result2, result3, result4).ConfigureAwait(false);
+            return (await result1.ConfigureAwait(false), await result2.ConfigureAwait(false), await result3.ConfigureAwait(false), await result4.ConfigureAwait(false));
         }
 
         /// <summary>
@@ -501,7 +501,7 @@ namespace Meteors
         /// <returns></returns>
         public static async Task<OperationResult<TResult>> IntoAsync<TResult1, TResult2, TResult3, TResult4, TResult>(this Task<(OperationResult<TResult1> result1, OperationResult<TResult2> result2, OperationResult<TResult3> result3, OperationResult<TResult4> result4)> results,
             Func<OperationResult<TResult1>, OperationResult<TResult2>, OperationResult<TResult3>, OperationResult<TResult4>, TResult> receiver)
-        { var (result1, result2, result3, result4) = await results; return await results.InOnceAsync(receiver(result1, result2, result3, result4)); }
+        { var (result1, result2, result3, result4) = await results.ConfigureAwait(false); return await results.InOnceAsync(receiver(result1, result2, result3, result4)).ConfigureAwait(false); }
 
 
         /// <summary>
@@ -516,7 +516,7 @@ namespace Meteors
         /// <param name="result"></param>
         /// <returns></returns>
         private static async Task<OperationResult<TResult>> InOnceAsync<TResult1, TResult2, TResult3, TResult4, TResult>(this Task<(OperationResult<TResult1> result1, OperationResult<TResult2> result2, OperationResult<TResult3> result3, OperationResult<TResult4> result4)> results, TResult result)
-        => OncePriority(await results, result);
+        => OncePriority(await results.ConfigureAwait(false), result);
 
         #endregion
 
@@ -595,8 +595,8 @@ namespace Meteors
         /// <returns></returns>
         public static async Task<(OperationResult<TResult1> result1, OperationResult<TResult2> result2, OperationResult<TResult3> result3, OperationResult<TResult4> result4, OperationResult<TResult5> result5)> CollectAsync<TResult1, TResult2, TResult3, TResult4, TResult5>(this Task<OperationResult<TResult1>> result1, Task<OperationResult<TResult2>> result2, Task<OperationResult<TResult3>> result3, Task<OperationResult<TResult4>> result4, Task<OperationResult<TResult5>> result5)
         {
-            await Task.WhenAll(result1, result2, result3, result4, result5);
-            return (await result1, await result2, await result3, await result4, await result5);
+            await Task.WhenAll(result1, result2, result3, result4, result5).ConfigureAwait(false);
+            return (await result1.ConfigureAwait(false), await result2.ConfigureAwait(false), await result3.ConfigureAwait(false), await result4.ConfigureAwait(false), await result5.ConfigureAwait(false));
         }
 
         /// <summary>
@@ -613,7 +613,7 @@ namespace Meteors
         /// <returns></returns>
         public static async Task<OperationResult<TResult>> IntoAsync<TResult1, TResult2, TResult3, TResult4, TResult5, TResult>(this Task<(OperationResult<TResult1> result1, OperationResult<TResult2> result2, OperationResult<TResult3> result3, OperationResult<TResult4> result4, OperationResult<TResult5> result5)> results,
             Func<OperationResult<TResult1>, OperationResult<TResult2>, OperationResult<TResult3>, OperationResult<TResult4>, OperationResult<TResult5>, TResult> receiver)
-        { var (result1, result2, result3, result4, result5) = await results; return await results.InOnceAsync(receiver(result1, result2, result3, result4, result5)); }
+        { var (result1, result2, result3, result4, result5) = await results.ConfigureAwait(false); return await results.InOnceAsync(receiver(result1, result2, result3, result4, result5)).ConfigureAwait(false); }
 
 
         /// <summary>
@@ -629,7 +629,7 @@ namespace Meteors
         /// <param name="result"></param>
         /// <returns></returns>
         private static async Task<OperationResult<TResult>> InOnceAsync<TResult1, TResult2, TResult3, TResult4, TResult5, TResult>(this Task<(OperationResult<TResult1> result1, OperationResult<TResult2> result2, OperationResult<TResult3> result3, OperationResult<TResult4> result4, OperationResult<TResult5> result5)> results, TResult result)
-        => OncePriority(await results, result);
+        => OncePriority(await results.ConfigureAwait(false), result);
 
         #endregion
 
@@ -714,8 +714,8 @@ namespace Meteors
         /// <returns></returns>
         public static async Task<(OperationResult<TResult1> result1, OperationResult<TResult2> result2, OperationResult<TResult3> result3, OperationResult<TResult4> result4, OperationResult<TResult5> result5, OperationResult<TResult6> result6)> CollectAsync<TResult1, TResult2, TResult3, TResult4, TResult5, TResult6>(this Task<OperationResult<TResult1>> result1, Task<OperationResult<TResult2>> result2, Task<OperationResult<TResult3>> result3, Task<OperationResult<TResult4>> result4, Task<OperationResult<TResult5>> result5, Task<OperationResult<TResult6>> result6)
         {
-            await Task.WhenAll(result1, result2, result3, result4, result5, result6);
-            return (await result1, await result2, await result3, await result4, await result5, await result6);
+            await Task.WhenAll(result1, result2, result3, result4, result5, result6).ConfigureAwait(false);
+            return (await result1.ConfigureAwait(false), await result2.ConfigureAwait(false), await result3.ConfigureAwait(false), await result4.ConfigureAwait(false), await result5.ConfigureAwait(false), await result6.ConfigureAwait(false));
         }
 
         /// <summary>
@@ -733,7 +733,7 @@ namespace Meteors
         /// <returns></returns>
         public static async Task<OperationResult<TResult>> IntoAsync<TResult1, TResult2, TResult3, TResult4, TResult5, TResult6, TResult>(this Task<(OperationResult<TResult1> result1, OperationResult<TResult2> result2, OperationResult<TResult3> result3, OperationResult<TResult4> result4, OperationResult<TResult5> result5, OperationResult<TResult6> result6)> results,
             Func<OperationResult<TResult1>, OperationResult<TResult2>, OperationResult<TResult3>, OperationResult<TResult4>, OperationResult<TResult5>, OperationResult<TResult6>, TResult> receiver)
-        { var (result1, result2, result3, result4, result5, result6) = await results; return await results.InOnceAsync(receiver(result1, result2, result3, result4, result5, result6)); }
+        { var (result1, result2, result3, result4, result5, result6) = await results.ConfigureAwait(false); return await results.InOnceAsync(receiver(result1, result2, result3, result4, result5, result6)).ConfigureAwait(false); }
 
 
         /// <summary>
@@ -750,7 +750,7 @@ namespace Meteors
         /// <param name="result"></param>
         /// <returns></returns>
         private static async Task<OperationResult<TResult>> InOnceAsync<TResult1, TResult2, TResult3, TResult4, TResult5, TResult6, TResult>(this Task<(OperationResult<TResult1> result1, OperationResult<TResult2> result2, OperationResult<TResult3> result3, OperationResult<TResult4> result4, OperationResult<TResult5> result5, OperationResult<TResult6> result6)> results, TResult result)
-        => OncePriority(await results, result);
+        => OncePriority(await results.ConfigureAwait(false), result);
 
         #endregion
 
@@ -841,8 +841,8 @@ namespace Meteors
         /// <returns></returns>
         public static async Task<(OperationResult<TResult1> result1, OperationResult<TResult2> result2, OperationResult<TResult3> result3, OperationResult<TResult4> result4, OperationResult<TResult5> result5, OperationResult<TResult6> result6, OperationResult<TResult7> result7)> CollectAsync<TResult1, TResult2, TResult3, TResult4, TResult5, TResult6, TResult7>(this Task<OperationResult<TResult1>> result1, Task<OperationResult<TResult2>> result2, Task<OperationResult<TResult3>> result3, Task<OperationResult<TResult4>> result4, Task<OperationResult<TResult5>> result5, Task<OperationResult<TResult6>> result6, Task<OperationResult<TResult7>> result7)
         {
-            await Task.WhenAll(result1, result2, result3, result4, result5, result6, result7);
-            return (await result1, await result2, await result3, await result4, await result5, await result6, await result7);
+            await Task.WhenAll(result1, result2, result3, result4, result5, result6, result7).ConfigureAwait(false);
+            return (await result1.ConfigureAwait(false), await result2.ConfigureAwait(false), await result3.ConfigureAwait(false), await result4.ConfigureAwait(false), await result5.ConfigureAwait(false), await result6.ConfigureAwait(false), await result7.ConfigureAwait(false));
         }
 
         /// <summary>
@@ -861,7 +861,7 @@ namespace Meteors
         /// <returns></returns>
         public static async Task<OperationResult<TResult>> IntoAsync<TResult1, TResult2, TResult3, TResult4, TResult5, TResult6, TResult7, TResult>(this Task<(OperationResult<TResult1> result1, OperationResult<TResult2> result2, OperationResult<TResult3> result3, OperationResult<TResult4> result4, OperationResult<TResult5> result5, OperationResult<TResult6> result6, OperationResult<TResult7> result7)> results,
             Func<OperationResult<TResult1>, OperationResult<TResult2>, OperationResult<TResult3>, OperationResult<TResult4>, OperationResult<TResult5>, OperationResult<TResult6>, OperationResult<TResult7>, TResult> receiver)
-        { var (result1, result2, result3, result4, result5, result6, result7) = await results; return await results.InOnceAsync(receiver(result1, result2, result3, result4, result5, result6, result7)); }
+        { var (result1, result2, result3, result4, result5, result6, result7) = await results.ConfigureAwait(false); return await results.InOnceAsync(receiver(result1, result2, result3, result4, result5, result6, result7)).ConfigureAwait(false); }
 
 
         /// <summary>
@@ -879,7 +879,7 @@ namespace Meteors
         /// <param name="result"></param>
         /// <returns></returns>
         private static async Task<OperationResult<TResult>> InOnceAsync<TResult1, TResult2, TResult3, TResult4, TResult5, TResult6, TResult7, TResult>(this Task<(OperationResult<TResult1> result1, OperationResult<TResult2> result2, OperationResult<TResult3> result3, OperationResult<TResult4> result4, OperationResult<TResult5> result5, OperationResult<TResult6> result6, OperationResult<TResult7> result7)> results, TResult result)
-        => OncePriority(await results, result);
+        => OncePriority(await results.ConfigureAwait(false), result);
 
         #endregion
 

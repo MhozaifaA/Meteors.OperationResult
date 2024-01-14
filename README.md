@@ -1,16 +1,16 @@
-# [Meteors] OperationResult 8.0.0
+# [Meteors] OperationResult 8.0.1
 
 
 [![](https://img.shields.io/github/license/MhozaifaA/OperationResult)](https://github.com/MhozaifaA/Meteors.OperationResult/blob/master/LICENSE.md)
 ![](https://img.shields.io/nuget/dt/Meteors.OperationResult)
 [![](https://img.shields.io/nuget/v/Meteors.OperationResult)](https://www.nuget.org/packages/Meteors.OperationResult)
 ![](https://img.shields.io/badge/Unit%20Test-%E2%80%89254%E2%80%89Passed-green)
-> `version 1.6 net6.0`
+
 
 
 *Meteors Operation Result came with new and redesigned to accept more than container for status and data. **OperationResult** is isolated but stuck with kernel of your business logic , without if/else and some corrupted code to handle results.*
 
-Install-Package Meteors.OperationResult -Version 8.0.0
+Install-Package Meteors.OperationResult -Version 8.0.1
 
 
 <div style="display: flex;"> 
@@ -24,6 +24,9 @@ Install-Package Meteors.OperationResult -Version 8.0.0
 <p align="center">
 <img width="10%" src="https://user-images.githubusercontent.com/48151918/175791394-3913f060-5551-435c-adda-5bc487964f1c.png" />
 </p>
+
+> [!Important]
+> Old enum Statues(OperationStatues) become record Statuses. [See New Statues](https://github.com/MhozaifaA/Meteors.OperationResult/blob/develop/src/Enum/Statuses.cs)
 
 
 ### Documentation 

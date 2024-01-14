@@ -54,7 +54,7 @@ namespace Meteors
         public static OperationResult Append(this OperationResult operation, string Message, bool space = true)
         {
             //can be null
-            if (operation.Message.IsNullOrEmpty())
+            if (string.IsNullOrEmpty(operation.Message))
                 operation.Message = Message.ToString();
             else
                 operation.Message = string.Join(space ? " " : string.Empty, operation.Message, Message);
@@ -72,7 +72,7 @@ namespace Meteors
         public static OperationResult Append(this OperationResult operation, params string[] Messages)
         {
                 //can be null
-                if (operation.Message.IsNullOrEmpty())
+                if (string.IsNullOrEmpty(operation.Message))
                 operation.Message = string.Join(" ", Messages);
                 else
                 operation.Message = string.Join(" ", operation.Message, Messages);
@@ -168,7 +168,7 @@ namespace Meteors
         /// <returns></returns>
         public static async Task<OperationResult<T>> WithStatusCodeAsync<T>(this Task<OperationResult<T>> result, int statusCode)
         {
-            var _result = await result;
+            var _result = await result.ConfigureAwait(false);//need test
             return (OperationResult<T>)WithStatusCode((OperationResult)_result, statusCode);
         }
 
