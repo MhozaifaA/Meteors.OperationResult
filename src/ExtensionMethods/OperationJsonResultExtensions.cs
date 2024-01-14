@@ -105,7 +105,7 @@ namespace Meteors
             if (!result.HasCustomStatusCode && (result.StatusCode ?? 0) == 0)
                 result.StatusCode = (int)result.Status;
 
-            bool jsonMessageIsNullOrEmpty = jsonMessage.IsNullOrEmpty();
+            bool jsonMessageIsNullOrEmpty = string.IsNullOrEmpty(jsonMessage);
 
             if (isBody is true || (isBody is null && OperationResultOptions._IsBody is true))
             {
